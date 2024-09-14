@@ -11,4 +11,8 @@ public class Print {
         System.out.println(Color.WHITE_BOLD_BRIGHT + " \t\t\t" + message + "\t\t\t\n" + Color.RESET);
     }
 
+    public static void secondaryTitle(Object message) {
+        System.out.println(Color.WHITE_BOLD_BRIGHT + " \t\t\t" + message + "\t\t\t\n" + Color.RESET);
+    }
+
 }

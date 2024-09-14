@@ -1,7 +1,6 @@
 package com.wora.client.application.services.impl;
 
-import com.wora.client.application.dtos.requests.CreateClientDto;
-import com.wora.client.application.dtos.requests.UpdateClientDto;
+import com.wora.client.application.dtos.requests.ClientRequest;
 import com.wora.client.application.dtos.responses.ClientResponse;
 import com.wora.client.application.mappers.ClientMapper;
 import com.wora.client.application.services.ClientService;
@@ -36,12 +35,13 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public void create(CreateClientDto dto) {
+    public ClientResponse create(ClientRequest dto) {
         repository.create(mapper.map(dto));
+
     }
 
     @Override
-    public void update(ClientId id, UpdateClientDto dto) {
+    public void update(ClientId id, ClientRequest dto) {
         repository.update(id.value(), mapper.map(dto, id));
     }
 
