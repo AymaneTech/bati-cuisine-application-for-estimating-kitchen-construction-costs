@@ -2,6 +2,7 @@ package com.wora.component.domain.entity;
 
 import com.wora.component.domain.enums.ComponentType;
 import com.wora.component.domain.valueObject.ComponentId;
+import com.wora.project.entity.Project;
 
 import java.time.LocalDateTime;
 
@@ -21,8 +22,8 @@ public class Materiel extends com.wora.component.domain.entity.Component {
     }
 
 
-    public Materiel(ComponentId id, String name, Double tva, Double unitCost, Double quantity, Double transportCost, Double qualityCoefficient, LocalDateTime createdAt, LocalDateTime updatedAt, LocalDateTime deletedAt) {
-        super(id, name, tva, ComponentType.MATERIEL, createdAt, updatedAt, deletedAt);
+    public Materiel(ComponentId id, String name, Double tva, Project project, Double unitCost, Double quantity, Double transportCost, Double qualityCoefficient, LocalDateTime createdAt, LocalDateTime updatedAt, LocalDateTime deletedAt) {
+        super(id, name, tva, ComponentType.MATERIEL, project, createdAt, updatedAt, deletedAt);
         this.unitCost = unitCost;
         this.quantity = quantity;
         this.transportCost = transportCost;
