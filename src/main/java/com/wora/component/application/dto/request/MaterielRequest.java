@@ -1,19 +1,20 @@
 package com.wora.component.application.dto.request;
 
 import com.wora.component.domain.enums.ComponentType;
+import com.wora.project.valueObject.ProjectId;
 
 public class MaterielRequest extends ComponentRequest{
     private final Double unitCost;
     private final Double quantity;
     private final Double transportCost;
-    private final Double quantityCoefficient;
+    private final Double qualityCoefficient;
 
-    public MaterielRequest(String name, String tva, String projectId, Double unitCost, Double quantity, Double transportCost, Double quantityCoefficient) {
+    public MaterielRequest(String name, Double tva, ProjectId projectId, Double unitCost, Double quantity, Double transportCost, Double qualityCoefficient) {
         super(name, tva, ComponentType.MATERIEL, projectId);
         this.unitCost = unitCost;
         this.quantity = quantity;
         this.transportCost = transportCost;
-        this.quantityCoefficient = quantityCoefficient;
+        this.qualityCoefficient = qualityCoefficient;
     }
 
     public Double unitCost() {
@@ -29,6 +30,6 @@ public class MaterielRequest extends ComponentRequest{
     }
 
     public Double quantityCoefficient() {
-        return quantityCoefficient;
+        return qualityCoefficient;
     }
 }

@@ -1,14 +1,15 @@
 package com.wora.component.application.dto.request;
 
 import com.wora.component.domain.enums.ComponentType;
+import com.wora.project.valueObject.ProjectId;
 
 public class ComponentRequest {
     private final String name;
-    private final String tva;
+    private final Double tva;
     private final ComponentType type;
-    private final String projectId;
+    private final ProjectId projectId;
 
-    public ComponentRequest(String name, String tva, ComponentType type, String projectId) {
+    public ComponentRequest(String name, Double tva, ComponentType type, ProjectId projectId) {
         this.name = name;
         this.tva = tva;
         this.type = type;
@@ -19,11 +20,11 @@ public class ComponentRequest {
         return name;
     }
 
-    public String tva() {
+    public Double tva() {
         return tva;
     }
 
-    public String projectId() {
+    public ProjectId projectId() {
         return projectId;
     }
 

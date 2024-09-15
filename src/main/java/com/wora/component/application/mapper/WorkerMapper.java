@@ -13,7 +13,7 @@ public class WorkerMapper implements BaseEntityDtoMapper<Worker, WorkerRequest, 
         return new Worker(
                 id,
                 dto.name(),
-                Double.parseDouble(dto.tva()),
+                dto.tva(),
                 dto.hourlyRate(),
                 dto.workingHours(),
                 dto.productivity()

@@ -1,6 +1,5 @@
 package com.wora.component.application.services;
 
-import com.wora.client.application.dto.request.ClientRequest;
 import com.wora.component.application.dto.request.ComponentRequest;
 import com.wora.component.application.dto.response.ComponentResponse;
 import com.wora.component.domain.valueObject.ComponentId;

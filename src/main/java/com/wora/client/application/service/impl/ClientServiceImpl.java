@@ -37,13 +37,13 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public ClientResponse create(ClientRequest dto) {
-        Client client = repository.create(mapper.map(dto, new ClientId()));
+        final Client client = repository.create(mapper.map(dto, new ClientId()));
         return mapper.map(client);
     }
 
     @Override
     public ClientResponse update(ClientId id, ClientRequest dto) {
-        Client client = repository.update(id.value(), mapper.map(dto, id));
+        final Client client = repository.update(id.value(), mapper.map(dto, id));
         return mapper.map(client);
     }
 

@@ -13,7 +13,7 @@ public class MaterielMapper implements BaseEntityDtoMapper<Materiel, MaterielReq
         return new Materiel(
                 id,
                 dto.name(),
-                Double.parseDouble(dto.tva()),
+                dto.tva(),
                 dto.unitCost(),
                 dto.quantity(),
                 dto.transportCost(),
