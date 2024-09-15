@@ -1,6 +1,6 @@
 package com.wora.common.infrastructure.persistence;
 
-import com.wora.common.infrastructure.mappers.BaseEntityResultSetMapper;
+import com.wora.common.infrastructure.mapper.BaseEntityResultSetMapper;
 
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -8,8 +8,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
-import static com.wora.common.utils.QueryExecutor.executeQueryPreparedStatement;
-import static com.wora.common.utils.QueryExecutor.executeQueryStatement;
+import static com.wora.common.util.QueryExecutor.executeQueryPreparedStatement;
+import static com.wora.common.util.QueryExecutor.executeQueryStatement;
 
 public abstract class BaseRepositoryImpl<Entity, ID> implements BaseRepository<Entity, ID> {
 

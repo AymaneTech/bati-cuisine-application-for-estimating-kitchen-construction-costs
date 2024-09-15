@@ -1,15 +1,14 @@
 package com.wora.client.infrastructure.persistence;
 
-import com.wora.client.domain.entities.Client;
-import com.wora.client.domain.exceptions.ClientNotFoundException;
-import com.wora.client.domain.repositories.ClientRepository;
-import com.wora.client.infrastructure.mappers.ClientResultSetMapper;
+import com.wora.client.domain.entity.Client;
+import com.wora.client.domain.exception.ClientNotFoundException;
+import com.wora.client.domain.repository.ClientRepository;
+import com.wora.client.infrastructure.mapper.ClientResultSetMapper;
 import com.wora.common.infrastructure.persistence.BaseRepositoryImpl;
 
-import java.sql.ResultSet;
 import java.util.UUID;
 
-import static com.wora.common.utils.QueryExecutor.execute;
+import static com.wora.common.util.QueryExecutor.execute;
 
 public class ClientRepositoryImpl extends BaseRepositoryImpl<Client, UUID> implements ClientRepository {
     public ClientRepositoryImpl(ClientResultSetMapper mapper) {
