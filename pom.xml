@@ -3,10 +3,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.wora</groupId>
-    <artifactId>ecomove</artifactId>
+    <artifactId>bati-cuisine</artifactId>
     <packaging>jar</packaging>
     <version>1.0-SNAPSHOT</version>
-    <name>ecomove</name>
+    <name>bat-cuisine</name>
     <url>http://maven.apache.org</url>
 
     <build>
