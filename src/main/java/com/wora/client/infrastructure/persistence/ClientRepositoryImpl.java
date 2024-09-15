@@ -21,8 +21,8 @@ public class ClientRepositoryImpl extends BaseRepositoryImpl<Client, UUID> imple
         final String query = "INSERT INTO clients (first_name, last_name, phone, address, is_professional, id) VALUES(?,?,?,?,?,?)";
         execute(query, stmt -> mapper.map(client, stmt));
 
-        return findById(client.getId().value())
-                .orElseThrow(() -> new ClientNotFoundException(client.getId().value()));
+        return findById(client.id().value())
+                .orElseThrow(() -> new ClientNotFoundException(client.id().value()));
     }
 
     @Override
@@ -33,8 +33,8 @@ public class ClientRepositoryImpl extends BaseRepositoryImpl<Client, UUID> imple
                 WHERE id = ?
                 """;
         execute(query, stmt -> mapper.map(client, stmt));
-        return findById(client.getId().value())
-                .orElseThrow(() -> new ClientNotFoundException(client.getId().value()));
+        return findById(client.id().value())
+                .orElseThrow(() -> new ClientNotFoundException(client.id().value()));
     }
 
     @Override

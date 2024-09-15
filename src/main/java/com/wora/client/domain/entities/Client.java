@@ -3,6 +3,7 @@ package com.wora.client.domain.entities;
 import com.wora.client.domain.valueObjects.ClientId;
 import com.wora.client.domain.valueObjects.Name;
 import com.wora.common.domain.AbstractEntity;
+import com.wora.project.entities.Project;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -13,13 +14,12 @@ public class Client extends AbstractEntity<ClientId> {
     private String phone;
     private String address;
     private Boolean isProfessional;
-    // TODO: add project list
-    private List<?> projects;
+    private List<Project> projects;
 
     public Client() {
     }
 
-    public Client(ClientId id, Name name, String phone, String address, Boolean isProfessional, List<?> projects) {
+    public Client(ClientId id, Name name, String phone, String address, Boolean isProfessional, List<Project> projects) {
         this.id = id;
         this.name = name;
         this.phone = phone;
@@ -28,7 +28,7 @@ public class Client extends AbstractEntity<ClientId> {
         this.projects = projects;
     }
 
-    public Client(ClientId id, Name name, String phone, String address, Boolean isProfessional, List<?> projects, LocalDateTime createdAt, LocalDateTime updatedAt, LocalDateTime deletedAt) {
+    public Client(ClientId id, Name name, String phone, String address, Boolean isProfessional, List<Project> projects, LocalDateTime createdAt, LocalDateTime updatedAt, LocalDateTime deletedAt) {
         this(id, name, phone, address, isProfessional, projects);
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
@@ -36,7 +36,7 @@ public class Client extends AbstractEntity<ClientId> {
     }
 
     @Override
-    public ClientId getId() {
+    public ClientId id() {
         return id;
     }
 
@@ -45,7 +45,7 @@ public class Client extends AbstractEntity<ClientId> {
         return this;
     }
 
-    public Name getName() {
+    public Name name() {
         return name;
     }
 
@@ -54,7 +54,7 @@ public class Client extends AbstractEntity<ClientId> {
         return this;
     }
 
-    public String getPhone() {
+    public String phone() {
         return phone;
     }
 
@@ -63,7 +63,7 @@ public class Client extends AbstractEntity<ClientId> {
         return this;
     }
 
-    public String getAddress() {
+    public String address() {
         return address;
     }
 
@@ -72,11 +72,11 @@ public class Client extends AbstractEntity<ClientId> {
         return this;
     }
 
-    public Boolean getIsProfessional() {
+    public Boolean isProfessional() {
         return isProfessional;
     }
 
-    public Client setIsProfessional(Boolean professional) {
+    public Client setProfessional(Boolean professional) {
         isProfessional = professional;
         return this;
     }
@@ -85,7 +85,7 @@ public class Client extends AbstractEntity<ClientId> {
         return projects;
     }
 
-    public Client setProjects(List<?> projects) {
+    public Client setProjects(List<Project> projects) {
         this.projects = projects;
         return this;
     }

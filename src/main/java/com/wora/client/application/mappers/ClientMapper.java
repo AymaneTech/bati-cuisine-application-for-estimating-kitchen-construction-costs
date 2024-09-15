@@ -22,13 +22,13 @@ public class ClientMapper {
 
     public ClientResponse map(Client client) {
         return new ClientResponse(
-                client.getId(),
-                client.getName(),
-                client.getPhone(),
-                client.getAddress(),
-                client.getIsProfessional(),
-                client.getCreatedAt(),
-                client.getUpdatedAt()
+                client.id(),
+                client.name(),
+                client.phone(),
+                client.address(),
+                client.isProfessional(),
+                client.createdAt(),
+                client.updatedAt()
         );
     }
 }

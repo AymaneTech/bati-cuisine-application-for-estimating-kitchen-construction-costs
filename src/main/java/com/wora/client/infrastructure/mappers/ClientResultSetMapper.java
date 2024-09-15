@@ -34,12 +34,12 @@ public class ClientResultSetMapper implements BaseEntityResultSetMapper<Client> 
 
     public void map(final Client client, final PreparedStatement stmt) throws SQLException {
         int count = 1;
-        stmt.setString(count++, client.getName().firstName());
-        stmt.setString(count++, client.getName().lastName());
-        stmt.setString(count++, client.getPhone());
-        stmt.setString(count++, client.getAddress());
-        stmt.setBoolean(count++, client.getIsProfessional());
-        stmt.setObject(count++, client.getId().value());
+        stmt.setString(count++, client.name().firstName());
+        stmt.setString(count++, client.name().lastName());
+        stmt.setString(count++, client.phone());
+        stmt.setString(count++, client.address());
+        stmt.setBoolean(count++, client.isProfessional());
+        stmt.setObject(count++, client.id().value());
     }
 
     private LocalDateTime getDate(final String columnName, final ResultSet rs) throws SQLException {
