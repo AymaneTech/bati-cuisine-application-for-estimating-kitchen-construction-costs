@@ -107,7 +107,7 @@ public class ClientUi {
 
     public void showById() {
         final UUID id = scanUuid("Please to enter the client id : ",
-                unput -> service.existsById(new ClientId(unput))
+                input -> service.existsById(new ClientId(input))
         );
         System.out.println(getTable(
                 List.of(
