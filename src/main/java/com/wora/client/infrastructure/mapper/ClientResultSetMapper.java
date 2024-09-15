@@ -41,9 +41,4 @@ public class ClientResultSetMapper implements BaseEntityResultSetMapper<Client> 
         stmt.setBoolean(count++, client.isProfessional());
         stmt.setObject(count++, client.id().value());
     }
-
-    private LocalDateTime getDate(final String columnName, final ResultSet rs) throws SQLException {
-        Timestamp timestamp = rs.getTimestamp(columnName);
-        return timestamp != null ? timestamp.toLocalDateTime() : null;
-    }
 }

@@ -5,5 +5,5 @@ import com.wora.component.domain.entity.Component;
 
 import java.util.UUID;
 
-public interface ComponentRepository extends BaseRepository<Component, UUID> {
+public interface ComponentRepository<Entity extends Component> extends BaseRepository<Entity, UUID> {
 }

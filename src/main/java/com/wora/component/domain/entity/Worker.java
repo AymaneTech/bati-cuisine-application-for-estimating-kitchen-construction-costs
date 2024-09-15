@@ -2,6 +2,7 @@ package com.wora.component.domain.entity;
 
 import com.wora.component.domain.enums.ComponentType;
 import com.wora.component.domain.valueObject.ComponentId;
+import com.wora.project.entity.Project;
 
 import java.time.LocalDateTime;
 
@@ -17,8 +18,8 @@ public class Worker extends com.wora.component.domain.entity.Component {
         this.productivity = productivity;
     }
 
-    public Worker(ComponentId id, String name, Double tva, Double hourlyRate, Double workingHours, Double productivity, LocalDateTime createdAt, LocalDateTime updatedAt, LocalDateTime deletedAt) {
-        super(id, name, tva, ComponentType.WORKER, createdAt, updatedAt, deletedAt);
+    public Worker(ComponentId id, String name, Double tva, Project project, Double hourlyRate, Double workingHours, Double productivity, LocalDateTime createdAt, LocalDateTime updatedAt, LocalDateTime deletedAt) {
+        super(id, name, tva, ComponentType.WORKER, project, createdAt, updatedAt, deletedAt);
         this.hourlyRate = hourlyRate;
         this.workingHours = workingHours;
         this.productivity = productivity;
