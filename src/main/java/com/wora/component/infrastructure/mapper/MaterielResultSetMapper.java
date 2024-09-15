@@ -3,7 +3,6 @@ package com.wora.component.infrastructure.mapper;
 import com.wora.common.infrastructure.mapper.BaseEntityResultSetMapper;
 import com.wora.component.domain.entity.Materiel;
 import com.wora.component.domain.valueObject.ComponentId;
-import com.wora.project.infrastructure.mapper.ProjectResultSetMapper;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,12 +10,6 @@ import java.sql.SQLException;
 import java.util.UUID;
 
 public class MaterielResultSetMapper implements BaseEntityResultSetMapper<Materiel> {
-
-    private final ProjectResultSetMapper projectMapper;
-
-    public MaterielResultSetMapper(ProjectResultSetMapper projectMapper) {
-        this.projectMapper = projectMapper;
-    }
 
     @Override
     public Materiel map(final ResultSet rs) throws SQLException {

@@ -21,7 +21,7 @@ public class WorkerRepositoryImpl extends ComponentRepositoryImpl<Worker> implem
     public Worker create(Worker materiel) {
         final String query = """
                 INSERT INTO workers (name, tva, component_type, hourly_rate, working_hours, productivity, project_id, id)
-                VALUES (?, ?, ?::component_type, ?, ?, ?, ?, ?, ?)
+                VALUES (?, ?, ?::component_type, ?, ?, ?, ?, ?)
                 """;
         execute(query, stmt -> mapper.map(materiel, stmt));
         return findById(materiel.id().value())
