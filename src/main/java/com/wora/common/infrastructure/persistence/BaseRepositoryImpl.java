@@ -51,7 +51,7 @@ public abstract class BaseRepositoryImpl<Entity, ID> implements BaseRepository<E
 
     @Override
     public Boolean existsById(final ID id) {
-        final String query = "SELECT EXISTS (SELECT 1 FROM " + tableName + " WHERE id = CAST (? AS uuid))";
+        final String query = "SELECT EXISTS (SELECT 1 FROM " + tableName + " WHERE id = CAST (? AS uuid)) AND WHERE deleted_at is null";
         AtomicReference<Boolean> exists = new AtomicReference<>(false);
         executeQueryPreparedStatement(query, stmt -> {
             stmt.setObject(1, id.toString());

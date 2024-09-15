@@ -8,6 +8,7 @@ import java.util.UUID;
 import java.util.function.Predicate;
 import java.util.stream.IntStream;
 
+
 public class InputScanner {
     private final static Scanner SCANNER = new Scanner(System.in);
 
@@ -75,6 +76,17 @@ public class InputScanner {
                     return enumConstants[index];
                 },
                 validator
+        );
+    }
+
+    public static Boolean scanBoolean(String prompt) {
+        return scanWithValidation(prompt,
+                input -> switch (input.toLowerCase()) {
+                    case "true", "yes", "y", "1" -> true;
+                    case "false", "no", "n", "0" -> false;
+                    default -> throw new IllegalArgumentException("Invalid boolean input");
+                },
+                ValidationStrategies.VALID_BOOLEAN
         );
     }
 
