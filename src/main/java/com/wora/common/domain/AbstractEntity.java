@@ -9,31 +9,31 @@ public abstract class AbstractEntity<ID> {
     protected LocalDateTime updatedAt;
     protected LocalDateTime deletedAt;
 
-    public abstract ID getId();
+    public abstract ID id();
 
-    public LocalDateTime getCreatedAt() {
+    public LocalDateTime createdAt() {
         return createdAt;
     }
 
-    public AbstractEntity setCreatedAt(LocalDateTime createdAt) {
+    public AbstractEntity<ID> setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
         return this;
     }
 
-    public LocalDateTime getUpdatedAt() {
+    public LocalDateTime updatedAt() {
         return updatedAt;
     }
 
-    public AbstractEntity setUpdatedAt(LocalDateTime updatedAt) {
+    public AbstractEntity<ID> setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
         return this;
     }
 
-    public LocalDateTime getDeletedAt() {
+    public LocalDateTime deletedAt() {
         return deletedAt;
     }
 
-    public AbstractEntity setDeletedAt(LocalDateTime deletedAt) {
+    public AbstractEntity<ID> setDeletedAt(LocalDateTime deletedAt) {
         this.deletedAt = deletedAt;
         return this;
     }

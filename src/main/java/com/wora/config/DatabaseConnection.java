@@ -1,6 +1,6 @@
 package com.wora.config;
 
-import com.wora.common.utils.Env;
+import com.wora.common.util.Env;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

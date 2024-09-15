@@ -1,3 +1,4 @@
+
 com/wora/client/application/dtos/responses/ClientResponse.class
 com/wora/client/domain/exceptions/ClientNotFoundException.class
 com/wora/client/domain/valueObjects/ClientId.class
