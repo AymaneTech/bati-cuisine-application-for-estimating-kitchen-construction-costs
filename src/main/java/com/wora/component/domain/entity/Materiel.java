@@ -13,8 +13,8 @@ public class Materiel extends com.wora.component.domain.entity.Component {
     private Double transportCost;
     private Double qualityCoefficient;
 
-    public Materiel(ComponentId id, String name, Double tva, Double unitCost, Double quantity, Double transportCost, Double qualityCoefficient) {
-        super(id, name, tva, ComponentType.MATERIEL);
+    public Materiel(ComponentId id, String name, Double tva, Project project, Double unitCost, Double quantity, Double transportCost, Double qualityCoefficient) {
+        super(id, name, tva, ComponentType.MATERIEL, project);
         this.unitCost = unitCost;
         this.quantity = quantity;
         this.transportCost = transportCost;

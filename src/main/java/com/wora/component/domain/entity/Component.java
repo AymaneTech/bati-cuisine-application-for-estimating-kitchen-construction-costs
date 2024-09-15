@@ -14,19 +14,20 @@ public class Component extends AbstractEntity<ComponentId> {
     private ComponentType componentType;
     private Project project;
 
-    public Component() {}
+    public Component() {
+    }
 
-    public Component(ComponentId id, String name, Double tva, ComponentType componentType) {
+    public Component(ComponentId id, String name, Double tva, ComponentType componentType, Project project) {
         this.id = id;
         this.name = name;
         this.tva = tva;
         this.componentType = componentType;
+        this.project = project;
     }
 
 
     public Component(ComponentId id, String name, Double tva, ComponentType componentType, Project project, LocalDateTime createdAt, LocalDateTime updatedAt, LocalDateTime deletedAt) {
-        this(id, name, tva, componentType);
-        this.project = project;
+        this(id, name, tva, componentType, project);
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.deletedAt = deletedAt;

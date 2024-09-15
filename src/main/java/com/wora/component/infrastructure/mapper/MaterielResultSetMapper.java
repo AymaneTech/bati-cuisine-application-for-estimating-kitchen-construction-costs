@@ -24,7 +24,7 @@ public class MaterielResultSetMapper implements BaseEntityResultSetMapper<Materi
                 new ComponentId((UUID) rs.getObject("id")),
                 rs.getString("name"),
                 rs.getDouble("tva"),
-                projectMapper.map(rs),
+                null,
                 rs.getDouble("unit_cost"),
                 rs.getDouble("quantity"),
                 rs.getDouble("transport_cost"),
@@ -40,10 +40,12 @@ public class MaterielResultSetMapper implements BaseEntityResultSetMapper<Materi
         int count = 1;
         stmt.setString(count++, materiel.name());
         stmt.setDouble(count++, materiel.tva());
+        stmt.setObject(count++, materiel.componentType().toString());
         stmt.setDouble(count++, materiel.unitCost());
         stmt.setDouble(count++, materiel.quantity());
         stmt.setDouble(count++, materiel.transportCost());
         stmt.setDouble(count++, materiel.qualityCoefficient());
+        stmt.setObject(count++, materiel.project().id().value());
         stmt.setObject(count++, materiel.id().value());
     }
 }

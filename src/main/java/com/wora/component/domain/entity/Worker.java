@@ -11,8 +11,8 @@ public class Worker extends com.wora.component.domain.entity.Component {
     private Double workingHours;
     private Double productivity;
 
-    public Worker(ComponentId id, String name, Double tva, Double hourlyRate, Double workingHours, Double productivity) {
-        super(id, name, tva, ComponentType.WORKER);
+    public Worker(ComponentId id, String name, Double tva, Project project, Double hourlyRate, Double workingHours, Double productivity) {
+        super(id, name, tva, ComponentType.WORKER, project);
         this.hourlyRate = hourlyRate;
         this.workingHours = workingHours;
         this.productivity = productivity;

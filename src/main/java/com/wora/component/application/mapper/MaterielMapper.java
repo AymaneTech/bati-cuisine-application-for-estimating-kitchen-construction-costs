@@ -5,6 +5,7 @@ import com.wora.component.application.dto.request.MaterielRequest;
 import com.wora.component.application.dto.response.MaterielResponse;
 import com.wora.component.domain.entity.Materiel;
 import com.wora.component.domain.valueObject.ComponentId;
+import com.wora.project.entity.Project;
 
 public class MaterielMapper implements BaseEntityDtoMapper<Materiel, MaterielRequest, MaterielResponse, ComponentId> {
 
@@ -14,6 +15,7 @@ public class MaterielMapper implements BaseEntityDtoMapper<Materiel, MaterielReq
                 id,
                 dto.name(),
                 dto.tva(),
+                new Project().setId(dto.projectId()),
                 dto.unitCost(),
                 dto.quantity(),
                 dto.transportCost(),
