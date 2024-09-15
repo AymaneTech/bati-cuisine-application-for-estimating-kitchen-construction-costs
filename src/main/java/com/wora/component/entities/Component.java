@@ -3,6 +3,7 @@ package com.wora.component.entities;
 import com.wora.common.domain.AbstractEntity;
 import com.wora.component.enums.ComponentType;
 import com.wora.component.valueObjects.ComponentId;
+import com.wora.project.entities.Project;
 
 import java.time.LocalDateTime;
 
@@ -11,6 +12,9 @@ public class Component extends AbstractEntity<ComponentId> {
     private String name;
     private Double tva;
     private ComponentType componentType;
+    private Project project;
+
+    public Component() {}
 
     public Component(ComponentId id, String name, Double tva, ComponentType componentType) {
         this.id = id;
@@ -20,8 +24,9 @@ public class Component extends AbstractEntity<ComponentId> {
     }
 
 
-    public Component(ComponentId id, String name, Double tva, ComponentType componentType, LocalDateTime createdAt, LocalDateTime updatedAt, LocalDateTime deletedAt) {
+    public Component(ComponentId id, String name, Double tva, ComponentType componentType, Project project, LocalDateTime createdAt, LocalDateTime updatedAt, LocalDateTime deletedAt) {
         this(id, name, tva, componentType);
+        this.project = project;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.deletedAt = deletedAt;
@@ -61,6 +66,15 @@ public class Component extends AbstractEntity<ComponentId> {
 
     public Component setComponentType(ComponentType componentType) {
         this.componentType = componentType;
+        return this;
+    }
+
+    public Project project() {
+        return project;
+    }
+
+    public Component setProject(Project project) {
+        this.project = project;
         return this;
     }
 }
