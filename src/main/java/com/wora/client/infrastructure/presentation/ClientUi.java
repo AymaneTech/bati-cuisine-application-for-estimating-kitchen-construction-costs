@@ -2,20 +2,20 @@ package com.wora.client.infrastructure.presentation;
 
 import com.github.freva.asciitable.AsciiTable;
 import com.github.freva.asciitable.Column;
-import com.wora.client.application.dtos.requests.ClientRequest;
-import com.wora.client.application.dtos.responses.ClientResponse;
-import com.wora.client.application.services.ClientService;
-import com.wora.client.domain.valueObjects.ClientId;
-import com.wora.client.domain.valueObjects.Name;
-import com.wora.common.utils.ValidationStrategies;
+import com.wora.client.application.dto.request.ClientRequest;
+import com.wora.client.application.dto.response.ClientResponse;
+import com.wora.client.application.service.ClientService;
+import com.wora.client.domain.valueObject.ClientId;
+import com.wora.client.domain.valueObject.Name;
+import com.wora.common.util.ValidationStrategies;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
-import static com.wora.common.utils.InputScanner.*;
-import static com.wora.common.utils.Print.secondaryTitle;
-import static com.wora.common.utils.Print.title;
+import static com.wora.common.util.InputScanner.*;
+import static com.wora.common.util.Print.secondaryTitle;
+import static com.wora.common.util.Print.title;
 
 public class ClientUi {
     private final ClientService service;
@@ -107,7 +107,7 @@ public class ClientUi {
 
     public void showById() {
         final UUID id = scanUuid("Please to enter the client id : ",
-                unput -> service.existsById(new ClientId(unput))
+                input -> service.existsById(new ClientId(input))
         );
         System.out.println(getTable(
                 List.of(
