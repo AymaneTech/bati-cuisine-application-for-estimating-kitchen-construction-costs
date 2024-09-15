@@ -1,36 +1,34 @@
 package com.wora.client.application.mappers;
 
-import com.wora.client.application.dtos.requests.CreateClientDto;
-import com.wora.client.application.dtos.requests.UpdateClientDto;
+import com.wora.client.application.dtos.requests.ClientRequest;
 import com.wora.client.application.dtos.responses.ClientResponse;
 import com.wora.client.domain.entities.Client;
 import com.wora.client.domain.valueObjects.ClientId;
 
+import java.util.List;
+
 public class ClientMapper {
 
-    public Client map(CreateClientDto dto) {
-        return new Client(
-                new ClientId(),
-                dto.name(),
-                dto.email(),
-                dto.phone()
-        );
-    }
-
-    public Client map(UpdateClientDto dto, ClientId id) {
+    public Client map(ClientRequest dto, ClientId id) {
         return new Client(
                 id,
                 dto.name(),
-                dto.email(),
-                dto.phone()
+                dto.phone(),
+                dto.address(),
+                dto.isProfessional(),
+                List.of()
         );
     }
 
     public ClientResponse map(Client client) {
         return new ClientResponse(
+                client.getId(),
                 client.getName(),
-                client.getEmail(),
-                client.getPhone()
+                client.getPhone(),
+                client.getAddress(),
+                client.getIsProfessional(),
+                client.getCreatedAt(),
+                client.getUpdatedAt()
         );
     }
 }

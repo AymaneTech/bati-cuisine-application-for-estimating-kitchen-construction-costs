@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 public class ClientResultSetMapper implements BaseEntityResultSetMapper<Client> {
@@ -24,6 +25,7 @@ public class ClientResultSetMapper implements BaseEntityResultSetMapper<Client> 
                 rs.getString("phone"),
                 rs.getString("address"),
                 rs.getBoolean("is_professional"),
+                List.of(),
                 rs.getTimestamp("created_at").toLocalDateTime(),
                 getDate("updated_at", rs),
                 getDate("deleted_at", rs)
@@ -37,7 +39,6 @@ public class ClientResultSetMapper implements BaseEntityResultSetMapper<Client> 
         stmt.setString(count++, client.getPhone());
         stmt.setString(count++, client.getAddress());
         stmt.setBoolean(count++, client.getIsProfessional());
-        stmt.setString(count++, client.getPhone());
         stmt.setObject(count++, client.getId().value());
     }
 
