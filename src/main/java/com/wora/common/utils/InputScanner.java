@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
+import java.util.UUID;
 import java.util.function.Predicate;
 import java.util.stream.IntStream;
 
@@ -12,12 +13,8 @@ public class InputScanner {
 
     private static <T> T scanWithValidation(String prompt, InputParser<T> parser, Predicate<T> validator) {
         while (true) {
-            System.out.println(prompt);
+            System.out.print(prompt);
             final String input = SCANNER.nextLine().trim();
-
-            if (input.isEmpty()) {
-                return null;
-            }
 
             try {
                 T result = parser.parse(input);
@@ -53,6 +50,10 @@ public class InputScanner {
     public static LocalDateTime scanDateTime(String prompt, Predicate<LocalDateTime> validator) {
         final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         return scanWithValidation(prompt, input -> LocalDateTime.parse(input, formatter), validator);
+    }
+
+    public static UUID scanUuid(String prompt, Predicate<UUID> validator) {
+        return scanWithValidation(prompt, UUID::fromString, validator);
     }
 
     public static <E extends Enum<E>> E scanEnum(String prompt, Class<E> enumClass, Predicate<E> validator) {

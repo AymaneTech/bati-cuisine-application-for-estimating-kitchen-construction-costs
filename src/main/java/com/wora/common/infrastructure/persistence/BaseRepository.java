@@ -1,7 +1,5 @@
 package com.wora.common.infrastructure.persistence;
 
-import com.wora.client.domain.entities.Client;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -11,13 +9,15 @@ public interface BaseRepository<Entity, ID> {
 
     Optional<Entity> findById(ID id);
 
-    Client create(Entity entity);
+    Optional<Entity> findByColumn(String columnName, String value);
 
-    void update(ID id, Entity entity);
+    Entity create(Entity entity);
+
+    Entity update(ID id, Entity entity);
 
     void delete(ID id);
 
     Boolean existsById(ID id);
 
-    Optional<Entity> findByColumn(String columnName, String value);
+    Boolean existsByColumn(String columnName, String value);
 }

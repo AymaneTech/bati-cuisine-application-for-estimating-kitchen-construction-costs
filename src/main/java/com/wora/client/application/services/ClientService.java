@@ -13,9 +13,13 @@ public interface ClientService {
 
     ClientResponse create(ClientRequest dto);
 
-    void update(ClientId id, ClientRequest dto);
+    ClientResponse update(ClientId id, ClientRequest dto);
 
     void delete(ClientId id);
 
     Boolean existsById(ClientId id);
+
+    Boolean existsByAddress(String address);
+
+    Boolean existsByPhone(String phone);
 }

@@ -5,24 +5,30 @@ import com.wora.client.application.dtos.responses.ClientResponse;
 import com.wora.client.domain.entities.Client;
 import com.wora.client.domain.valueObjects.ClientId;
 
+import java.util.List;
+
 public class ClientMapper {
 
-    public Client map(ClientRequest dto) {
+    public Client map(ClientRequest dto, ClientId id) {
         return new Client(
-                new ClientId(),
+                id,
                 dto.name(),
                 dto.phone(),
                 dto.address(),
-                dto.isProfessional()
+                dto.isProfessional(),
+                List.of()
         );
     }
 
     public ClientResponse map(Client client) {
         return new ClientResponse(
+                client.getId(),
                 client.getName(),
                 client.getPhone(),
                 client.getAddress(),
-                client.getIsProfessional()
+                client.getIsProfessional(),
+                client.getCreatedAt(),
+                client.getUpdatedAt()
         );
     }
 }

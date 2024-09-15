@@ -16,7 +16,7 @@ public abstract class BaseRepositoryImpl<Entity, ID> implements BaseRepository<E
     protected final String tableName;
     protected final BaseEntityResultSetMapper<Entity> mapper;
 
-    public BaseRepositoryImpl(String tableName, BaseEntityResultSetMapper mapper) {
+    public BaseRepositoryImpl(String tableName, BaseEntityResultSetMapper<Entity> mapper) {
         this.tableName = tableName;
         this.mapper = mapper;
     }
@@ -63,20 +63,17 @@ public abstract class BaseRepositoryImpl<Entity, ID> implements BaseRepository<E
         return exists.get();
     }
 
-    @Override
-    public void delete(final ID id) {
-        final String query = String.format("""
-                UPDATE %s
-                SET deleted_at = CURRENT_TIMESTAMP
-                WHERE id = CAST(? AS uuid)""", tableName);
-
+    public Boolean existsByColumn(final String column, String value) {
+        final String query = "SELECT EXISTS (SELECT 1 FROM " + tableName + " WHERE " + column + " = ?)";
+        AtomicReference<Boolean> exists = new AtomicReference<>(false);
         executeQueryPreparedStatement(query, stmt -> {
-            stmt.setString(1, id.toString());
-            int affectedRows = stmt.executeUpdate();
-            if (affectedRows == 0) {
-                throw new RuntimeException("error while deleting this");
+            stmt.setObject(1, value);
+            final ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                exists.set(rs.getBoolean(1));
             }
         });
+        return exists.get();
     }
 
     @Override
@@ -96,5 +93,21 @@ public abstract class BaseRepositoryImpl<Entity, ID> implements BaseRepository<E
             }
         });
         return entity.get();
+    }
+
+    @Override
+    public void delete(final ID id) {
+        final String query = String.format("""
+                UPDATE %s
+                SET deleted_at = CURRENT_TIMESTAMP
+                WHERE id = CAST(? AS uuid)""", tableName);
+
+        executeQueryPreparedStatement(query, stmt -> {
+            stmt.setString(1, id.toString());
+            int affectedRows = stmt.executeUpdate();
+            if (affectedRows == 0) {
+                throw new RuntimeException("error while deleting this");
+            }
+        });
     }
 }
