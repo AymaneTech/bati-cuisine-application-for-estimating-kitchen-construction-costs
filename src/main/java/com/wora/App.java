@@ -43,10 +43,6 @@ public class App {
         final ComponentRepository<Worker> workerRepository = new WorkerRepositoryImpl(new WorkerResultSetMapper());
         final ComponentService<WorkerRequest, WorkerResponse> workerService = new WorkerServiceImpl(workerRepository, new WorkerMapper());
         final WorkerUi workerUi = new WorkerUi(workerService);
-
-
-//        materielUi.create(new ProjectId(UUID.fromString("8ff91dff-fe1c-4273-b555-2468dd1d6aeb")));
-        workerUi.create(new ProjectId(UUID.fromString("8ff91dff-fe1c-4273-b555-2468dd1d6aeb")));
-
+        
     }
 }
