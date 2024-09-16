@@ -35,7 +35,7 @@ public class ClientUi {
         Integer userChoice = scanInt("Please to enter you choice: ", ValidationStrategies.POSITIVE_INT);
 
         switch (userChoice) {
-            case 1 -> this.create();
+            case 1 -> this.createAndDisplay();
             case 2 -> this.update();
             case 3 -> this.delete();
             case 4 -> this.showAll();
@@ -44,7 +44,12 @@ public class ClientUi {
         }
     }
 
-    public void create() {
+    public void createAndDisplay() {
+        System.out.println(getTable(List.of(create())));
+        this.showMenu();
+    }
+
+    private ClientResponse create() {
         secondaryTitle("Please to enter all necessary information!");
         final String firstName = scanString("Please to enter the client first name: ", ValidationStrategies.NOT_BLANK);
         final String lastName = scanString("Please to enter the client last name: ", ValidationStrategies.NOT_BLANK);
@@ -58,9 +63,11 @@ public class ClientUi {
         ));
         final Boolean isProfessional = scanBoolean("is he professional (y/n): ");
 
-        final ClientResponse clientResponse = service.create(new ClientRequest(new Name(firstName, lastName), phone, address, isProfessional));
-        System.out.println(getTable(List.of(clientResponse)));
-        this.showMenu();
+        return service.create(new ClientRequest(new Name(firstName, lastName), phone, address, isProfessional));
+    }
+
+    private ClientId createForProject() {
+        return create().id();
     }
 
     public void update() {
@@ -115,6 +122,29 @@ public class ClientUi {
                 )
         ));
         this.showMenu();
+    }
+
+    public ClientId searchOrCreate() {
+        System.out.println("--- client searching !!");
+        System.out.println("do you wish to look for existing client or create new one:");
+        System.out.println("1. search for existing client.");
+        System.out.println("2. create new client.\n");
+
+        final Integer userChoice = scanInt("Please enter you choice", ValidationStrategies.POSITIVE_INT);
+
+        return switch (userChoice) {
+            case 1 -> findById();
+            case 2 -> createForProject();
+            default -> throw new IllegalStateException("Unexpected value: " + userChoice);
+        };
+    }
+
+    private ClientId findById() {
+        final UUID id = scanUuid("Please to enter the client id : ",
+                input -> service.existsById(new ClientId(input))
+        );
+        System.out.println("Client found successfully!");
+        return new ClientId(id);
     }
 
     private String getTable(List<ClientResponse> clients) {
