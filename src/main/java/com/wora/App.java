@@ -25,7 +25,14 @@ import com.wora.component.infrastructure.presentation.MaterielUi;
 import com.wora.component.infrastructure.presentation.WorkerUi;
 import com.wora.component.infrastructure.presistence.MaterielRepositoryImpl;
 import com.wora.component.infrastructure.presistence.WorkerRepositoryImpl;
+import com.wora.project.application.mapper.ProjectMapper;
+import com.wora.project.application.services.ProjectService;
+import com.wora.project.application.services.impl.ProjectServiceImpl;
+import com.wora.project.domain.repository.ProjectRepository;
 import com.wora.project.domain.valueObject.ProjectId;
+import com.wora.project.infrastructure.mapper.ProjectResultSetMapper;
+import com.wora.project.infrastructure.persistence.ProjectRepositoryImpl;
+import com.wora.project.infrastructure.presentation.ProjectUi;
 
 import java.util.UUID;
 
@@ -44,7 +51,11 @@ public class App {
         final ComponentService<WorkerRequest, WorkerResponse> workerService = new WorkerServiceImpl(workerRepository, new WorkerMapper());
         final WorkerUi workerUi = new WorkerUi(workerService);
 
-        materielUi.create(new ProjectId(UUID.fromString("8ff91dff-fe1c-4273-b555-2468dd1d6aeb")));
+        final ProjectRepository projectRepository = new ProjectRepositoryImpl(new ProjectResultSetMapper(new ClientResultSetMapper()));
+        final ProjectService projectService = new ProjectServiceImpl(projectRepository, new ProjectMapper());
+        final ProjectUi projectUi = new ProjectUi(projectService, clientUi, materielUi, workerUi);
+
+        projectUi.create();
         
     }
 }

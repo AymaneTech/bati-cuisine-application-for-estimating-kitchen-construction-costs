@@ -22,6 +22,7 @@ public class InputScanner {
                 if (validator.test(result)) return result;
                 else System.out.println("invalid input please try again !");
             } catch (Exception e) {
+                System.out.println(e.getMessage());
                 System.out.println("Invalid input format. Please try again.");
             }
         }

@@ -11,9 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicReference;
 
-import static com.wora.common.util.QueryExecutor.execute;
-import static com.wora.common.util.QueryExecutor.executeQueryPreparedStatement;
+import static com.wora.common.util.QueryExecutor.*;
 
 public class ProjectRepositoryImpl extends BaseRepositoryImpl<Project, UUID> implements ProjectRepository {
     public ProjectRepositoryImpl(BaseEntityResultSetMapper<Project> mapper) {
@@ -21,11 +21,48 @@ public class ProjectRepositoryImpl extends BaseRepositoryImpl<Project, UUID> imp
     }
 
     @Override
+    public List<Project> findAll() {
+        final List<Project> projects = new ArrayList<>();
+        final String query = """
+                SELECT p.*, c.* FROM projects p
+                JOIN clients c ON p.client_id = c.id
+                WHERE p.deleted_at IS NULL
+                """;
+        executeQueryStatement(query, rs -> {
+            while (rs.next()) {
+                projects.add(mapper.map(rs));
+            }
+        });
+        return projects;
+    }
+
+    @Override
+    public Optional<Project> findById(UUID id) {
+        final AtomicReference<Optional<Project>> project = new AtomicReference<>(Optional.empty());
+        final String query = """
+                SELECT p.*, c.* FROM projects p
+                JOIN clients c ON p.client_id = c.id
+                WHERE p.id = ?::uuid
+                AND p.deleted_at IS NULL
+                """;
+
+        executeQueryPreparedStatement(query, stmt -> {
+            stmt.setObject(1, id.toString());
+            final ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                project.set(Optional.of(mapper.map(rs)));
+            }
+        });
+        return project.get();
+
+    }
+
+    @Override
     public Project create(Project project) {
         final String query = """
                 INSERT INTO projects
-                (name, surface, total_cost, project_status, client_id, id)
-                VALUES (?, ?, ?? ?, ?, ?)
+                (name, surface, project_status, client_id, id)
+                VALUES (?, ?, ?::project_status, ?, ?)
                 """;
         execute(query, stmt -> mapper.map(project, stmt));
         return findById(project.id().value())

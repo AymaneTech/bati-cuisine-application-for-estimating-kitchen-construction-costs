@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS projects (
     client_id UUID NOT NULL,
     name VARCHAR (255) UNIQUE NOT NULL,
     surface REAL NOT NULL,
-    total_cost DECIMAL (18, 2) NOT NULL,
+    total_cost DECIMAL (18, 2),
     project_status project_status DEFAULT 'PENDING',
     created_at TIMESTAMP DEFAULT now (),
     updated_at TIMESTAMP DEFAULT now (),
