@@ -26,18 +26,22 @@ public class ProjectUi {
     }
 
     public void create() {
-        ClientId clientId = clientUi.searchOrCreate();
+        final ClientId clientId = clientUi.searchOrCreate();
         final String name = scanString("Please enter the project name: ", ValidationStrategies.NOT_BLANK);
         final Double surface = scanDouble("Please to enter the surface of " + name + " in m²: ", ValidationStrategies.POSITIVE_DOUBLE);
         final ProjectStatus projectStatus = scanEnum("Please enter the number of project status: ", ProjectStatus.class);
 
         final ProjectResponse projectResponse = service.create(new ProjectRequest(name, surface, projectStatus, clientId));
 
-        System.out.println("Do you want to add materiels: ");
-        materielUi.create(projectResponse.id());
+        final Boolean createMateriels = scanBoolean("Do you want to add new materiels : ");
+        if (createMateriels) {
+            materielUi.create(projectResponse.id());
+        }
 
-        System.out.println("Do you want to add worker: ");
-        workerUi.create(projectResponse.id());
+        final Boolean createWorkers = scanBoolean("Do you want to add new workers : ");
+        if (createWorkers) {
+            workerUi.create(projectResponse.id());
+        }
 
     }
 

@@ -17,9 +17,9 @@ public interface ClientService {
 
     void delete(ClientId id);
 
-    Boolean existsById(ClientId id);
+    boolean existsById(ClientId id);
 
-    Boolean existsByAddress(String address);
+    boolean existsByAddress(String address);
 
-    Boolean existsByPhone(String phone);
+    boolean existsByPhone(String phone);
 }

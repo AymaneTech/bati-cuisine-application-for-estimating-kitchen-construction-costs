@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
 import static com.wora.common.util.QueryExecutor.executeQueryPreparedStatement;
@@ -50,10 +51,10 @@ public abstract class BaseRepositoryImpl<Entity, ID> implements BaseRepository<E
     }
 
     @Override
-    public Boolean existsById(final ID id) {
+    public boolean existsById(final ID id) {
         final String query = "SELECT EXISTS (SELECT 1 FROM " + tableName + " WHERE id = ?::uuid AND deleted_at IS NULL)";
 
-        AtomicReference<Boolean> exists = new AtomicReference<>(false);
+        final AtomicBoolean exists = new AtomicBoolean(false);
         executeQueryPreparedStatement(query, stmt -> {
             stmt.setObject(1, id.toString());
             final ResultSet rs = stmt.executeQuery();
@@ -64,9 +65,9 @@ public abstract class BaseRepositoryImpl<Entity, ID> implements BaseRepository<E
         return exists.get();
     }
 
-    public Boolean existsByColumn(final String column, String value) {
+    public boolean existsByColumn(final String column, String value) {
         final String query = "SELECT EXISTS (SELECT 1 FROM " + tableName + " WHERE " + column + " = ?)";
-        AtomicReference<Boolean> exists = new AtomicReference<>(false);
+        final AtomicBoolean exists = new AtomicBoolean(false);
         executeQueryPreparedStatement(query, stmt -> {
             stmt.setObject(1, value);
             final ResultSet rs = stmt.executeQuery();

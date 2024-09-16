@@ -60,7 +60,7 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public Boolean existsById(ProjectId id) {
+    public boolean existsById(ProjectId id) {
         return repository.existsById(id.value());
     }
 }

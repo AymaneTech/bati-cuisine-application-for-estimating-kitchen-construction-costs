@@ -17,5 +17,5 @@ public interface ComponentService<RequestDto extends ComponentRequest, ResponseD
 
     void delete(ComponentId id);
 
-    Boolean existsById(ComponentId id);
+    boolean existsById(ComponentId id);
 }

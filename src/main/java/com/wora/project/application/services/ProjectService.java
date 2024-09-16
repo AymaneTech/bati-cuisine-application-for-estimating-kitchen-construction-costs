@@ -20,5 +20,5 @@ public interface ProjectService {
 
     void delete(ProjectId id);
 
-    Boolean existsById(ProjectId id);
+    boolean existsById(ProjectId id);
 }

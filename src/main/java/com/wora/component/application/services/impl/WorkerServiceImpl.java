@@ -53,7 +53,7 @@ public class WorkerServiceImpl implements ComponentService<WorkerRequest, Worker
     }
 
     @Override
-    public Boolean existsById(ComponentId id) {
+    public boolean existsById(ComponentId id) {
         return repository.existsById(id.value());
     }
 }

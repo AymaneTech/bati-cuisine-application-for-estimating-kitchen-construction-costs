@@ -53,17 +53,17 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public Boolean existsById(ClientId id) {
+    public boolean existsById(ClientId id) {
         return repository.existsById(id.value());
     }
 
     @Override
-    public Boolean existsByAddress(String address) {
+    public boolean existsByAddress(String address) {
         return repository.existsByAddress(address);
     }
 
     @Override
-    public Boolean existsByPhone(String phone) {
+    public boolean existsByPhone(String phone) {
         return repository.existsByPhone(phone);
     }
 }

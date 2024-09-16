@@ -17,7 +17,7 @@ public interface BaseRepository<Entity, ID> {
 
     void delete(ID id);
 
-    Boolean existsById(ID id);
+    boolean existsById(ID id);
 
-    Boolean existsByColumn(String columnName, String value);
+    boolean existsByColumn(String columnName, String value);
 }
