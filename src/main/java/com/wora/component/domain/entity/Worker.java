@@ -6,7 +6,7 @@ import com.wora.project.domain.entity.Project;
 
 import java.time.LocalDateTime;
 
-public class Worker extends com.wora.component.domain.entity.Component {
+public class Worker extends Component {
     private Double hourlyRate;
     private Double workingHours;
     private Double productivity;

@@ -15,7 +15,6 @@ public class ProjectMapper implements BaseEntityDtoMapper<Project, ProjectReques
                 id,
                 dto.name(),
                 dto.surface(),
-                dto.totalCost(),
                 dto.projectStatus(),
                 new Client().setId(dto.clientId())
         );

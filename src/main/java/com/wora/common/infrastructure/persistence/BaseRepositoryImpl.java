@@ -1,6 +1,5 @@
 package com.wora.common.infrastructure.persistence;
 
-import com.wora.client.domain.exception.ClientNotFoundException;
 import com.wora.common.infrastructure.mapper.BaseEntityResultSetMapper;
 
 import java.sql.ResultSet;
@@ -9,7 +8,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
-import static com.wora.common.util.QueryExecutor.*;
+import static com.wora.common.util.QueryExecutor.executeQueryPreparedStatement;
+import static com.wora.common.util.QueryExecutor.executeQueryStatement;
 
 public abstract class BaseRepositoryImpl<Entity, ID> implements BaseRepository<Entity, ID> {
 
@@ -99,8 +99,8 @@ public abstract class BaseRepositoryImpl<Entity, ID> implements BaseRepository<E
     public void delete(final ID id) {
         final String query = String.format("""
                 UPDATE %s
-                SET deleted_at = CURRENT_TIMESTAMP
-                WHERE id = CAST(? AS uuid)""", tableName);
+                SET deleted_at = now()
+                WHERE id = ?::uuid""", tableName);
 
         executeQueryPreparedStatement(query, stmt -> {
             stmt.setString(1, id.toString());

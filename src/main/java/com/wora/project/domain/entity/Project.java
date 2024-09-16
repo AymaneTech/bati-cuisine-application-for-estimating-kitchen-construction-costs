@@ -22,17 +22,16 @@ public class Project extends AbstractEntity<ProjectId> {
     public Project() {
     }
 
-    public Project(ProjectId id, String name, Double surface, Double totalCost, ProjectStatus projectStatus, Client client) {
+    public Project(ProjectId id, String name, Double surface, ProjectStatus projectStatus, Client client) {
         this.id = id;
         this.name = name;
         this.surface = surface;
-        this.totalCost = totalCost;
         this.projectStatus = projectStatus;
         this.client = client;
     }
 
-    public Project(ProjectId id, String name, Double surface, Double totalCost, ProjectStatus projectStatus, Client client, List<Component> components, LocalDateTime createdAt, LocalDateTime updatedAt, LocalDateTime deletedAt) {
-        this(id, name, surface, totalCost, projectStatus, client);
+    public Project(ProjectId id, String name, Double surface, ProjectStatus projectStatus, Client client, List<Component> components, LocalDateTime createdAt, LocalDateTime updatedAt, LocalDateTime deletedAt) {
+        this(id, name, surface, projectStatus, client);
         this.components = components;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;

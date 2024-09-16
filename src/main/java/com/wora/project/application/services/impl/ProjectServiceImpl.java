@@ -50,7 +50,7 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public ProjectResponse update(ProjectId id, ProjectRequest dto) {
-        final Project project = repository.update(id, mapper.map(dto, id));
+        final Project project = repository.update(id.value(), mapper.map(dto, id));
         return mapper.map(project);
     }
 
