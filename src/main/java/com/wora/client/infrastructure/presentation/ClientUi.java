@@ -129,5 +129,4 @@ public class ClientUi {
                 new Column().header("Last Updated At").with(client -> client.updatedAt() != null ? client.updatedAt().toString() : "Not Updated Yet")
         ));
     }
-
 }

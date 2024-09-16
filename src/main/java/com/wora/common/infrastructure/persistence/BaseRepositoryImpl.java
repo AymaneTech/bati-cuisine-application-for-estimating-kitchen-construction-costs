@@ -1,5 +1,6 @@
 package com.wora.common.infrastructure.persistence;
 
+import com.wora.client.domain.exception.ClientNotFoundException;
 import com.wora.common.infrastructure.mapper.BaseEntityResultSetMapper;
 
 import java.sql.ResultSet;
@@ -8,8 +9,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
-import static com.wora.common.util.QueryExecutor.executeQueryPreparedStatement;
-import static com.wora.common.util.QueryExecutor.executeQueryStatement;
+import static com.wora.common.util.QueryExecutor.*;
 
 public abstract class BaseRepositoryImpl<Entity, ID> implements BaseRepository<Entity, ID> {
 

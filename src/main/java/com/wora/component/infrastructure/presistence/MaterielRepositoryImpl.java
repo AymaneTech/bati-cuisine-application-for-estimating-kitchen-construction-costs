@@ -22,7 +22,6 @@ public class MaterielRepositoryImpl extends ComponentRepositoryImpl<Materiel> im
                     INSERT INTO materiels (name, tva, component_type, unit_cost, quantity, transport_cost, quality_coefficient, project_id, id)
                     VALUES (?, ?, ?::component_type, ?, ?, ?, ?, ?, ?)
                 """;
-
         execute(query, stmt -> mapper.map(materiel, stmt));
         return findById(materiel.id().value())
                 .orElseThrow(() -> new ComponentNotFoundException(materiel.id().value(), ComponentType.MATERIEL));

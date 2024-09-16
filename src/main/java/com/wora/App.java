@@ -25,7 +25,7 @@ import com.wora.component.infrastructure.presentation.MaterielUi;
 import com.wora.component.infrastructure.presentation.WorkerUi;
 import com.wora.component.infrastructure.presistence.MaterielRepositoryImpl;
 import com.wora.component.infrastructure.presistence.WorkerRepositoryImpl;
-import com.wora.project.valueObject.ProjectId;
+import com.wora.project.domain.valueObject.ProjectId;
 
 import java.util.UUID;
 
@@ -43,6 +43,8 @@ public class App {
         final ComponentRepository<Worker> workerRepository = new WorkerRepositoryImpl(new WorkerResultSetMapper());
         final ComponentService<WorkerRequest, WorkerResponse> workerService = new WorkerServiceImpl(workerRepository, new WorkerMapper());
         final WorkerUi workerUi = new WorkerUi(workerService);
+
+        materielUi.create(new ProjectId(UUID.fromString("8ff91dff-fe1c-4273-b555-2468dd1d6aeb")));
         
     }
 }

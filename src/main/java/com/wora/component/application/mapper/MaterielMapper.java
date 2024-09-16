@@ -5,7 +5,7 @@ import com.wora.component.application.dto.request.MaterielRequest;
 import com.wora.component.application.dto.response.MaterielResponse;
 import com.wora.component.domain.entity.Materiel;
 import com.wora.component.domain.valueObject.ComponentId;
-import com.wora.project.entity.Project;
+import com.wora.project.domain.entity.Project;
 
 public class MaterielMapper implements BaseEntityDtoMapper<Materiel, MaterielRequest, MaterielResponse, ComponentId> {
 
@@ -19,8 +19,7 @@ public class MaterielMapper implements BaseEntityDtoMapper<Materiel, MaterielReq
                 dto.unitCost(),
                 dto.quantity(),
                 dto.transportCost(),
-                dto.quantityCoefficient()
-        );
+                dto.quantityCoefficient());
     }
 
     @Override
@@ -35,7 +34,6 @@ public class MaterielMapper implements BaseEntityDtoMapper<Materiel, MaterielReq
                 materiel.transportCost(),
                 materiel.qualityCoefficient(),
                 materiel.createdAt(),
-                materiel.updatedAt()
-        );
+                materiel.updatedAt());
     }
 }

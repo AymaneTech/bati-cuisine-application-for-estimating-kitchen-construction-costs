@@ -2,9 +2,9 @@ package com.wora.project.infrastructure.mapper;
 
 import com.wora.client.infrastructure.mapper.ClientResultSetMapper;
 import com.wora.common.infrastructure.mapper.BaseEntityResultSetMapper;
-import com.wora.project.entity.Project;
-import com.wora.project.enums.ProjectStatus;
-import com.wora.project.valueObject.ProjectId;
+import com.wora.project.domain.entity.Project;
+import com.wora.project.domain.enums.ProjectStatus;
+import com.wora.project.domain.valueObject.ProjectId;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

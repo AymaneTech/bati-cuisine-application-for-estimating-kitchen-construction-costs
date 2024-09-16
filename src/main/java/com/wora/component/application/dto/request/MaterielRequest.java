@@ -1,7 +1,7 @@
 package com.wora.component.application.dto.request;
 
 import com.wora.component.domain.enums.ComponentType;
-import com.wora.project.valueObject.ProjectId;
+import com.wora.project.domain.valueObject.ProjectId;
 
 public class MaterielRequest extends ComponentRequest{
     private final Double unitCost;

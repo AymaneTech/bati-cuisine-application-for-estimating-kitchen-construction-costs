@@ -1,10 +1,10 @@
-package com.wora.project.entity;
+package com.wora.project.domain.entity;
 
 import com.wora.client.domain.entity.Client;
 import com.wora.common.domain.AbstractEntity;
 import com.wora.component.domain.entity.Component;
-import com.wora.project.enums.ProjectStatus;
-import com.wora.project.valueObject.ProjectId;
+import com.wora.project.domain.enums.ProjectStatus;
+import com.wora.project.domain.valueObject.ProjectId;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -39,6 +39,7 @@ public class Project extends AbstractEntity<ProjectId> {
         this.deletedAt = deletedAt;
     }
 
+    @Override
     public ProjectId id() {
         return id;
     }
@@ -61,7 +62,7 @@ public class Project extends AbstractEntity<ProjectId> {
         return surface;
     }
 
-    public Project setSufrace(Double surface) {
+    public Project setSurface(Double surface) {
         this.surface = surface;
         return this;
     }
@@ -84,8 +85,12 @@ public class Project extends AbstractEntity<ProjectId> {
         return this;
     }
 
-    public Project setSurface(Double surface) {
-        this.surface = surface;
+    public Client client() {
+        return client;
+    }
+
+    public Project setClient(Client client) {
+        this.client = client;
         return this;
     }
 
@@ -95,15 +100,6 @@ public class Project extends AbstractEntity<ProjectId> {
 
     public Project setComponents(List<Component> components) {
         this.components = components;
-        return this;
-    }
-
-    public Client client() {
-        return client;
-    }
-
-    public Project setClient(Client client) {
-        this.client = client;
         return this;
     }
 }
