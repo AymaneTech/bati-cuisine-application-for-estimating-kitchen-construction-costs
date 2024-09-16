@@ -1,7 +1,7 @@
 # Compiled class file
 *.class
 
-# Log file
+# Log files
 *.log
 
 # BlueJ files
@@ -19,12 +19,24 @@
 *.tar.gz
 *.rar
 
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+# Maven specific
+/target/
+
+# IDE-specific files
+/.idea/
+.project
+.classpath
+/.settings/
+/.vscode/
+
+# Environment files
+.env
+
+# Virtual machine crash logs
 hs_err_pid*
 replay_pid*
 
-./target/
-./.idea/
+# Other IntelliJ IDEA files
+*.iml
+.idea/
 
-
-./.env  
