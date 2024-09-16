@@ -42,12 +42,12 @@ public class ProjectRepositoryImpl extends BaseRepositoryImpl<Project, UUID> imp
         final String query = """
                 SELECT p.*, c.* FROM projects p
                 JOIN clients c ON p.client_id = c.id
-                WHERE p.id = ?::uuid
+                WHERE p.id = ?
                 AND p.deleted_at IS NULL
                 """;
 
         executeQueryPreparedStatement(query, stmt -> {
-            stmt.setObject(1, id.toString());
+            stmt.setObject(1, id);
             final ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
                 project.set(Optional.of(mapper.map(rs)));

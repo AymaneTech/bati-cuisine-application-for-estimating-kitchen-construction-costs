@@ -38,10 +38,10 @@ public abstract class BaseRepositoryImpl<Entity, ID> implements BaseRepository<E
     @Override
     public Optional<Entity> findById(final ID id) {
         final AtomicReference<Optional<Entity>> entity = new AtomicReference<>(Optional.empty());
-        final String query = "SELECT * FROM " + tableName + " WHERE id = ?::uuid AND deleted_at is null";
+        final String query = "SELECT * FROM " + tableName + " WHERE id = ? AND deleted_at is null";
 
         executeQueryPreparedStatement(query, stmt -> {
-            stmt.setObject(1, id.toString());
+            stmt.setObject(1, id);
             final ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
                 entity.set(Optional.of(mapper.map(rs)));
@@ -52,11 +52,11 @@ public abstract class BaseRepositoryImpl<Entity, ID> implements BaseRepository<E
 
     @Override
     public boolean existsById(final ID id) {
-        final String query = "SELECT EXISTS (SELECT 1 FROM " + tableName + " WHERE id = ?::uuid AND deleted_at IS NULL)";
+        final String query = "SELECT EXISTS (SELECT 1 FROM " + tableName + " WHERE id = ? AND deleted_at IS NULL)";
 
         final AtomicBoolean exists = new AtomicBoolean(false);
         executeQueryPreparedStatement(query, stmt -> {
-            stmt.setObject(1, id.toString());
+            stmt.setObject(1, id);
             final ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
                 exists.set(rs.getBoolean(1));
@@ -102,10 +102,10 @@ public abstract class BaseRepositoryImpl<Entity, ID> implements BaseRepository<E
         final String query = String.format("""
                 UPDATE %s
                 SET deleted_at = now()
-                WHERE id = ?::uuid""", tableName);
+                WHERE id = ?""", tableName);
 
         executeQueryPreparedStatement(query, stmt -> {
-            stmt.setString(1, id.toString());
+            stmt.setObject(1, id);
             int affectedRows = stmt.executeUpdate();
             if (affectedRows == 0) {
                 throw new RuntimeException("error while deleting this");
