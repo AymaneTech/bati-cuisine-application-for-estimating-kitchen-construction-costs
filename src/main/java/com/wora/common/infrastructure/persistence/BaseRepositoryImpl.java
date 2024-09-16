@@ -53,29 +53,12 @@ public abstract class BaseRepositoryImpl<Entity, ID> implements BaseRepository<E
     @Override
     public boolean existsById(final ID id) {
         final String query = "SELECT EXISTS (SELECT 1 FROM " + tableName + " WHERE id = ? AND deleted_at IS NULL)";
-
-        final AtomicBoolean exists = new AtomicBoolean(false);
-        executeQueryPreparedStatement(query, stmt -> {
-            stmt.setObject(1, id);
-            final ResultSet rs = stmt.executeQuery();
-            if (rs.next()) {
-                exists.set(rs.getBoolean(1));
-            }
-        });
-        return exists.get();
+        return executeQueryReturnBoolean(query, id);
     }
 
     public boolean existsByColumn(final String column, String value) {
         final String query = "SELECT EXISTS (SELECT 1 FROM " + tableName + " WHERE " + column + " = ?)";
-        final AtomicBoolean exists = new AtomicBoolean(false);
-        executeQueryPreparedStatement(query, stmt -> {
-            stmt.setObject(1, value);
-            final ResultSet rs = stmt.executeQuery();
-            if (rs.next()) {
-                exists.set(rs.getBoolean(1));
-            }
-        });
-        return exists.get();
+        return executeQueryReturnBoolean(query, value);
     }
 
     @Override
@@ -111,5 +94,17 @@ public abstract class BaseRepositoryImpl<Entity, ID> implements BaseRepository<E
                 throw new RuntimeException("error while deleting this");
             }
         });
+    }
+
+    private <Value> boolean executeQueryReturnBoolean(final String query, Value value) {
+        final AtomicBoolean exists = new AtomicBoolean(false);
+        executeQueryPreparedStatement(query, stmt -> {
+            stmt.setObject(1, value);
+            final ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                exists.set(rs.getBoolean(1));
+            }
+        });
+        return exists.get();
     }
 }
