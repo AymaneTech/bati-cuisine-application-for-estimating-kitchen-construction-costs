@@ -2,9 +2,9 @@ package com.wora.project.infrastructure.mapper;
 
 import com.wora.client.infrastructure.mapper.ClientResultSetMapper;
 import com.wora.common.infrastructure.mapper.BaseEntityResultSetMapper;
-import com.wora.project.entity.Project;
-import com.wora.project.enums.ProjectStatus;
-import com.wora.project.valueObject.ProjectId;
+import com.wora.project.domain.entity.Project;
+import com.wora.project.domain.enums.ProjectStatus;
+import com.wora.project.domain.valueObject.ProjectId;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -26,14 +26,14 @@ public class ProjectResultSetMapper implements BaseEntityResultSetMapper<Project
                 new ProjectId((UUID) rs.getObject("id")),
                 rs.getString("name"),
                 rs.getDouble("surface"),
-                rs.getDouble("total_cost"),
                 ProjectStatus.valueOf(rs.getString("project_status")),
                 clientResultSetMapper.map(rs),
                 List.of(),
-                rs.getTimestamp("created_at").toLocalDateTime(),
-                rs.getTimestamp("updated_at").toLocalDateTime(),
-                rs.getTimestamp("deleted_at").toLocalDateTime()
-        );
+                getDate("created_at", rs),
+                getDate("updated_at", rs),
+                getDate("deleted_at", rs)
+        )
+                .setTotalCost(rs.getDouble("total_cost"));
     }
 
     @Override
@@ -41,7 +41,6 @@ public class ProjectResultSetMapper implements BaseEntityResultSetMapper<Project
         int count = 1;
         stmt.setString(count++, project.name());
         stmt.setDouble(count++, project.surface());
-        stmt.setDouble(count++, project.totalCost());
         stmt.setString(count++, project.projectStatus().name());
         stmt.setObject(count++, project.client().id().value());
         stmt.setObject(count++, project.id().value());

@@ -20,6 +20,7 @@ public class ValidationStrategies {
     public static final Predicate<Boolean> VALID_BOOLEAN = Objects::nonNull;
     public static final Predicate<String> VALID_EMAIL = email -> EMAIL_PATTERN.matcher(email).matches();
     public static final Predicate<String> VALID_PHONE = phone -> PHONE_PATTERN.matcher(phone).matches();
+    public static final Predicate<Enum<?>> VALID_ENUM = Objects::nonNull;
 
     @SafeVarargs
     public static <T> Predicate<T> combine(Predicate<T>... strategies) {

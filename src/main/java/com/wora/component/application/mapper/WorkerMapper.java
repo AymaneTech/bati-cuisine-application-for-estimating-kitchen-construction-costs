@@ -5,7 +5,7 @@ import com.wora.component.application.dto.request.WorkerRequest;
 import com.wora.component.application.dto.response.WorkerResponse;
 import com.wora.component.domain.entity.Worker;
 import com.wora.component.domain.valueObject.ComponentId;
-import com.wora.project.entity.Project;
+import com.wora.project.domain.entity.Project;
 
 public class WorkerMapper implements BaseEntityDtoMapper<Worker, WorkerRequest, WorkerResponse, ComponentId> {
 

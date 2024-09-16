@@ -1,4 +1,4 @@
-package com.wora.project.enums;
+package com.wora.project.domain.enums;
 
 public enum ProjectStatus {
     PENDING,

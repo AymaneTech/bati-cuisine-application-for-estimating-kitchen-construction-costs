@@ -3,7 +3,7 @@ package com.wora.client.domain.entity;
 import com.wora.client.domain.valueObject.ClientId;
 import com.wora.client.domain.valueObject.Name;
 import com.wora.common.domain.AbstractEntity;
-import com.wora.project.entity.Project;
+import com.wora.project.domain.entity.Project;
 
 import java.time.LocalDateTime;
 import java.util.List;

@@ -3,7 +3,7 @@ package com.wora.component.domain.entity;
 import com.wora.common.domain.AbstractEntity;
 import com.wora.component.domain.enums.ComponentType;
 import com.wora.component.domain.valueObject.ComponentId;
-import com.wora.project.entity.Project;
+import com.wora.project.domain.entity.Project;
 
 import java.time.LocalDateTime;
 

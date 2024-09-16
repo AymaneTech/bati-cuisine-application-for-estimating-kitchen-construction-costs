@@ -22,6 +22,7 @@ public class InputScanner {
                 if (validator.test(result)) return result;
                 else System.out.println("invalid input please try again !");
             } catch (Exception e) {
+                System.out.println(e.getMessage());
                 System.out.println("Invalid input format. Please try again.");
             }
         }
@@ -57,7 +58,7 @@ public class InputScanner {
         return scanWithValidation(prompt, UUID::fromString, validator);
     }
 
-    public static <E extends Enum<E>> E scanEnum(String prompt, Class<E> enumClass, Predicate<E> validator) {
+    public static <E extends Enum<E>> E scanEnum(String prompt, Class<E> enumClass) {
         E[] enumConstants = enumClass.getEnumConstants();
         String enumOptions = IntStream.range(0, enumConstants.length)
                 .mapToObj(i -> String.format("%d. %s", i + 1, enumConstants[i].name()))
@@ -75,7 +76,7 @@ public class InputScanner {
                     }
                     return enumConstants[index];
                 },
-                validator
+                (Predicate<E>) ValidationStrategies.VALID_ENUM
         );
     }
 

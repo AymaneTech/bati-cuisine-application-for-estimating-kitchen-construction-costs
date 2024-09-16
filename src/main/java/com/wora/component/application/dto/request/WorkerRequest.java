@@ -1,8 +1,7 @@
 package com.wora.component.application.dto.request;
 
 import com.wora.component.domain.enums.ComponentType;
-import com.wora.project.entity.Project;
-import com.wora.project.valueObject.ProjectId;
+import com.wora.project.domain.valueObject.ProjectId;
 
 public class WorkerRequest extends ComponentRequest{
     private final Double hourlyRate;

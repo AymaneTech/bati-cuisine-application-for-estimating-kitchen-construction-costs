@@ -6,7 +6,7 @@ import com.wora.common.util.ValidationStrategies;
 import com.wora.component.application.dto.request.WorkerRequest;
 import com.wora.component.application.dto.response.WorkerResponse;
 import com.wora.component.application.services.ComponentService;
-import com.wora.project.valueObject.ProjectId;
+import com.wora.project.domain.valueObject.ProjectId;
 
 import java.util.Arrays;
 import java.util.List;

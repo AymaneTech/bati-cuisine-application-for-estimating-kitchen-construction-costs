@@ -2,11 +2,11 @@ package com.wora.component.domain.entity;
 
 import com.wora.component.domain.enums.ComponentType;
 import com.wora.component.domain.valueObject.ComponentId;
-import com.wora.project.entity.Project;
+import com.wora.project.domain.entity.Project;
 
 import java.time.LocalDateTime;
 
-public class Worker extends com.wora.component.domain.entity.Component {
+public class Worker extends Component {
     private Double hourlyRate;
     private Double workingHours;
     private Double productivity;
