@@ -11,22 +11,25 @@ public class Materiel extends Component {
     private Double quantity;
     private Double transportCost;
     private Double qualityCoefficient;
+    private Double tva;
 
     public Materiel(ComponentId id, String name, Double tva, Project project, Double unitCost, Double quantity, Double transportCost, Double qualityCoefficient) {
-        super(id, name, tva, ComponentType.MATERIEL, project);
+        super(id, name, ComponentType.MATERIEL, project);
         this.unitCost = unitCost;
         this.quantity = quantity;
         this.transportCost = transportCost;
         this.qualityCoefficient = qualityCoefficient;
+        this.tva = tva;
     }
 
 
     public Materiel(ComponentId id, String name, Double tva, Project project, Double unitCost, Double quantity, Double transportCost, Double qualityCoefficient, LocalDateTime createdAt, LocalDateTime updatedAt, LocalDateTime deletedAt) {
-        super(id, name, tva, ComponentType.MATERIEL, project, createdAt, updatedAt, deletedAt);
+        super(id, name, ComponentType.MATERIEL, project, createdAt, updatedAt, deletedAt);
         this.unitCost = unitCost;
         this.quantity = quantity;
         this.transportCost = transportCost;
         this.qualityCoefficient = qualityCoefficient;
+        this.tva = tva;
     }
 
     public Double unitCost() {
@@ -62,6 +65,15 @@ public class Materiel extends Component {
 
     public Materiel setQualityCoefficient(Double qualityCoefficient) {
         this.qualityCoefficient = qualityCoefficient;
+        return this;
+    }
+
+    public Double tva() {
+        return tva;
+    }
+
+    public Materiel setTva(Double tva) {
+        this.tva = tva;
         return this;
     }
 }

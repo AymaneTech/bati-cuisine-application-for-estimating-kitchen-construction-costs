@@ -20,8 +20,8 @@ public class WorkerRepositoryImpl extends ComponentRepositoryImpl<Worker> implem
     @Override
     public Worker create(Worker materiel) {
         final String query = """
-                INSERT INTO workers (name, tva, component_type, hourly_rate, working_hours, productivity, project_id, id)
-                VALUES (?, ?, ?::component_type, ?, ?, ?, ?, ?)
+                INSERT INTO workers (name, component_type, hourly_rate, working_hours, productivity, project_id, id)
+                VALUES (?, ?::component_type, ?, ?, ?, ?, ?)
                 """;
         execute(query, stmt -> mapper.map(materiel, stmt));
         return findById(materiel.id().value())
@@ -32,7 +32,7 @@ public class WorkerRepositoryImpl extends ComponentRepositoryImpl<Worker> implem
     public Worker update(UUID uuid, Worker materiel) {
         final String query = """
                 UPDATE workers
-                SET name = ?, tva = ?, component_type = ?::component_type, hourly_rate = ?,
+                SET name = ?, component_type = ?::component_type, hourly_rate = ?,
                 working_hours = ?, productivity = ?, project_id = ?
                 WHERE id = ?
                 """;

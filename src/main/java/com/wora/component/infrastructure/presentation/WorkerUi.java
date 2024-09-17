@@ -24,13 +24,12 @@ public class WorkerUi {
     public void create(ProjectId id) {
         secondaryTitle("Please enter all necessary information!");
         final String name = scanString("Please enter the worker name: ", ValidationStrategies.NOT_BLANK);
-        final Double tva = scanDouble("Please enter TVA percentage:", ValidationStrategies.POSITIVE_DOUBLE);
         final Double hourlyRate = scanDouble("Please enter hourly rate:", ValidationStrategies.POSITIVE_DOUBLE);
         final Double workingHours = scanDouble("Please enter working hours: ", ValidationStrategies.POSITIVE_DOUBLE);
         final Double productivity = scanDouble("Please enter productivity: ", ValidationStrategies.POSITIVE_DOUBLE);
 
         final WorkerResponse workerResponse = service.create(
-                new WorkerRequest(name, tva, id, hourlyRate, workingHours, productivity)
+                new WorkerRequest(name, id, hourlyRate, workingHours, productivity)
         );
         System.out.println(getTable(List.of(workerResponse)));
         System.out.println("The worker was created successfully!");
@@ -44,7 +43,6 @@ public class WorkerUi {
         return AsciiTable.getTable(workers, Arrays.asList(
                 new Column().with(worker -> worker.id().value().toString()),
                 new Column().header("Name").with(WorkerResponse::name),
-                new Column().header("TVA").with(WorkerResponse::tva),
                 new Column().header("Hourly Rate").with(w -> w.hourlyRate().toString()),
                 new Column().header("Working Hours").with(w -> w.workingHours().toString()),
                 new Column().header("Productivity").with(w -> w.productivity().toString()),

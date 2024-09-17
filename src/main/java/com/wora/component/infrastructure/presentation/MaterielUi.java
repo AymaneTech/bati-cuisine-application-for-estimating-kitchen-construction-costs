@@ -45,7 +45,7 @@ public class MaterielUi {
         return AsciiTable.getTable(materiels, Arrays.asList(
                 new Column().with(materiel -> materiel.id().value().toString()),
                 new Column().header("Name").with(MaterielResponse::name),
-                new Column().header("TVA").with(MaterielResponse::tva),
+                new Column().header("TVA").with(m -> m.tva().toString()),
                 new Column().header("Unit Cost").with(m -> m.unitCost().toString()),
                 new Column().header("Quantity").with(m -> m.quantity().toString()),
                 new Column().header("Transport Cost").with(m -> m.transportCost().toString()),

@@ -16,7 +16,6 @@ public class WorkerResultSetMapper implements BaseEntityResultSetMapper<Worker> 
         return new Worker(
                 new ComponentId((UUID) rs.getObject("id")),
                 rs.getString("name"),
-                rs.getDouble("tva"),
                 null,
                 rs.getDouble("hourly_rate"),
                 rs.getDouble("working_hours"),
@@ -31,7 +30,6 @@ public class WorkerResultSetMapper implements BaseEntityResultSetMapper<Worker> 
     public void map(final Worker worker, final PreparedStatement stmt) throws SQLException {
         int count = 1;
         stmt.setString(count++, worker.name());
-        stmt.setDouble(count++, worker.tva());
         stmt.setObject(count++, worker.componentType().toString());
         stmt.setDouble(count++, worker.hourlyRate());
         stmt.setDouble(count++, worker.workingHours());

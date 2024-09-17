@@ -27,7 +27,7 @@ public class MaterielMapper implements BaseEntityDtoMapper<Materiel, MaterielReq
         return new MaterielResponse(
                 materiel.id(),
                 materiel.name(),
-                String.valueOf(materiel.tva()),
+                materiel.tva(),
                 materiel.project() != null ? materiel.project().id().toString() : null,
                 materiel.unitCost(),
                 materiel.quantity(),
