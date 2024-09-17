@@ -6,6 +6,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 import java.util.UUID;
 import java.util.function.Predicate;
+import java.util.function.Supplier;
 import java.util.stream.IntStream;
 
 
@@ -26,6 +27,16 @@ public class InputScanner {
                 System.out.println("Invalid input format. Please try again.");
             }
         }
+    }
+
+    public static <T> T executeIfUserConfirmsWithResult(String prompt, Supplier<T> action, T defaultValue) {
+        final Boolean userConfirmed = scanBoolean(prompt + "(y/n): ");
+        return userConfirmed ? action.get() : defaultValue;
+    }
+
+    public static void executeIfUserConfirms(String prompt, Runnable action) {
+        final Boolean userConfirmed = scanBoolean(prompt + "(y/n): ");
+        if (userConfirmed) action.run();
     }
 
     public static Integer scanInt(String prompt, Predicate<Integer> validator) {
