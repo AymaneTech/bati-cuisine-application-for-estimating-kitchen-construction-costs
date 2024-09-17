@@ -2,15 +2,15 @@ package com.wora.project.application.mapper;
 
 import com.wora.client.domain.entity.Client;
 import com.wora.common.application.mapper.BaseEntityDtoMapper;
-import com.wora.project.application.dto.request.ProjectRequest;
+import com.wora.project.application.dto.request.CreateProjectRequest;
 import com.wora.project.application.dto.response.ProjectResponse;
 import com.wora.project.domain.entity.Project;
 import com.wora.project.domain.valueObject.ProjectId;
 
-public class ProjectMapper implements BaseEntityDtoMapper<Project, ProjectRequest, ProjectResponse, ProjectId> {
+public class ProjectMapper implements BaseEntityDtoMapper<Project, CreateProjectRequest, ProjectResponse, ProjectId> {
 
     @Override
-    public Project map(ProjectRequest dto, ProjectId id) {
+    public Project map(CreateProjectRequest dto, ProjectId id) {
         return new Project(
                 id,
                 dto.name(),

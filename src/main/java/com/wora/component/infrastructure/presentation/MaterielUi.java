@@ -36,10 +36,9 @@ public class MaterielUi {
         System.out.println(getTable(List.of(materielResponse)));
         System.out.println("the materiel created successfully!");
 
-        Boolean addNewOneOrNot = scanBoolean("Add new One or not (y/n): ");
-        if (addNewOneOrNot) {
-            this.create(id);
-        }
+        executeIfUserConfirms("Add new One or not ",
+                () -> this.create(id)
+        );
     }
 
     private String getTable(List<MaterielResponse> materiels) {

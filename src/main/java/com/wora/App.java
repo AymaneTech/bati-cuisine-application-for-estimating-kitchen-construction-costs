@@ -26,15 +26,12 @@ import com.wora.component.infrastructure.presentation.WorkerUi;
 import com.wora.component.infrastructure.presistence.MaterielRepositoryImpl;
 import com.wora.component.infrastructure.presistence.WorkerRepositoryImpl;
 import com.wora.project.application.mapper.ProjectMapper;
-import com.wora.project.application.services.ProjectService;
-import com.wora.project.application.services.impl.ProjectServiceImpl;
+import com.wora.project.application.service.ProjectService;
+import com.wora.project.application.service.impl.ProjectServiceImpl;
 import com.wora.project.domain.repository.ProjectRepository;
-import com.wora.project.domain.valueObject.ProjectId;
 import com.wora.project.infrastructure.mapper.ProjectResultSetMapper;
 import com.wora.project.infrastructure.persistence.ProjectRepositoryImpl;
 import com.wora.project.infrastructure.presentation.ProjectUi;
-
-import java.util.UUID;
 
 public class App {
     public static void main(String[] args) {

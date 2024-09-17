@@ -1,10 +1,10 @@
-package com.wora.project.application.services.impl;
+package com.wora.project.application.service.impl;
 
 import com.wora.client.domain.valueObject.ClientId;
-import com.wora.project.application.dto.request.ProjectRequest;
+import com.wora.project.application.dto.request.CreateProjectRequest;
 import com.wora.project.application.dto.response.ProjectResponse;
 import com.wora.project.application.mapper.ProjectMapper;
-import com.wora.project.application.services.ProjectService;
+import com.wora.project.application.service.ProjectService;
 import com.wora.project.domain.entity.Project;
 import com.wora.project.domain.exception.ProjectNotFoundException;
 import com.wora.project.domain.repository.ProjectRepository;
@@ -43,13 +43,13 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public ProjectResponse create(ProjectRequest dto) {
+    public ProjectResponse create(CreateProjectRequest dto) {
         final Project project = repository.create(mapper.map(dto, new ProjectId()));
         return mapper.map(project);
     }
 
     @Override
-    public ProjectResponse update(ProjectId id, ProjectRequest dto) {
+    public ProjectResponse update(ProjectId id, CreateProjectRequest dto) {
         final Project project = repository.update(id.value(), mapper.map(dto, id));
         return mapper.map(project);
     }

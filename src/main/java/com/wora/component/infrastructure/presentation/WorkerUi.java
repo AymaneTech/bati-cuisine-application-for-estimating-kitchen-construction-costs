@@ -35,10 +35,9 @@ public class WorkerUi {
         System.out.println(getTable(List.of(workerResponse)));
         System.out.println("The worker was created successfully!");
 
-        Boolean addNewOneOrNot = scanBoolean("Add new one or not (y/n): ");
-        if (addNewOneOrNot) {
-            this.create(id);
-        }
+        executeIfUserConfirms("Add new one or not ",
+                () -> this.create(id)
+        );
     }
 
     private String getTable(List<WorkerResponse> workers) {

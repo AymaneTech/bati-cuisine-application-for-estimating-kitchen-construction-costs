@@ -1,7 +1,6 @@
 -- Enum types for project_status and component_type
 CREATE TYPE project_status AS ENUM (
     'PENDING',
-    'IN_PROGRESS',
     'COMPLETED',
     'CANCELLED'
 );
@@ -26,6 +25,8 @@ CREATE TABLE IF NOT EXISTS projects (
     id UUID PRIMARY KEY,
     client_id UUID NOT NULL,
     name VARCHAR (255) UNIQUE NOT NULL,
+    profit_margin REAL,
+    tva REAL,
     surface REAL NOT NULL,
     total_cost DECIMAL (18, 2),
     project_status project_status DEFAULT 'PENDING',

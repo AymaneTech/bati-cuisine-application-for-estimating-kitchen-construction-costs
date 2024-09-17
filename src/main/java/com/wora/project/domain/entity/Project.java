@@ -13,6 +13,8 @@ import java.util.List;
 public class Project extends AbstractEntity<ProjectId> {
     private ProjectId id;
     private String name;
+    private Double profitMargin;
+    private Double tva;
     private Double surface;
     private Double totalCost;
     private ProjectStatus projectStatus;
@@ -38,6 +40,7 @@ public class Project extends AbstractEntity<ProjectId> {
         this.deletedAt = deletedAt;
     }
 
+
     @Override
     public ProjectId id() {
         return id;
@@ -54,6 +57,24 @@ public class Project extends AbstractEntity<ProjectId> {
 
     public Project setName(String name) {
         this.name = name;
+        return this;
+    }
+
+    public Double profitMargin() {
+        return profitMargin;
+    }
+
+    public Project setProfitMargin(Double profitMargin) {
+        this.profitMargin = profitMargin;
+        return this;
+    }
+
+    public Double tva() {
+        return tva;
+    }
+
+    public Project setTva(Double tva) {
+        this.tva = tva;
         return this;
     }
 

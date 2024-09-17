@@ -5,9 +5,10 @@ import com.wora.client.infrastructure.presentation.ClientUi;
 import com.wora.common.util.ValidationStrategies;
 import com.wora.component.infrastructure.presentation.MaterielUi;
 import com.wora.component.infrastructure.presentation.WorkerUi;
-import com.wora.project.application.dto.request.ProjectRequest;
+import com.wora.project.application.dto.request.CreateProjectRequest;
+import com.wora.project.application.dto.request.SaveProjectRequest;
 import com.wora.project.application.dto.response.ProjectResponse;
-import com.wora.project.application.services.ProjectService;
+import com.wora.project.application.service.ProjectService;
 import com.wora.project.domain.enums.ProjectStatus;
 
 import static com.wora.common.util.InputScanner.*;
@@ -31,18 +32,31 @@ public class ProjectUi {
         final Double surface = scanDouble("Please to enter the surface of " + name + " in m²: ", ValidationStrategies.POSITIVE_DOUBLE);
         final ProjectStatus projectStatus = scanEnum("Please enter the number of project status: ", ProjectStatus.class);
 
-        final ProjectResponse projectResponse = service.create(new ProjectRequest(name, surface, projectStatus, clientId));
+        final ProjectResponse createdProject = service.create(new CreateProjectRequest(name, surface, projectStatus, clientId));
 
-        final Boolean createMateriels = scanBoolean("Do you want to add new materiels : ");
-        if (createMateriels) {
-            materielUi.create(projectResponse.id());
-        }
+        executeIfUserConfirms("Do you want to add new materiels",
+                () -> materielUi.create(createdProject.id())
+        );
 
-        final Boolean createWorkers = scanBoolean("Do you want to add new workers : ");
-        if (createWorkers) {
-            workerUi.create(projectResponse.id());
-        }
+        executeIfUserConfirms("Do you want to add new workers",
+                () -> workerUi.create(createdProject.id())
+        );
 
+        final Double tva = executeIfUserConfirmsWithResult("Do you want to apply TVA ",
+                () -> scanDouble("Please to enter the TVA (%): ", ValidationStrategies.POSITIVE_DOUBLE),
+                1.0
+        );
+
+        final Double profitMargin = executeIfUserConfirmsWithResult("Do you want to apply profit Margin ",
+                () -> scanDouble("Please to enter profit margin (%): ", ValidationStrategies.POSITIVE_DOUBLE),
+                1.0
+        );
+
+        final SaveProjectRequest saveProjectRequest = new SaveProjectRequest(
+                createdProject.id(), createdProject.name(),
+                createdProject.surface(), createdProject.totalCost(),
+                createdProject.projectStatus(), createdProject.clientId(),
+                tva, profitMargin
+        );
     }
-
 }
