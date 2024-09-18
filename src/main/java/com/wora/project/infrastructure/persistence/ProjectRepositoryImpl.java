@@ -64,7 +64,7 @@ public class ProjectRepositoryImpl extends BaseRepositoryImpl<Project, UUID> imp
                 (name, surface, project_status, client_id, id)
                 VALUES (?, ?, ?::project_status, ?, ?)
                 """;
-        execute(query, stmt -> mapper.map(project, stmt));
+        executeWithSingleUpdate(query, stmt -> mapper.map(project, stmt));
         return findById(project.id().value())
                 .orElseThrow(() -> new ProjectNotFoundException(project.id().value()));
     }
@@ -76,7 +76,7 @@ public class ProjectRepositoryImpl extends BaseRepositoryImpl<Project, UUID> imp
                 SET name = ?, surface = ?, total_cost = ?, client_id = ?
                 WHERE id = ?
                 """;
-        execute(query, stmt -> mapper.map(project, stmt));
+        executeWithSingleUpdate(query, stmt -> mapper.map(project, stmt));
         return findById(project.id().value())
                 .orElseThrow(() -> new ProjectNotFoundException(project.id().value()));
     }

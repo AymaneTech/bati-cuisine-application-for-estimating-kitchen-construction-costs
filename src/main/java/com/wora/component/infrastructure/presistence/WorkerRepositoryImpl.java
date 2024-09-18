@@ -8,8 +8,7 @@ import com.wora.component.infrastructure.mapper.WorkerResultSetMapper;
 
 import java.util.UUID;
 
-import static com.wora.common.util.QueryExecutor.execute;
-
+import static com.wora.common.util.QueryExecutor.executeWithSingleUpdate;
 
 public class WorkerRepositoryImpl extends ComponentRepositoryImpl<Worker> implements ComponentRepository<Worker> {
     public WorkerRepositoryImpl(WorkerResultSetMapper mapper) {
@@ -23,7 +22,7 @@ public class WorkerRepositoryImpl extends ComponentRepositoryImpl<Worker> implem
                 INSERT INTO workers (name, component_type, hourly_rate, working_hours, productivity, project_id, id)
                 VALUES (?, ?::component_type, ?, ?, ?, ?, ?)
                 """;
-        execute(query, stmt -> mapper.map(materiel, stmt));
+        executeWithSingleUpdate(query, stmt -> mapper.map(materiel, stmt));
         return findById(materiel.id().value())
                 .orElseThrow(() -> new ComponentNotFoundException(materiel.id().value(), ComponentType.WORKER));
     }
@@ -36,7 +35,7 @@ public class WorkerRepositoryImpl extends ComponentRepositoryImpl<Worker> implem
                 working_hours = ?, productivity = ?, project_id = ?
                 WHERE id = ?
                 """;
-        execute(query, stmt -> mapper.map(materiel, stmt));
+        executeWithSingleUpdate(query, stmt -> mapper.map(materiel, stmt));
         return findById(materiel.id().value())
                 .orElseThrow(() -> new ComponentNotFoundException(materiel.id().value(), ComponentType.WORKER));
     }

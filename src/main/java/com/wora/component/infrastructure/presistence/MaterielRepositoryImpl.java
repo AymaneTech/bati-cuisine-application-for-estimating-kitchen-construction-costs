@@ -8,8 +8,7 @@ import com.wora.component.infrastructure.mapper.MaterielResultSetMapper;
 
 import java.util.UUID;
 
-import static com.wora.common.util.QueryExecutor.execute;
-
+import static com.wora.common.util.QueryExecutor.executeWithSingleUpdate;
 
 public class MaterielRepositoryImpl extends ComponentRepositoryImpl<Materiel> implements ComponentRepository<Materiel> {
     public MaterielRepositoryImpl(MaterielResultSetMapper mapper) {
@@ -22,7 +21,7 @@ public class MaterielRepositoryImpl extends ComponentRepositoryImpl<Materiel> im
                     INSERT INTO materiels (name, tva, component_type, unit_cost, quantity, transport_cost, quality_coefficient, project_id, id)
                     VALUES (?, ?, ?::component_type, ?, ?, ?, ?, ?, ?)
                 """;
-        execute(query, stmt -> mapper.map(materiel, stmt));
+        executeWithSingleUpdate(query, stmt -> mapper.map(materiel, stmt));
         return findById(materiel.id().value())
                 .orElseThrow(() -> new ComponentNotFoundException(materiel.id().value(), ComponentType.MATERIEL));
     }
@@ -35,7 +34,7 @@ public class MaterielRepositoryImpl extends ComponentRepositoryImpl<Materiel> im
                 transport_cost = ?, quality_coefficient = ?, project_id = ?
                 WHERE id = ?
                 """;
-        execute(query, stmt -> mapper.map(materiel, stmt));
+        executeWithSingleUpdate(query, stmt -> mapper.map(materiel, stmt));
         return findById(id)
                 .orElseThrow(() -> new ComponentNotFoundException(id, ComponentType.MATERIEL));
     }
