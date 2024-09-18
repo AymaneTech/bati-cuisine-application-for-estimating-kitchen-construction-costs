@@ -50,6 +50,7 @@ public class MaterielUi {
                 new Column().header("Quantity").with(m -> m.quantity().toString()),
                 new Column().header("Transport Cost").with(m -> m.transportCost().toString()),
                 new Column().header("Quality Coefficient").with(m -> m.qualityCoefficient().toString()),
+                new Column().header("Cost").with(m -> m.total().toString()),
                 new Column().header("Created At").with(materiel -> materiel.createdAt().toString()),
                 new Column().header("Last Updated At").with(materiel -> materiel.updatedAt() != null ? materiel.updatedAt().toString() : "Not Updated Yet")
         ));

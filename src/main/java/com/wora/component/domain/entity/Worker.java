@@ -54,6 +54,6 @@ public class Worker extends Component {
 
     @Override
     public Double total() {
-        return 0.0;
+        return hourlyRate * workingHours * productivity;
     }
 }
