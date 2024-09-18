@@ -71,6 +71,15 @@ public abstract class Component extends AbstractEntity<ComponentId> {
         return this;
     }
 
+    public Double tva() {
+        return tva;
+    }
+
+    public Component setTva(Double tva) {
+        this.tva = tva;
+        return this;
+    }
+
     public Double totalWithTva() {
         return total() * (1 + tva / 100.0);
     }

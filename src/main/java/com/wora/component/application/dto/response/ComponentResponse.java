@@ -19,6 +19,7 @@ public class ComponentResponse {
     public ComponentResponse(ComponentId id, String name, Double tva, ComponentType type, String projectId, Double total, Double totalWithTva, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.name = name;
+        this.tva = tva;
         this.type = type;
         this.projectId = projectId;
         this.total = total;
