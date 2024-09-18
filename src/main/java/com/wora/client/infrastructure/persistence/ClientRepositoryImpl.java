@@ -8,7 +8,7 @@ import com.wora.common.infrastructure.persistence.BaseRepositoryImpl;
 
 import java.util.UUID;
 
-import static com.wora.common.util.QueryExecutor.execute;
+import static com.wora.common.util.QueryExecutor.executeWithSingleUpdate;
 
 public class ClientRepositoryImpl extends BaseRepositoryImpl<Client, UUID> implements ClientRepository {
     public ClientRepositoryImpl(ClientResultSetMapper mapper) {
@@ -18,7 +18,7 @@ public class ClientRepositoryImpl extends BaseRepositoryImpl<Client, UUID> imple
     @Override
     public Client create(Client client) {
         final String query = "INSERT INTO clients (first_name, last_name, phone, address, is_professional, id) VALUES(?,?,?,?,?,?)";
-        execute(query, stmt -> mapper.map(client, stmt));
+        executeWithSingleUpdate(query, stmt -> mapper.map(client, stmt));
 
         return findById(client.id().value())
                 .orElseThrow(() -> new ClientNotFoundException(client.id().value()));
@@ -31,7 +31,7 @@ public class ClientRepositoryImpl extends BaseRepositoryImpl<Client, UUID> imple
                 SET first_name =?, last_name =?, phone =?, address = ?, is_professional = ?, updated_at = now()
                 WHERE id = ?
                 """;
-        execute(query, stmt -> mapper.map(client, stmt));
+        executeWithSingleUpdate(query, stmt -> mapper.map(client, stmt));
         return findById(client.id().value())
                 .orElseThrow(() -> new ClientNotFoundException(client.id().value()));
     }
