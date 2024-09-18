@@ -47,7 +47,7 @@ public class ProjectUi {
 
         final Double tva = executeIfUserConfirmsWithResult("Do you want to apply TVA ",
                 () -> scanDouble("Please to enter the TVA (%): ", ValidationStrategies.POSITIVE_DOUBLE),
-                1.0
+                0.0
         );
 
         final Double profitMargin = executeIfUserConfirmsWithResult("Do you want to apply profit Margin ",
@@ -83,10 +83,8 @@ public class ProjectUi {
         workerUi.showByProjectId(project.id());
         workerUi.showTotalCostOfWorkers(project.id());
 
-        System.out.println("Total cost without margin" + costCalculatingService.calculateWithoutProfitMargin(project));
-        System.out.println("Profit Margin " + costCalculatingService.calculateProfitMargin(project));
-        System.out.println("Total cost with margin " + costCalculatingService.calculateWithProfitMargin(project));
-
-
+        System.out.println("Total cost without margin: " + costCalculatingService.calculateWithoutProfitMargin(project));
+        System.out.println("Profit Margin: " + costCalculatingService.calculateProfitMargin(project));
+        System.out.println("Total cost with margin: " + costCalculatingService.calculateWithProfitMargin(project));
     }
 }

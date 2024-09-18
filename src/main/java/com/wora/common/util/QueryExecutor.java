@@ -14,7 +14,7 @@ public class QueryExecutor {
     private QueryExecutor() {
     }
 
-    public static void executeUpdatePreparedStatement(final String query, final SQLConsumer<PreparedStatement> executor) {
+    public static void executeUpdateWithPreparedStatement(final String query, final SQLConsumer<PreparedStatement> executor) {
         try (final var stmt = CONNECTION.prepareStatement(query)) {
             executor.run(stmt);
 
@@ -28,7 +28,7 @@ public class QueryExecutor {
         }
     }
 
-    public static void executeQueryStatement(final String query, final SQLConsumer<ResultSet> executor) {
+    public static void fetchResultWithQuery(final String query, final SQLConsumer<ResultSet> executor) {
         try (final var stmt = CONNECTION.createStatement()) {
             final ResultSet resultSet = stmt.executeQuery(query);
             executor.run(resultSet);
@@ -37,7 +37,7 @@ public class QueryExecutor {
         }
     }
 
-    public static void executeQueryPreparedStatement(final String query, final SQLConsumer<PreparedStatement> executor) {
+    public static void executeQueryWithPreparedStatement(final String query, final SQLConsumer<PreparedStatement> executor) {
         try (final var stmt = CONNECTION.prepareStatement(query)) {
             executor.run(stmt);
         } catch (SQLException e) {
@@ -45,7 +45,7 @@ public class QueryExecutor {
         }
     }
 
-    public static void execute(final String query, final SQLConsumer<PreparedStatement> executor) {
+    public static void executeWithSingleUpdate(final String query, final SQLConsumer<PreparedStatement> executor) {
         try (final var stmt = CONNECTION.prepareStatement(query)) {
             executor.run(stmt);
 

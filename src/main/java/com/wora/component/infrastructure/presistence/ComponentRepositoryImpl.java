@@ -10,8 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import static com.wora.common.util.QueryExecutor.executeQueryPreparedStatement;
-import static com.wora.common.util.QueryExecutor.executeQueryStatement;
+import static com.wora.common.util.QueryExecutor.executeQueryWithPreparedStatement;
+import static com.wora.common.util.QueryExecutor.fetchResultWithQuery;
 
 public abstract class ComponentRepositoryImpl<Entity extends Component> extends BaseRepositoryImpl<Entity, UUID> implements ComponentRepository<Entity> {
     public ComponentRepositoryImpl(String tableName, BaseEntityResultSetMapper<Entity> mapper) {
@@ -26,7 +26,7 @@ public abstract class ComponentRepositoryImpl<Entity extends Component> extends 
                 JOIN projects p ON t.project_id = p.id
                 WHERE deleted_at IS NULL
                 """, tableName);
-        executeQueryStatement(query, rs -> {
+        fetchResultWithQuery(query, rs -> {
             while (rs.next()) {
                 components.add(mapper.map(rs));
             }
@@ -39,7 +39,7 @@ public abstract class ComponentRepositoryImpl<Entity extends Component> extends 
     public List<Entity> findAllByProjectId(UUID id) {
         final List<Entity> materiels = new ArrayList<>();
         final String query = "SELECT * FROM " + tableName + " WHERE project_id = ? AND deleted_at IS NULL";
-        executeQueryPreparedStatement(query, stmt -> {
+        executeQueryWithPreparedStatement(query, stmt -> {
             stmt.setObject(1, id);
             final ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
