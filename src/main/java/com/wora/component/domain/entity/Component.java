@@ -20,6 +20,7 @@ public abstract class Component extends AbstractEntity<ComponentId> {
     public Component(ComponentId id, String name, Double tva, ComponentType componentType, Project project) {
         this.id = id;
         this.name = name;
+        this.tva = tva;
         this.componentType = componentType;
         this.project = project;
     }

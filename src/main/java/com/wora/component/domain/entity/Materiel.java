@@ -27,7 +27,6 @@ public class Materiel extends Component {
         this.quantity = quantity;
         this.transportCost = transportCost;
         this.qualityCoefficient = qualityCoefficient;
-        this.tva = tva;
     }
 
     public Double unitCost() {
@@ -69,5 +68,20 @@ public class Materiel extends Component {
     @Override
     public Double total() {
         return unitCost * quantity * qualityCoefficient + transportCost;
+    }
+
+    @Override
+    public String toString() {
+        return "Materiel{" +
+                "unitCost=" + unitCost +
+                ", quantity=" + quantity +
+                ", transportCost=" + transportCost +
+                ", qualityCoefficient=" + qualityCoefficient +
+                ", id=" + id +
+                ", name='" + name + '\'' +
+                ", tva=" + tva +
+                ", componentType=" + componentType +
+                ", project=" + project +
+                '}';
     }
 }
