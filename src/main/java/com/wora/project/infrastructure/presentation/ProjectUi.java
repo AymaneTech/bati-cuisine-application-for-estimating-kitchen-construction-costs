@@ -8,6 +8,7 @@ import com.wora.component.infrastructure.presentation.WorkerUi;
 import com.wora.project.application.dto.request.CreateProjectRequest;
 import com.wora.project.application.dto.request.SaveProjectRequest;
 import com.wora.project.application.dto.response.ProjectResponse;
+import com.wora.project.application.service.ProjectCostCalculatingService;
 import com.wora.project.application.service.ProjectService;
 import com.wora.project.domain.enums.ProjectStatus;
 
@@ -15,12 +16,14 @@ import static com.wora.common.util.InputScanner.*;
 
 public class ProjectUi {
     private final ProjectService service;
+    private final ProjectCostCalculatingService costCalculatingService;
     private final ClientUi clientUi;
     private final MaterielUi materielUi;
     private final WorkerUi workerUi;
 
-    public ProjectUi(ProjectService service, ClientUi clientUi, MaterielUi materielUi, WorkerUi workerUi) {
+    public ProjectUi(ProjectService service, ProjectCostCalculatingService costCalculatingService, ClientUi clientUi, MaterielUi materielUi, WorkerUi workerUi) {
         this.service = service;
+        this.costCalculatingService = costCalculatingService;
         this.clientUi = clientUi;
         this.materielUi = materielUi;
         this.workerUi = workerUi;
@@ -52,11 +55,14 @@ public class ProjectUi {
                 1.0
         );
 
-        final SaveProjectRequest saveProjectRequest = new SaveProjectRequest(
-                createdProject.id(), createdProject.name(),
-                createdProject.surface(), createdProject.totalCost(),
-                createdProject.projectStatus(), createdProject.clientId(),
-                tva, profitMargin
+        costCalculatingService.calculate(
+                new SaveProjectRequest(
+                        createdProject.id(), createdProject.name(),
+                        createdProject.surface(), createdProject.totalCost(),
+                        createdProject.projectStatus(), createdProject.clientId(),
+                        tva, profitMargin
+                )
         );
+
     }
 }
