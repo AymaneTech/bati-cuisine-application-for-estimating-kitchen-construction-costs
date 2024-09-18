@@ -70,8 +70,8 @@ public class InputScanner {
     }
 
     public static <E extends Enum<E>> E scanEnum(String prompt, Class<E> enumClass) {
-        E[] enumConstants = enumClass.getEnumConstants();
-        String enumOptions = IntStream.range(0, enumConstants.length)
+        final E[] enumConstants = enumClass.getEnumConstants();
+        final String enumOptions = IntStream.range(0, enumConstants.length)
                 .mapToObj(i -> String.format("%d. %s", i + 1, enumConstants[i].name()))
                 .reduce((a, b) -> a + "\n" + b)
                 .orElse("");
