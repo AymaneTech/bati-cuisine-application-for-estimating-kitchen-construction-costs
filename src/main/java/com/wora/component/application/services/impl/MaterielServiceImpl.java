@@ -45,6 +45,7 @@ public class MaterielServiceImpl implements ComponentService<MaterielRequest, Ma
 
     @Override
     public MaterielResponse create(MaterielRequest dto) {
+        System.out.println("here is againt he tva" + dto);
         final Materiel materiel = repository.create(mapper.map(dto, new ComponentId()));
         return mapper.map(materiel);
     }

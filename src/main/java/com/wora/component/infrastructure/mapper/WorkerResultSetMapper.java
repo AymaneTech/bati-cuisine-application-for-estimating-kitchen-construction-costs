@@ -3,6 +3,7 @@ package com.wora.component.infrastructure.mapper;
 import com.wora.common.infrastructure.mapper.BaseEntityResultSetMapper;
 import com.wora.component.domain.entity.Worker;
 import com.wora.component.domain.valueObject.ComponentId;
+import com.wora.project.infrastructure.mapper.ProjectResultSetMapper;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,6 +17,7 @@ public class WorkerResultSetMapper implements BaseEntityResultSetMapper<Worker> 
         return new Worker(
                 new ComponentId((UUID) rs.getObject("id")),
                 rs.getString("name"),
+                rs.getDouble("tva"),
                 null,
                 rs.getDouble("hourly_rate"),
                 rs.getDouble("working_hours"),

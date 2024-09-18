@@ -14,6 +14,7 @@ public class WorkerMapper implements BaseEntityDtoMapper<Worker, WorkerRequest, 
         return new Worker(
                 id,
                 dto.name(),
+                dto.tva(),
                 new Project().setId(dto.projectId()),
                 dto.hourlyRate(),
                 dto.workingHours(),

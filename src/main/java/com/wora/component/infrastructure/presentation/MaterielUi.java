@@ -21,7 +21,7 @@ public class MaterielUi {
         this.service = service;
     }
 
-    public void create(ProjectId id) {
+    public void create(ProjectId projectId) {
         secondaryTitle("Please to enter all necessary information!");
         final String name = scanString("Please to enter the materiel name: ", ValidationStrategies.NOT_BLANK);
         final Double tva = scanDouble("Please to enter TVA purcentage:", ValidationStrategies.POSITIVE_DOUBLE);
@@ -30,14 +30,15 @@ public class MaterielUi {
         final Double transportCost = scanDouble("Please enter the transportation cost: ", ValidationStrategies.POSITIVE_DOUBLE);
         final Double quantityCoefficient = scanDouble("Please to enter quantity coefficient: ", ValidationStrategies.POSITIVE_DOUBLE);
 
+        System.out.println("here is the tva" + tva);
         final MaterielResponse materielResponse = service.create(
-                new MaterielRequest(name, tva, id, unitCost, quantity, transportCost, quantityCoefficient)
+                new MaterielRequest(name, tva, projectId, unitCost, quantity, transportCost, quantityCoefficient)
         );
         System.out.println(getTable(List.of(materielResponse)));
         System.out.println("the materiel created successfully!");
 
         executeIfUserConfirms("Add new One or not ",
-                () -> this.create(id)
+                () -> this.create(projectId)
         );
     }
 

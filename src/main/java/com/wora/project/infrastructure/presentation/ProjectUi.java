@@ -61,6 +61,8 @@ public class ProjectUi {
                 tva, profitMargin
         );
 
+        service.update(saveProject.id(), saveProject);
+
         printReport(saveProject);
     }
 

@@ -21,21 +21,22 @@ public class WorkerUi {
         this.service = service;
     }
 
-    public void create(ProjectId id) {
+    public void create(ProjectId projectId) {
         secondaryTitle("Please enter all necessary information!");
         final String name = scanString("Please enter the worker name: ", ValidationStrategies.NOT_BLANK);
+        final Double tva = scanDouble("Please to enter TVA purcentage:", ValidationStrategies.POSITIVE_DOUBLE);
         final Double hourlyRate = scanDouble("Please enter hourly rate:", ValidationStrategies.POSITIVE_DOUBLE);
         final Double workingHours = scanDouble("Please enter working hours: ", ValidationStrategies.POSITIVE_DOUBLE);
         final Double productivity = scanDouble("Please enter productivity: ", ValidationStrategies.POSITIVE_DOUBLE);
 
         final WorkerResponse workerResponse = service.create(
-                new WorkerRequest(name, id, hourlyRate, workingHours, productivity)
+                new WorkerRequest(name, tva, projectId, hourlyRate, workingHours, productivity)
         );
         System.out.println(getTable(List.of(workerResponse)));
         System.out.println("The worker was created successfully!");
 
         executeIfUserConfirms("Add new one or not ",
-                () -> this.create(id)
+                () -> this.create(projectId)
         );
     }
 

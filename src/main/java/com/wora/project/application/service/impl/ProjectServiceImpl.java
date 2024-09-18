@@ -2,6 +2,7 @@ package com.wora.project.application.service.impl;
 
 import com.wora.client.domain.valueObject.ClientId;
 import com.wora.project.application.dto.request.CreateProjectRequest;
+import com.wora.project.application.dto.request.SaveProjectRequest;
 import com.wora.project.application.dto.response.ProjectResponse;
 import com.wora.project.application.mapper.ProjectMapper;
 import com.wora.project.application.service.ProjectService;
@@ -49,7 +50,7 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public ProjectResponse update(ProjectId id, CreateProjectRequest dto) {
+    public ProjectResponse update(ProjectId id, SaveProjectRequest dto) {
         final Project project = repository.update(id.value(), mapper.map(dto, id));
         return mapper.map(project);
     }
