@@ -1,6 +1,7 @@
 package com.wora.component.application.services.impl;
 
 import com.wora.component.application.dto.request.WorkerRequest;
+import com.wora.component.application.dto.response.MaterielResponse;
 import com.wora.component.application.dto.response.WorkerResponse;
 import com.wora.component.application.mapper.WorkerMapper;
 import com.wora.component.application.services.ComponentService;
@@ -9,6 +10,7 @@ import com.wora.component.domain.enums.ComponentType;
 import com.wora.component.domain.exception.ComponentNotFoundException;
 import com.wora.component.domain.repository.ComponentRepository;
 import com.wora.component.domain.valueObject.ComponentId;
+import com.wora.project.domain.valueObject.ProjectId;
 
 import java.util.List;
 
@@ -25,6 +27,13 @@ public class WorkerServiceImpl implements ComponentService<WorkerRequest, Worker
     public List<WorkerResponse> findAll() {
         return repository.findAll().stream()
                 .map(mapper::map)
+                .toList();
+    }
+
+    @Override
+    public List<WorkerResponse> findAllByProjectId(ProjectId projectId) {
+        return repository.findAllByProjectId(projectId.value())
+                .stream().map(mapper::map)
                 .toList();
     }
 

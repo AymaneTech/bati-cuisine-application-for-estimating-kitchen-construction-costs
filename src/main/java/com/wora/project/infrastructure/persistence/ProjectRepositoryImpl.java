@@ -28,7 +28,7 @@ public class ProjectRepositoryImpl extends BaseRepositoryImpl<Project, UUID> imp
                 JOIN clients c ON p.client_id = c.id
                 WHERE p.deleted_at IS NULL
                 """;
-        executeQueryStatement(query, rs -> {
+        fetchResultWithQuery(query, rs -> {
             while (rs.next()) {
                 projects.add(mapper.map(rs));
             }
@@ -46,7 +46,7 @@ public class ProjectRepositoryImpl extends BaseRepositoryImpl<Project, UUID> imp
                 AND p.deleted_at IS NULL
                 """;
 
-        executeQueryPreparedStatement(query, stmt -> {
+        executeQueryWithPreparedStatement(query, stmt -> {
             stmt.setObject(1, id);
             final ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
@@ -94,7 +94,7 @@ public class ProjectRepositoryImpl extends BaseRepositoryImpl<Project, UUID> imp
                 WHERE client_id = ?
                 AND deleted_at IS NULL
                 """;
-        executeQueryPreparedStatement(query, stmt -> {
+        executeQueryWithPreparedStatement(query, stmt -> {
             stmt.setObject(1, clientId.toString());
             final ResultSet rs = stmt.executeQuery();
             while (rs.next()) {

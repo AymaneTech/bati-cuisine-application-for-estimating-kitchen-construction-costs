@@ -7,11 +7,12 @@ import com.wora.project.domain.entity.Project;
 
 import java.time.LocalDateTime;
 
-public class Component extends AbstractEntity<ComponentId> {
-    private ComponentId id;
-    private String name;
-    private ComponentType componentType;
-    private Project project;
+public abstract class Component extends AbstractEntity<ComponentId> {
+    protected ComponentId id;
+    protected String name;
+    protected Double tva;
+    protected ComponentType componentType;
+    protected Project project;
 
     public Component() {
     }
@@ -30,6 +31,8 @@ public class Component extends AbstractEntity<ComponentId> {
         this.updatedAt = updatedAt;
         this.deletedAt = deletedAt;
     }
+
+    public abstract Double total();
 
     @Override
     public ComponentId id() {
@@ -67,4 +70,9 @@ public class Component extends AbstractEntity<ComponentId> {
         this.project = project;
         return this;
     }
+
+    public Double totalWithTva() {
+        return total() * (1 + tva / 100.0);
+    }
+
 }

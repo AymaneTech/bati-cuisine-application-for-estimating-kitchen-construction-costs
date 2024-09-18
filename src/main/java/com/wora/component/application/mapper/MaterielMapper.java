@@ -33,6 +33,8 @@ public class MaterielMapper implements BaseEntityDtoMapper<Materiel, MaterielReq
                 materiel.quantity(),
                 materiel.transportCost(),
                 materiel.qualityCoefficient(),
+                materiel.total(),
+                materiel.totalWithTva(),
                 materiel.createdAt(),
                 materiel.updatedAt());
     }

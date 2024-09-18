@@ -68,12 +68,8 @@ public class Materiel extends Component {
         return this;
     }
 
-    public Double tva() {
-        return tva;
-    }
-
-    public Materiel setTva(Double tva) {
-        this.tva = tva;
-        return this;
+    @Override
+    public Double total() {
+        return unitCost * quantity * qualityCoefficient + transportCost;
     }
 }

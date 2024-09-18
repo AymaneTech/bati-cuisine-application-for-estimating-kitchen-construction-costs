@@ -41,6 +41,18 @@ public class MaterielUi {
         );
     }
 
+    public void showByProjectId(ProjectId id) {
+        final List<MaterielResponse> materiels = service.findAllByProjectId(id);
+        System.out.println(getTable(materiels));
+    }
+
+    public void showTotalCostOfMateriels(ProjectId id) {
+        final Double total = service.calculateTotalCost(service.findAllByProjectId(id));
+        final Double totalWithTva = service.calculateTotalCostWithTva(service.findAllByProjectId(id));
+        System.out.println("--- Total cost without tva: " + total);
+        System.out.println("--- Total cost with tva: " + totalWithTva);
+    }
+
     private String getTable(List<MaterielResponse> materiels) {
         return AsciiTable.getTable(materiels, Arrays.asList(
                 new Column().with(materiel -> materiel.id().value().toString()),
@@ -49,7 +61,9 @@ public class MaterielUi {
                 new Column().header("Unit Cost").with(m -> m.unitCost().toString()),
                 new Column().header("Quantity").with(m -> m.quantity().toString()),
                 new Column().header("Transport Cost").with(m -> m.transportCost().toString()),
-                new Column().header("Quality Coefficient").with(m -> m.quantityCoefficient().toString()),
+                new Column().header("Quality Coefficient").with(m -> m.qualityCoefficient().toString()),
+                new Column().header("Total").with(m -> m.total().toString()),
+                new Column().header("Total with Tva").with(m -> m.totalWithTva().toString()),
                 new Column().header("Created At").with(materiel -> materiel.createdAt().toString()),
                 new Column().header("Last Updated At").with(materiel -> materiel.updatedAt() != null ? materiel.updatedAt().toString() : "Not Updated Yet")
         ));

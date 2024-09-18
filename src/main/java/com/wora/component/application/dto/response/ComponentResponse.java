@@ -8,16 +8,21 @@ import java.time.LocalDateTime;
 public class ComponentResponse {
     private final ComponentId id;
     private final String name;
+    private final Double tva;
     private final ComponentType type;
     private final String projectId;
+    private final Double total;
+    private final Double totalWithTva;
     private final LocalDateTime createdAt;
     private final LocalDateTime updatedAt;
 
-    public ComponentResponse(ComponentId id, String name, ComponentType type, String projectId, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public ComponentResponse(ComponentId id, String name, Double tva, ComponentType type, String projectId, Double total, Double totalWithTva, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.name = name;
         this.type = type;
         this.projectId = projectId;
+        this.total = total;
+        this.totalWithTva = totalWithTva;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
@@ -28,6 +33,10 @@ public class ComponentResponse {
 
     public String name() {
         return name;
+    }
+
+    public Double tva() {
+        return tva;
     }
 
     public String projectId() {
@@ -44,5 +53,13 @@ public class ComponentResponse {
 
     public LocalDateTime updatedAt() {
         return updatedAt;
+    }
+
+    public Double total() {
+        return total;
+    }
+
+    public Double totalWithTva() {
+        return totalWithTva;
     }
 }

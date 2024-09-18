@@ -9,8 +9,8 @@ import java.util.Optional;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
-import static com.wora.common.util.QueryExecutor.executeQueryPreparedStatement;
-import static com.wora.common.util.QueryExecutor.executeQueryStatement;
+import static com.wora.common.util.QueryExecutor.executeQueryWithPreparedStatement;
+import static com.wora.common.util.QueryExecutor.fetchResultWithQuery;
 
 public abstract class BaseRepositoryImpl<Entity, ID> implements BaseRepository<Entity, ID> {
 
@@ -27,7 +27,7 @@ public abstract class BaseRepositoryImpl<Entity, ID> implements BaseRepository<E
         final List<Entity> entities = new ArrayList<>();
         final String query = "SELECT * FROM " + tableName + " WHERE deleted_at IS NULL";
 
-        executeQueryStatement(query, rs -> {
+        fetchResultWithQuery(query, rs -> {
             while (rs.next()) {
                 entities.add(mapper.map(rs));
             }
@@ -40,7 +40,7 @@ public abstract class BaseRepositoryImpl<Entity, ID> implements BaseRepository<E
         final AtomicReference<Optional<Entity>> entity = new AtomicReference<>(Optional.empty());
         final String query = "SELECT * FROM " + tableName + " WHERE id = ? AND deleted_at is null";
 
-        executeQueryPreparedStatement(query, stmt -> {
+        executeQueryWithPreparedStatement(query, stmt -> {
             stmt.setObject(1, id);
             final ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
@@ -70,7 +70,7 @@ public abstract class BaseRepositoryImpl<Entity, ID> implements BaseRepository<E
                 AND deleted_at IS NULL
                 """, tableName, columnName);
 
-        executeQueryPreparedStatement(query, stmt -> {
+        executeQueryWithPreparedStatement(query, stmt -> {
             stmt.setString(1, value);
             final ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
@@ -87,7 +87,7 @@ public abstract class BaseRepositoryImpl<Entity, ID> implements BaseRepository<E
                 SET deleted_at = now()
                 WHERE id = ?""", tableName);
 
-        executeQueryPreparedStatement(query, stmt -> {
+        executeQueryWithPreparedStatement(query, stmt -> {
             stmt.setObject(1, id);
             int affectedRows = stmt.executeUpdate();
             if (affectedRows == 0) {
@@ -98,7 +98,7 @@ public abstract class BaseRepositoryImpl<Entity, ID> implements BaseRepository<E
 
     private <Value> boolean executeQueryReturnBoolean(final String query, Value value) {
         final AtomicBoolean exists = new AtomicBoolean(false);
-        executeQueryPreparedStatement(query, stmt -> {
+        executeQueryWithPreparedStatement(query, stmt -> {
             stmt.setObject(1, value);
             final ResultSet rs = stmt.executeQuery();
             if (rs.next()) {

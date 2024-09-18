@@ -8,7 +8,7 @@ import com.wora.component.infrastructure.presentation.WorkerUi;
 import com.wora.project.application.dto.request.CreateProjectRequest;
 import com.wora.project.application.dto.request.SaveProjectRequest;
 import com.wora.project.application.dto.response.ProjectResponse;
-import com.wora.project.application.service.ProjectCostCalculatingService;
+import com.wora.project.application.service.ProjectReportService;
 import com.wora.project.application.service.ProjectService;
 import com.wora.project.domain.enums.ProjectStatus;
 
@@ -16,12 +16,12 @@ import static com.wora.common.util.InputScanner.*;
 
 public class ProjectUi {
     private final ProjectService service;
-    private final ProjectCostCalculatingService costCalculatingService;
+    private final ProjectReportService costCalculatingService;
     private final ClientUi clientUi;
     private final MaterielUi materielUi;
     private final WorkerUi workerUi;
 
-    public ProjectUi(ProjectService service, ProjectCostCalculatingService costCalculatingService, ClientUi clientUi, MaterielUi materielUi, WorkerUi workerUi) {
+    public ProjectUi(ProjectService service, ProjectReportService costCalculatingService, ClientUi clientUi, MaterielUi materielUi, WorkerUi workerUi) {
         this.service = service;
         this.costCalculatingService = costCalculatingService;
         this.clientUi = clientUi;
@@ -47,22 +47,44 @@ public class ProjectUi {
 
         final Double tva = executeIfUserConfirmsWithResult("Do you want to apply TVA ",
                 () -> scanDouble("Please to enter the TVA (%): ", ValidationStrategies.POSITIVE_DOUBLE),
-                1.0
+                0.0
         );
 
         final Double profitMargin = executeIfUserConfirmsWithResult("Do you want to apply profit Margin ",
                 () -> scanDouble("Please to enter profit margin (%): ", ValidationStrategies.POSITIVE_DOUBLE),
                 1.0
         );
-
-        costCalculatingService.calculate(
-                new SaveProjectRequest(
-                        createdProject.id(), createdProject.name(),
-                        createdProject.surface(), createdProject.totalCost(),
-                        createdProject.projectStatus(), createdProject.clientId(),
-                        tva, profitMargin
-                )
+        SaveProjectRequest saveProject = new SaveProjectRequest(
+                createdProject.id(), createdProject.name(),
+                createdProject.surface(), createdProject.totalCost(),
+                createdProject.projectStatus(), createdProject.client(),
+                tva, profitMargin
         );
 
+        printReport(saveProject);
+    }
+
+    public void printReport(SaveProjectRequest project) {
+        clearScreen();
+        System.out.println("Report generating ...");
+        System.out.println("--------------------------------------------------------");
+        System.out.println("Project Name: " + project.name());
+        System.out.println("Client name : " + project.client().name().fullName());
+        System.out.println("Client address: " + project.client().address());
+        System.out.println("Surface (m²): " + project.surface());
+        System.out.println("--------------------------------------------------------");
+        System.out.println("Cost Details");
+
+        System.out.println("1. Materiels: ");
+        materielUi.showByProjectId(project.id());
+        materielUi.showTotalCostOfMateriels(project.id());
+
+        System.out.println("2. Workers: ");
+        workerUi.showByProjectId(project.id());
+        workerUi.showTotalCostOfWorkers(project.id());
+
+        System.out.println("Total cost without margin: " + costCalculatingService.calculateWithoutProfitMargin(project));
+        System.out.println("Profit Margin: " + costCalculatingService.calculateProfitMargin(project));
+        System.out.println("Total cost with margin: " + costCalculatingService.calculateWithProfitMargin(project));
     }
 }
