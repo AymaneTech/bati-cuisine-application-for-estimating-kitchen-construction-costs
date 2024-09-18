@@ -67,7 +67,6 @@ public class Materiel extends Component {
 
     @Override
     public Double total() {
-        return (unitCost * quantity * qualityCoefficient + transportCost) * (1 + tva / 100.0);
+        return unitCost * quantity * qualityCoefficient + transportCost;
     }
-
 }

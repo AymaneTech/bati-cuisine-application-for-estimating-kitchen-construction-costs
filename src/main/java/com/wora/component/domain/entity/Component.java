@@ -80,4 +80,9 @@ public abstract class Component extends AbstractEntity<ComponentId> {
         this.project = project;
         return this;
     }
+
+    public Double totalWithTva() {
+        return total() * (1 + tva / 100.0);
+    }
+
 }

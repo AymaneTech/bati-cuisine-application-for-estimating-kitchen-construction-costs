@@ -40,7 +40,7 @@ public abstract class ComponentRepositoryImpl<Entity extends Component> extends 
         final List<Entity> materiels = new ArrayList<>();
         final String query = "SELECT * FROM " + tableName + " WHERE project_id = ? AND deleted_at IS NULL";
         executeQueryPreparedStatement(query, stmt -> {
-            stmt.setObject(1, id.toString());
+            stmt.setObject(1, id);
             final ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 materiels.add(mapper.map(rs));

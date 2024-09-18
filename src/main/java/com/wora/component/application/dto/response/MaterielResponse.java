@@ -11,8 +11,8 @@ public class MaterielResponse extends ComponentResponse {
     private final Double transportCost;
     private final Double qualityCoefficient;
 
-    public MaterielResponse(ComponentId id, String name, Double tva, String projectId, Double unitCost, Double quantity, Double transportCost, Double qualityCoefficient, Double total, LocalDateTime createdAt, LocalDateTime updatedAt) {
-        super(id, name, tva, ComponentType.MATERIEL, projectId, total, createdAt, updatedAt);
+    public MaterielResponse(ComponentId id, String name, Double tva, String projectId, Double unitCost, Double quantity, Double transportCost, Double qualityCoefficient, Double total, Double totalWithTva, LocalDateTime createdAt, LocalDateTime updatedAt) {
+        super(id, name, tva, ComponentType.MATERIEL, projectId, total, totalWithTva, createdAt, updatedAt);
         this.unitCost = unitCost;
         this.quantity = quantity;
         this.transportCost = transportCost;

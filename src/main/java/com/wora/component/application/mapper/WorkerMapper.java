@@ -33,6 +33,7 @@ public class WorkerMapper implements BaseEntityDtoMapper<Worker, WorkerRequest, 
                 worker.workingHours(),
                 worker.productivity(),
                 worker.total(),
+                worker.totalWithTva(),
                 worker.createdAt(),
                 worker.updatedAt()
         );

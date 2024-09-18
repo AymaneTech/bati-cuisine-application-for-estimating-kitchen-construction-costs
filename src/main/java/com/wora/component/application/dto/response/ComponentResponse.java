@@ -12,16 +12,18 @@ public class ComponentResponse {
     private final ComponentType type;
     private final String projectId;
     private final Double total;
+    private final Double totalWithTva;
     private final LocalDateTime createdAt;
     private final LocalDateTime updatedAt;
 
-    public ComponentResponse(ComponentId id, String name, Double tva, ComponentType type, String projectId, Double total, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public ComponentResponse(ComponentId id, String name, Double tva, ComponentType type, String projectId, Double total, Double totalWithTva, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.name = name;
         this.tva = tva;
         this.type = type;
         this.projectId = projectId;
         this.total = total;
+        this.totalWithTva = totalWithTva;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
@@ -56,5 +58,9 @@ public class ComponentResponse {
 
     public Double total() {
         return total;
+    }
+
+    public Double totalWithTva() {
+        return totalWithTva;
     }
 }

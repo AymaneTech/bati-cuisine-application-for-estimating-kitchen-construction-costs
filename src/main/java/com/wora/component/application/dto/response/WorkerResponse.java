@@ -10,8 +10,8 @@ public class WorkerResponse extends ComponentResponse {
     private final Double workingHours;
     private final Double productivity;
 
-    public WorkerResponse(ComponentId id, String name, Double tva, String projectId, Double hourlyRate, Double workingHours, Double productivity, Double total, LocalDateTime createdAt, LocalDateTime updatedAt) {
-        super(id, name, tva, ComponentType.WORKER, projectId, total, createdAt, updatedAt);
+    public WorkerResponse(ComponentId id, String name, Double tva, String projectId, Double hourlyRate, Double workingHours, Double productivity, Double total, Double totalWithTva, LocalDateTime createdAt, LocalDateTime updatedAt) {
+        super(id, name, tva, ComponentType.WORKER, projectId, total, totalWithTva, createdAt, updatedAt);
         this.hourlyRate = hourlyRate;
         this.workingHours = workingHours;
         this.productivity = productivity;

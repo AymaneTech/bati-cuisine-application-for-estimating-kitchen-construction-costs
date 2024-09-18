@@ -26,4 +26,9 @@ public interface ComponentService<RequestDto extends ComponentRequest, ResponseD
         return components.stream().map(ResponseDto::total)
                 .reduce(0.0, Double::sum);
     }
+
+    default Double calculateTotalCostWithTva(List<ResponseDto> components) {
+       return components.stream().map(ResponseDto::totalWithTva)
+               .reduce(0.0, Double::sum);
+    }
 }

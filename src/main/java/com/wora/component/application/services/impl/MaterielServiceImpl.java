@@ -64,4 +64,6 @@ public class MaterielServiceImpl implements ComponentService<MaterielRequest, Ma
     public boolean existsById(ComponentId id) {
         return repository.existsById(id.value());
     }
+
+
 }

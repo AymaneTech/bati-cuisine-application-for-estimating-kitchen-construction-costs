@@ -40,6 +40,19 @@ public class WorkerUi {
         );
     }
 
+    public void showByProjectId(ProjectId id) {
+        final List<WorkerResponse> workers = service.findAllByProjectId(id);
+        System.out.println(getTable(workers));
+    }
+
+    public void showTotalCostOfWorkers(ProjectId id) {
+        final Double total = service.calculateTotalCost(service.findAllByProjectId(id));
+        final Double totalWithTva = service.calculateTotalCostWithTva(service.findAllByProjectId(id));
+        System.out.println("--- Total cost without tva: " + total);
+        System.out.println("--- Total cost with tva: " + totalWithTva);
+
+    }
+
     private String getTable(List<WorkerResponse> workers) {
         return AsciiTable.getTable(workers, Arrays.asList(
                 new Column().with(worker -> worker.id().value().toString()),
@@ -48,8 +61,11 @@ public class WorkerUi {
                 new Column().header("Hourly Rate").with(w -> w.hourlyRate().toString()),
                 new Column().header("Working Hours").with(w -> w.workingHours().toString()),
                 new Column().header("Productivity").with(w -> w.productivity().toString()),
+                new Column().header("Total").with(w -> w.total().toString()),
+                new Column().header("Total with tva").with(w -> w.totalWithTva().toString()),
                 new Column().header("Created At").with(worker -> worker.createdAt().toString()),
                 new Column().header("Last Updated At").with(worker -> worker.updatedAt() != null ? worker.updatedAt().toString() : "Not Updated Yet")
         ));
     }
+
 }
