@@ -44,7 +44,7 @@ public class WorkerUi {
         return AsciiTable.getTable(workers, Arrays.asList(
                 new Column().with(worker -> worker.id().value().toString()),
                 new Column().header("Name").with(WorkerResponse::name),
-                new Column().header("TVA").with(WorkerResponse::tva),
+                new Column().header("TVA").with(w -> w.tva().toString()),
                 new Column().header("Hourly Rate").with(w -> w.hourlyRate().toString()),
                 new Column().header("Working Hours").with(w -> w.workingHours().toString()),
                 new Column().header("Productivity").with(w -> w.productivity().toString()),

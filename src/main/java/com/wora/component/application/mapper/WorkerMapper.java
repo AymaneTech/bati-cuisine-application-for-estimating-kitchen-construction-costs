@@ -27,11 +27,12 @@ public class WorkerMapper implements BaseEntityDtoMapper<Worker, WorkerRequest, 
         return new WorkerResponse(
                 worker.id(),
                 worker.name(),
-                String.valueOf(worker.tva()),
+                worker.tva(),
                 worker.project() != null ? worker.project().id().toString() : null,
                 worker.hourlyRate(),
                 worker.workingHours(),
                 worker.productivity(),
+                worker.total(),
                 worker.createdAt(),
                 worker.updatedAt()
         );

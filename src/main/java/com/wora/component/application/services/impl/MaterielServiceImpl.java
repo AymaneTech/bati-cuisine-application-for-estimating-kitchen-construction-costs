@@ -9,6 +9,7 @@ import com.wora.component.domain.enums.ComponentType;
 import com.wora.component.domain.exception.ComponentNotFoundException;
 import com.wora.component.domain.repository.ComponentRepository;
 import com.wora.component.domain.valueObject.ComponentId;
+import com.wora.project.domain.valueObject.ProjectId;
 
 import java.util.List;
 
@@ -25,6 +26,13 @@ public class MaterielServiceImpl implements ComponentService<MaterielRequest, Ma
     public List<MaterielResponse> findAll() {
         return repository.findAll().stream()
                 .map(mapper::map)
+                .toList();
+    }
+
+    @Override
+    public List<MaterielResponse> findAllByProjectId(ProjectId projectId) {
+        return repository.findAllByProjectId(projectId.value())
+                .stream().map(mapper::map)
                 .toList();
     }
 

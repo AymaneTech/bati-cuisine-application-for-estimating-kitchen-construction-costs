@@ -9,14 +9,14 @@ public class MaterielResponse extends ComponentResponse {
     private final Double unitCost;
     private final Double quantity;
     private final Double transportCost;
-    private final Double quantityCoefficient;
+    private final Double qualityCoefficient;
 
-    public MaterielResponse(ComponentId id, String name, String tva, String projectId, Double unitCost, Double quantity, Double transportCost, Double quantityCoefficient, LocalDateTime createdAt, LocalDateTime updatedAt) {
-        super(id, name, tva, ComponentType.MATERIEL, projectId, createdAt, updatedAt);
+    public MaterielResponse(ComponentId id, String name, Double tva, String projectId, Double unitCost, Double quantity, Double transportCost, Double qualityCoefficient, Double total, LocalDateTime createdAt, LocalDateTime updatedAt) {
+        super(id, name, tva, ComponentType.MATERIEL, projectId, total, createdAt, updatedAt);
         this.unitCost = unitCost;
         this.quantity = quantity;
         this.transportCost = transportCost;
-        this.quantityCoefficient = quantityCoefficient;
+        this.qualityCoefficient = qualityCoefficient;
     }
 
     public Double unitCost() {
@@ -31,7 +31,7 @@ public class MaterielResponse extends ComponentResponse {
         return transportCost;
     }
 
-    public Double quantityCoefficient() {
-        return quantityCoefficient;
+    public Double qualityCoefficient() {
+        return qualityCoefficient;
     }
 }

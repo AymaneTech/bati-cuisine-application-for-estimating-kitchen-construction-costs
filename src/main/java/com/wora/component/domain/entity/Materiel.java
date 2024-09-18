@@ -64,4 +64,10 @@ public class Materiel extends Component {
         this.qualityCoefficient = qualityCoefficient;
         return this;
     }
+
+    @Override
+    public Double total() {
+        return unitCost * quantity * qualityCoefficient
+                + transportCost * (1 + tva / 100.0);
+    }
 }

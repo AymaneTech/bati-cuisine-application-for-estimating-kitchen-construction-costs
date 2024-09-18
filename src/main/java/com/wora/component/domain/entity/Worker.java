@@ -51,4 +51,9 @@ public class Worker extends Component {
         this.productivity = productivity;
         return this;
     }
+
+    @Override
+    public Double total() {
+        return 0.0;
+    }
 }

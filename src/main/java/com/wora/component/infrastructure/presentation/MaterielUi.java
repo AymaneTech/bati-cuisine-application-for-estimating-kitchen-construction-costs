@@ -45,11 +45,11 @@ public class MaterielUi {
         return AsciiTable.getTable(materiels, Arrays.asList(
                 new Column().with(materiel -> materiel.id().value().toString()),
                 new Column().header("Name").with(MaterielResponse::name),
-                new Column().header("TVA").with(MaterielResponse::tva),
+                new Column().header("TVA").with(m -> m.tva().toString()),
                 new Column().header("Unit Cost").with(m -> m.unitCost().toString()),
                 new Column().header("Quantity").with(m -> m.quantity().toString()),
                 new Column().header("Transport Cost").with(m -> m.transportCost().toString()),
-                new Column().header("Quality Coefficient").with(m -> m.quantityCoefficient().toString()),
+                new Column().header("Quality Coefficient").with(m -> m.qualityCoefficient().toString()),
                 new Column().header("Created At").with(materiel -> materiel.createdAt().toString()),
                 new Column().header("Last Updated At").with(materiel -> materiel.updatedAt() != null ? materiel.updatedAt().toString() : "Not Updated Yet")
         ));
