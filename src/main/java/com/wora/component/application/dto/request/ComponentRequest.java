@@ -5,23 +5,17 @@ import com.wora.project.domain.valueObject.ProjectId;
 
 public class ComponentRequest {
     private final String name;
-    private final Double tva;
     private final ComponentType type;
     private final ProjectId projectId;
 
-    public ComponentRequest(String name, Double tva, ComponentType type, ProjectId projectId) {
+    public ComponentRequest(String name, ComponentType type, ProjectId projectId) {
         this.name = name;
-        this.tva = tva;
         this.type = type;
         this.projectId = projectId;
     }
 
     public String name() {
         return name;
-    }
-
-    public Double tva() {
-        return tva;
     }
 
     public ProjectId projectId() {

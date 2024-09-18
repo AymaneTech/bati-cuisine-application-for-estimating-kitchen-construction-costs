@@ -8,8 +8,8 @@ public class WorkerRequest extends ComponentRequest{
     private final Double workingHours;
     private final Double productivity;
 
-    public WorkerRequest(String name, Double tva, ProjectId projectId, Double hourlyRate, Double workingHours, Double productivity) {
-        super(name, tva, ComponentType.WORKER, projectId);
+    public WorkerRequest(String name, ProjectId projectId, Double hourlyRate, Double workingHours, Double productivity) {
+        super(name, ComponentType.WORKER, projectId);
         this.hourlyRate = hourlyRate;
         this.workingHours = workingHours;
         this.productivity = productivity;

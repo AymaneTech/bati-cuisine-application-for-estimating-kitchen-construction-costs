@@ -17,17 +17,16 @@ public abstract class Component extends AbstractEntity<ComponentId> {
     public Component() {
     }
 
-    public Component(ComponentId id, String name, Double tva, ComponentType componentType, Project project) {
+    public Component(ComponentId id, String name, ComponentType componentType, Project project) {
         this.id = id;
         this.name = name;
-        this.tva = tva;
         this.componentType = componentType;
         this.project = project;
     }
 
 
-    public Component(ComponentId id, String name, Double tva, ComponentType componentType, Project project, LocalDateTime createdAt, LocalDateTime updatedAt, LocalDateTime deletedAt) {
-        this(id, name, tva, componentType, project);
+    public Component(ComponentId id, String name, ComponentType componentType, Project project, LocalDateTime createdAt, LocalDateTime updatedAt, LocalDateTime deletedAt) {
+        this(id, name, componentType, project);
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.deletedAt = deletedAt;
@@ -51,15 +50,6 @@ public abstract class Component extends AbstractEntity<ComponentId> {
 
     public Component setName(String name) {
         this.name = name;
-        return this;
-    }
-
-    public Double tva() {
-        return tva;
-    }
-
-    public Component setTva(Double tva) {
-        this.tva = tva;
         return this;
     }
 

@@ -11,15 +11,15 @@ public class Worker extends Component {
     private Double workingHours;
     private Double productivity;
 
-    public Worker(ComponentId id, String name, Double tva, Project project, Double hourlyRate, Double workingHours, Double productivity) {
-        super(id, name, tva, ComponentType.WORKER, project);
+    public Worker(ComponentId id, String name, Project project, Double hourlyRate, Double workingHours, Double productivity) {
+        super(id, name, ComponentType.WORKER, project);
         this.hourlyRate = hourlyRate;
         this.workingHours = workingHours;
         this.productivity = productivity;
     }
 
-    public Worker(ComponentId id, String name, Double tva, Project project, Double hourlyRate, Double workingHours, Double productivity, LocalDateTime createdAt, LocalDateTime updatedAt, LocalDateTime deletedAt) {
-        super(id, name, tva, ComponentType.WORKER, project, createdAt, updatedAt, deletedAt);
+    public Worker(ComponentId id, String name, Project project, Double hourlyRate, Double workingHours, Double productivity, LocalDateTime createdAt, LocalDateTime updatedAt, LocalDateTime deletedAt) {
+        super(id, name, ComponentType.WORKER, project, createdAt, updatedAt, deletedAt);
         this.hourlyRate = hourlyRate;
         this.workingHours = workingHours;
         this.productivity = productivity;

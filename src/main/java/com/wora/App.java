@@ -55,7 +55,7 @@ public class App {
         final ProjectRepository projectRepository = new ProjectRepositoryImpl(new ProjectResultSetMapper(new ClientResultSetMapper()));
         final ProjectService projectService = new ProjectServiceImpl(projectRepository, new ProjectMapper());
         final ProjectUi projectUi = new ProjectUi(projectService, projectReportService, clientUi, materielUi, workerUi);
-
+      
         projectUi.create();
         
     }
