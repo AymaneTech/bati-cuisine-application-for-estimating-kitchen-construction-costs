@@ -1,5 +1,8 @@
 package com.wora.project.infrastructure.mapper;
 
+import com.wora.client.domain.entity.Client;
+import com.wora.client.domain.valueObject.ClientId;
+import com.wora.client.domain.valueObject.Name;
 import com.wora.client.infrastructure.mapper.ClientResultSetMapper;
 import com.wora.common.infrastructure.mapper.BaseEntityResultSetMapper;
 import com.wora.project.domain.entity.Project;
@@ -27,13 +30,25 @@ public class ProjectResultSetMapper implements BaseEntityResultSetMapper<Project
                 rs.getString("name"),
                 rs.getDouble("surface"),
                 ProjectStatus.valueOf(rs.getString("project_status")),
-                clientResultSetMapper.map(rs),
+                new Client(
+                        new ClientId((UUID) rs.getObject(11)),
+                        new Name(
+                                rs.getString("first_name"),
+                                rs.getString("last_name")
+                        ),
+                        rs.getString("phone"),
+                        rs.getString("address"),
+                        rs.getBoolean("is_professional"),
+                        List.of(),
+                        rs.getTimestamp("created_at").toLocalDateTime(),
+                        getDateTime("updated_at", rs),
+                        getDateTime("deleted_at", rs)
+                ),
                 List.of(),
-                getDate("created_at", rs),
-                getDate("updated_at", rs),
-                getDate("deleted_at", rs)
-        )
-                .setTotalCost(rs.getDouble("total_cost"));
+                getDateTime("created_at", rs),
+                getDateTime("updated_at", rs),
+                getDateTime("deleted_at", rs)
+        );
     }
 
     @Override

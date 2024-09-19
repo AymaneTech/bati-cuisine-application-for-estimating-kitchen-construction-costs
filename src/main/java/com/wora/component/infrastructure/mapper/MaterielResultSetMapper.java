@@ -23,8 +23,8 @@ public class MaterielResultSetMapper implements BaseEntityResultSetMapper<Materi
                 rs.getDouble("transport_cost"),
                 rs.getDouble("quality_coefficient"),
                 rs.getTimestamp("created_at").toLocalDateTime(),
-                getDate("updated_at", rs),
-                getDate("deleted_at", rs)
+                getDateTime("updated_at", rs),
+                getDateTime("deleted_at", rs)
         );
     }
 

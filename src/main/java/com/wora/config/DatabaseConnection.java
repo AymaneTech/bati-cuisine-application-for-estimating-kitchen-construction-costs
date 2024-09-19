@@ -45,6 +45,7 @@ public class DatabaseConnection {
         final String password = Env.get("DB_PASSWORD");
         try {
             connection = DriverManager.getConnection(url, username, password);
+            connection.setAutoCommit(false);
         } catch (SQLException e) {
             throw new SQLException(e);
         }

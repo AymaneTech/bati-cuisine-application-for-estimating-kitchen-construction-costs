@@ -122,4 +122,19 @@ public class Project extends AbstractEntity<ProjectId> {
         this.components = components;
         return this;
     }
+
+    @Override
+    public String toString() {
+        return "Project{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", profitMargin=" + profitMargin +
+                ", tva=" + tva +
+                ", surface=" + surface +
+                ", totalCost=" + totalCost +
+                ", projectStatus=" + projectStatus +
+                ", client=" + client +
+                ", components=" + components +
+                '}';
+    }
 }

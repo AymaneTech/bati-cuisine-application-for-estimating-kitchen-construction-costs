@@ -8,8 +8,6 @@ import com.wora.project.application.dto.response.ProjectResponse;
 import com.wora.project.domain.entity.Project;
 import com.wora.project.domain.valueObject.ProjectId;
 
-import java.util.List;
-
 public class ProjectMapper implements BaseEntityDtoMapper<Project, CreateProjectRequest, ProjectResponse, ProjectId> {
 
     @Override
@@ -29,7 +27,7 @@ public class ProjectMapper implements BaseEntityDtoMapper<Project, CreateProject
                 dto.name(),
                 dto.surface(),
                 dto.projectStatus(),
-                new Client(dto.client().id(), dto.client().name(), dto.client().phone(), dto.client().address(), dto.client().isProfessional(), List.of())
+                dto.client()
         )
                 .setProfitMargin(dto.profitMargin())
                 .setTva(dto.tva());

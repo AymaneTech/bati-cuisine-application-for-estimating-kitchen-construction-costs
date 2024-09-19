@@ -3,29 +3,13 @@ package com.wora.common.util;
 import com.wora.common.infrastructure.persistence.SQLConsumer;
 import com.wora.config.DatabaseConnection;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import javax.management.StringValueExp;
+import java.sql.*;
 
 public class QueryExecutor {
     private final static Connection CONNECTION = DatabaseConnection.getInstance().getConnection();
 
     private QueryExecutor() {
-    }
-
-    public static void executeUpdateWithPreparedStatement(final String query, final SQLConsumer<PreparedStatement> executor) {
-        try (final var stmt = CONNECTION.prepareStatement(query)) {
-            executor.run(stmt);
-
-            // after
-            int affectedRows = stmt.executeUpdate();
-            if (affectedRows == 0) {
-                throw new RuntimeException("database operation failed");
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e.getMessage());
-        }
     }
 
     public static void fetchResultWithQuery(final String query, final SQLConsumer<ResultSet> executor) {
@@ -38,21 +22,40 @@ public class QueryExecutor {
     }
 
     public static void executeQueryWithPreparedStatement(final String query, final SQLConsumer<PreparedStatement> executor) {
+        Savepoint savepoint = null;
         try (final var stmt = CONNECTION.prepareStatement(query)) {
+            savepoint = CONNECTION.setSavepoint();
+
             executor.run(stmt);
+
+            CONNECTION.commit();
         } catch (SQLException e) {
+            rollBack(savepoint);
             throw new RuntimeException(e);
         }
     }
 
     public static void executeWithSingleUpdate(final String query, final SQLConsumer<PreparedStatement> executor) {
+        Savepoint savepoint = null;
         try (final var stmt = CONNECTION.prepareStatement(query)) {
-            executor.run(stmt);
+            savepoint = CONNECTION.setSavepoint();
 
+            executor.run(stmt);
             final int affectedRows = stmt.executeUpdate();
             assert affectedRows == 1;
+
+            CONNECTION.commit();
         } catch (SQLException e) {
+            rollBack(savepoint);
             throw new RuntimeException(e);
+        }
+    }
+
+    private static void rollBack(final Savepoint savepoint) {
+        try {
+            CONNECTION.rollback(savepoint);
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
         }
     }
 }

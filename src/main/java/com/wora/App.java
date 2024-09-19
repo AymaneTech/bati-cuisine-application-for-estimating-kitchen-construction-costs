@@ -34,6 +34,13 @@ import com.wora.project.domain.repository.ProjectRepository;
 import com.wora.project.infrastructure.mapper.ProjectResultSetMapper;
 import com.wora.project.infrastructure.persistence.ProjectRepositoryImpl;
 import com.wora.project.infrastructure.presentation.ProjectUi;
+import com.wora.quotation.application.mapper.QuoteMapper;
+import com.wora.quotation.application.service.QuoteService;
+import com.wora.quotation.application.service.impl.QuoteServiceImpl;
+import com.wora.quotation.domain.repository.QuoteRepository;
+import com.wora.quotation.infrastructure.mapper.QuoteResultSetMapper;
+import com.wora.quotation.infrastructure.presentation.QuoteUi;
+import com.wora.quotation.infrastructure.presistence.QuoteRepositoryImpl;
 
 public class App {
     public static void main(String[] args) {
@@ -52,11 +59,15 @@ public class App {
 
         final ProjectReportService projectReportService = new ProjectReportServiceImpl(workerService, materielService);
 
+        final QuoteRepository quoteRepository = new QuoteRepositoryImpl(new QuoteResultSetMapper());
+        final QuoteService quoteService = new QuoteServiceImpl(quoteRepository, new QuoteMapper());
+        final QuoteUi quoteUi = new QuoteUi(quoteService);
+
         final ProjectRepository projectRepository = new ProjectRepositoryImpl(new ProjectResultSetMapper(new ClientResultSetMapper()));
         final ProjectService projectService = new ProjectServiceImpl(projectRepository, new ProjectMapper());
-        final ProjectUi projectUi = new ProjectUi(projectService, projectReportService, clientUi, materielUi, workerUi);
-      
+        final ProjectUi projectUi = new ProjectUi(projectService, projectReportService, clientUi, materielUi, workerUi, quoteUi);
+
         projectUi.create();
-        
+
     }
 }

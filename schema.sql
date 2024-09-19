@@ -64,6 +64,18 @@ CREATE TABLE IF NOT EXISTS workers (
     productivity REAL NOT NULL DEFAULT 1.0
 ) INHERITS (components);
 
+CREATE TABLE IF NOT EXISTS quotes (
+    id UUID PRIMARY KEY,
+    project_id UUID,
+    issue_date DATE,
+    validity_date DATE,
+    accepted BOOLEAN,
+    created_at TIMESTAMP DEFAULT NOW(),
+    updated_at TIMESTAMP DEFAULT NOW(),
+    deleted_at TIMESTAMP,
+    FOREIGN KEY (project_id) REFERENCES projects(id) ON DELETE CASCADE
+);
+
 CREATE
 OR REPLACE FUNCTION update_timestamp_column() RETURNS TRIGGER AS $ $ BEGIN NEW.updated_at = NOW();
 
@@ -82,3 +94,7 @@ UPDATE
 CREATE TRIGGER update_components_timestamp BEFORE
 UPDATE
     ON components FOR EACH ROW EXECUTE FUNCTION update_timestamp_column();
+
+CREATE TRIGGER update_quotes_timestamp BEFORE
+    UPDATE
+    ON quotes FOR EACH ROW EXECUTE FUNCTION update_timestamp_column();

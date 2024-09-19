@@ -11,6 +11,7 @@ import com.wora.project.application.dto.response.ProjectResponse;
 import com.wora.project.application.service.ProjectReportService;
 import com.wora.project.application.service.ProjectService;
 import com.wora.project.domain.enums.ProjectStatus;
+import com.wora.quotation.infrastructure.presentation.QuoteUi;
 
 import static com.wora.common.util.InputScanner.*;
 
@@ -20,18 +21,23 @@ public class ProjectUi {
     private final ClientUi clientUi;
     private final MaterielUi materielUi;
     private final WorkerUi workerUi;
+    private final QuoteUi quoteUi;
 
-    public ProjectUi(ProjectService service, ProjectReportService costCalculatingService, ClientUi clientUi, MaterielUi materielUi, WorkerUi workerUi) {
+    public ProjectUi(ProjectService service, ProjectReportService costCalculatingService, ClientUi clientUi, MaterielUi materielUi, WorkerUi workerUi, QuoteUi quoteUi) {
         this.service = service;
         this.costCalculatingService = costCalculatingService;
         this.clientUi = clientUi;
         this.materielUi = materielUi;
         this.workerUi = workerUi;
+        this.quoteUi = quoteUi;
     }
 
     public void create() {
         final ClientId clientId = clientUi.searchOrCreate();
-        final String name = scanString("Please enter the project name: ", ValidationStrategies.NOT_BLANK);
+        final String name = scanString("Please enter the project name: ", ValidationStrategies.combine(
+                ValidationStrategies.NOT_BLANK,
+                input -> !service.existsByName(input)
+        ));
         final Double surface = scanDouble("Please to enter the surface of " + name + " in m²: ", ValidationStrategies.POSITIVE_DOUBLE);
         final ProjectStatus projectStatus = scanEnum("Please enter the number of project status: ", ProjectStatus.class);
 
@@ -62,8 +68,8 @@ public class ProjectUi {
         );
 
         service.update(saveProject.id(), saveProject);
-
         printReport(saveProject);
+
     }
 
     public void printReport(SaveProjectRequest project) {
@@ -88,5 +94,8 @@ public class ProjectUi {
         System.out.println("Total cost without margin: " + costCalculatingService.calculateWithoutProfitMargin(project));
         System.out.println("Profit Margin: " + costCalculatingService.calculateProfitMargin(project));
         System.out.println("Total cost with margin: " + costCalculatingService.calculateWithProfitMargin(project));
+
+        quoteUi.create(project.id());
+
     }
 }

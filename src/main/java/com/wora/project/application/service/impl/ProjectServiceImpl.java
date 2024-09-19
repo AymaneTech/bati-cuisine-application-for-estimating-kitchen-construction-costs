@@ -64,4 +64,8 @@ public class ProjectServiceImpl implements ProjectService {
     public boolean existsById(ProjectId id) {
         return repository.existsById(id.value());
     }
+
+    public boolean existsByName(String name) {
+        return repository.existsByColumn("name", name);
+    }
 }

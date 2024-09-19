@@ -89,4 +89,16 @@ public class Client extends AbstractEntity<ClientId> {
         this.projects = projects;
         return this;
     }
+
+    @Override
+    public String toString() {
+        return "Client{" +
+                "id=" + id +
+                ", name=" + name +
+                ", phone='" + phone + '\'' +
+                ", address='" + address + '\'' +
+                ", isProfessional=" + isProfessional +
+                ", projects=" + projects +
+                '}';
+    }
 }

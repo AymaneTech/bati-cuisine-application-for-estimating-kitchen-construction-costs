@@ -1,16 +1,22 @@
 package com.wora.quotation.domain;
 
+import com.wora.common.domain.AbstractEntity;
 import com.wora.project.domain.entity.Project;
 import com.wora.quotation.domain.valueObject.QuoteId;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
-public class Quote {
+public class Quote extends AbstractEntity<QuoteId> {
     private QuoteId id;
     private LocalDate issueDate;
     private LocalDate validityDate;
     private Boolean accepted;
     private Project project;
+
+    public Quote() {
+
+    }
 
     public Quote(QuoteId id, LocalDate issueDate, LocalDate validityDate, Boolean accepted, Project project) {
         this.id = id;
@@ -18,6 +24,12 @@ public class Quote {
         this.validityDate = validityDate;
         this.accepted = accepted;
         this.project = project;
+    }
+
+    public Quote(QuoteId id, LocalDate issueDate, LocalDate validityDate, Boolean accepted, Project project, LocalDateTime createdAt, LocalDateTime updatedAt) {
+        this(id, issueDate, validityDate, accepted, project);
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 
     public QuoteId id() {
