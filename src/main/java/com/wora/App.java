@@ -73,6 +73,7 @@ public class App {
         projectUi.setMenuUi(menu);
         clientUi.setMenuUi(menu);
         quoteUi.setMenuUi(menu);
+
         menu.showMenu();
     }
 }
