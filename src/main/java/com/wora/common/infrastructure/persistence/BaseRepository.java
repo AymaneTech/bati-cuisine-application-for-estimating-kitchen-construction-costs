@@ -20,4 +20,6 @@ public interface BaseRepository<Entity, ID> {
     boolean existsById(ID id);
 
     boolean existsByColumn(String columnName, String value);
+
+    void deleteByColumn(String name, String value);
 }

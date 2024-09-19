@@ -6,11 +6,9 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
-import static com.wora.common.util.QueryExecutor.executeQueryWithPreparedStatement;
-import static com.wora.common.util.QueryExecutor.fetchResultWithQuery;
+import static com.wora.common.util.QueryExecutor.*;
 
 public abstract class BaseRepositoryImpl<Entity, ID> implements BaseRepository<Entity, ID> {
 
@@ -89,22 +87,22 @@ public abstract class BaseRepositoryImpl<Entity, ID> implements BaseRepository<E
 
         executeQueryWithPreparedStatement(query, stmt -> {
             stmt.setObject(1, id);
-            int affectedRows = stmt.executeUpdate();
-            if (affectedRows == 0) {
-                throw new RuntimeException("error while deleting this");
-            }
+            isAffectedRows(stmt);
         });
     }
 
-    private <Value> boolean executeQueryReturnBoolean(final String query, Value value) {
-        final AtomicBoolean exists = new AtomicBoolean(false);
+    public void deleteByColumn(String column, String value) {
+        final String query = String.format("""
+                UPDATE %s
+                SET deleted_at = now()
+                WHERE %s = ?
+                """, tableName, column);
         executeQueryWithPreparedStatement(query, stmt -> {
             stmt.setObject(1, value);
-            final ResultSet rs = stmt.executeQuery();
-            if (rs.next()) {
-                exists.set(rs.getBoolean(1));
-            }
+            isAffectedRows(stmt);
+
         });
-        return exists.get();
     }
+
+
 }

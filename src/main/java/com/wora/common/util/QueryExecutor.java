@@ -3,8 +3,8 @@ package com.wora.common.util;
 import com.wora.common.infrastructure.persistence.SQLConsumer;
 import com.wora.config.DatabaseConnection;
 
-import javax.management.StringValueExp;
 import java.sql.*;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class QueryExecutor {
     private final static Connection CONNECTION = DatabaseConnection.getInstance().getConnection();
@@ -41,13 +41,31 @@ public class QueryExecutor {
             savepoint = CONNECTION.setSavepoint();
 
             executor.run(stmt);
-            final int affectedRows = stmt.executeUpdate();
-            assert affectedRows == 1;
+            isAffectedRows(stmt);
 
             CONNECTION.commit();
         } catch (SQLException e) {
             rollBack(savepoint);
             throw new RuntimeException(e);
+        }
+    }
+
+    public static <Value> boolean executeQueryReturnBoolean(final String query, Value value) {
+        final AtomicBoolean exists = new AtomicBoolean(false);
+        executeQueryWithPreparedStatement(query, stmt -> {
+            stmt.setObject(1, value);
+            final ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                exists.set(rs.getBoolean(1));
+            }
+        });
+        return exists.get();
+    }
+
+    public static void isAffectedRows(PreparedStatement stmt) throws SQLException {
+        final int affectedRows = stmt.executeUpdate();
+        if (affectedRows == 0) {
+            throw new RuntimeException("error while deleting this");
         }
     }
 
@@ -58,4 +76,5 @@ public class QueryExecutor {
             throw new RuntimeException(ex);
         }
     }
+
 }
