@@ -1,5 +1,7 @@
 package com.wora.quotation.application.service;
 
+import com.wora.client.domain.valueObject.ClientId;
+import com.wora.project.domain.valueObject.ProjectId;
 import com.wora.quotation.application.dto.request.QuoteRequest;
 import com.wora.quotation.application.dto.response.QuoteResponse;
 import com.wora.quotation.domain.valueObject.QuoteId;
@@ -15,7 +17,11 @@ public interface QuoteService {
 
     QuoteResponse update(QuoteId id, QuoteRequest dto);
 
-    QuoteResponse delete(QuoteId id);
+    void delete(QuoteId id);
 
     boolean existsById(QuoteId id);
+
+    List<QuoteResponse> findByClient(ClientId clientId);
+
+    List<QuoteResponse> findByProject(ProjectId projectId);
 }
