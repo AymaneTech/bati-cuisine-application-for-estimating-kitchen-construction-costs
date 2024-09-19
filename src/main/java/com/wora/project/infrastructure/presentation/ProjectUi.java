@@ -104,7 +104,64 @@ public class ProjectUi {
         service.update(saveProject.id(), saveProject);
         printReport(saveProject);
         quoteUi.create(saveProject.id());
+        this.showMenu();
     }
+
+    public void update() {
+        final UUID id = scanUuid("Please enter the project ID you want to update: ", ValidationStrategies.combine(
+                input -> service.existsById(new ProjectId(input))
+        ));
+
+        ProjectResponse existingProject = service.findById(new ProjectId(id));
+
+        System.out.println("Existing project details:");
+        printReport(existingProject);
+
+        String name = executeIfUserConfirmsWithResult("Do you want to change the project name? (Current: " + existingProject.name() + ")",
+                () -> scanString("Please enter the new project name: ", ValidationStrategies.combine(
+                        ValidationStrategies.NOT_BLANK,
+                        input -> !service.existsByName(input)
+                )), existingProject.name()
+        );
+
+        Double surface = executeIfUserConfirmsWithResult("Do you want to change the surface? (Current: " + existingProject.surface() + "m²)",
+                () -> scanDouble("Please enter the new surface in m²: ", ValidationStrategies.POSITIVE_DOUBLE),
+                existingProject.surface()
+        );
+
+        ProjectStatus projectStatus = executeIfUserConfirmsWithResult("Do you want to change the project status? (Current: " + existingProject.projectStatus() + ")",
+                () -> scanEnum("Please enter the new project status: ", ProjectStatus.class),
+                existingProject.projectStatus()
+        );
+
+        final Double tva = executeIfUserConfirmsWithResult("Do you want to change the TVA? (Current: " + existingProject.tva() + "%)",
+                () -> scanDouble("Please enter the new TVA (%): ", ValidationStrategies.POSITIVE_DOUBLE),
+                existingProject.tva()
+        );
+
+        final Double profitMargin = executeIfUserConfirmsWithResult("Do you want to change the profit margin? (Current: " + existingProject.profitMargin() + "%)",
+                () -> scanDouble("Please enter the new profit margin (%): ", ValidationStrategies.POSITIVE_DOUBLE),
+                existingProject.profitMargin()
+        );
+
+        SaveProjectRequest updatedProject = new SaveProjectRequest(
+                existingProject.id(),
+                name,
+                surface,
+                existingProject.totalCost(),
+                projectStatus,
+                existingProject.client(),
+                tva,
+                profitMargin
+        );
+
+        service.update(updatedProject.id(), updatedProject);
+
+        System.out.println("Project updated successfully!");
+        printReport(updatedProject);
+        this.showMenu();
+    }
+
 
     public void showAll() {
         System.out.println(getTable(service.findAll()));
@@ -156,8 +213,6 @@ public class ProjectUi {
         System.out.println("Total cost without margin: " + costCalculatingService.calculateWithoutProfitMargin(project));
         System.out.println("Profit Margin: " + costCalculatingService.calculateProfitMargin(project));
         System.out.println("Total cost with margin: " + costCalculatingService.calculateWithProfitMargin(project));
-
-        this.showMenu();
     }
 
     public void setMenuUi(MainMenuUi menuUi) {
