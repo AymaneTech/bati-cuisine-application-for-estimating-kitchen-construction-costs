@@ -42,6 +42,8 @@ public class ProjectMapper implements BaseEntityDtoMapper<Project, CreateProject
                 project.totalCost(),
                 project.projectStatus(),
                 project.client(),
+                project.tva(),
+                project.profitMargin(),
                 project.createdAt(),
                 project.updatedAt()
         );

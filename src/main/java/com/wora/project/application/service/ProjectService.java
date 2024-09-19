@@ -24,4 +24,8 @@ public interface ProjectService {
     boolean existsById(ProjectId id);
 
     boolean existsByName(String name);
+
+    void deleteByName(String projectName);
+
+    ProjectResponse findByName(String name);
 }

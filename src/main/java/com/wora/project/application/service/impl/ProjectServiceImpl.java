@@ -44,6 +44,13 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
+    public ProjectResponse findByName(String name) {
+        return repository.findByName( name)
+                .map(mapper::map)
+                .orElseThrow(() -> new ProjectNotFoundException(name));
+    }
+
+    @Override
     public ProjectResponse create(CreateProjectRequest dto) {
         final Project project = repository.create(mapper.map(dto, new ProjectId()));
         return mapper.map(project);
@@ -58,6 +65,11 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public void delete(ProjectId id) {
         repository.delete(id.value());
+    }
+
+    @Override
+    public void deleteByName(String name) {
+        repository.deleteByColumn("name", name);
     }
 
     @Override
