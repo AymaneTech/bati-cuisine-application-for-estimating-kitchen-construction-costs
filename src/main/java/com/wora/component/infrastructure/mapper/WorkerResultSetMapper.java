@@ -3,7 +3,6 @@ package com.wora.component.infrastructure.mapper;
 import com.wora.common.infrastructure.mapper.BaseEntityResultSetMapper;
 import com.wora.component.domain.entity.Worker;
 import com.wora.component.domain.valueObject.ComponentId;
-import com.wora.project.infrastructure.mapper.ProjectResultSetMapper;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -23,8 +22,8 @@ public class WorkerResultSetMapper implements BaseEntityResultSetMapper<Worker> 
                 rs.getDouble("working_hours"),
                 rs.getDouble("productivity"),
                 rs.getTimestamp("created_at").toLocalDateTime(),
-                getDate("updated_at", rs),
-                getDate("deleted_at", rs)
+                getDateTime("updated_at", rs),
+                getDateTime("deleted_at", rs)
         );
     }
 

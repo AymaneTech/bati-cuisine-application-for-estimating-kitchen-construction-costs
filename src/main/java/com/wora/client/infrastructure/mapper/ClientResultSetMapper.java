@@ -8,8 +8,6 @@ import com.wora.common.infrastructure.mapper.BaseEntityResultSetMapper;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -27,8 +25,8 @@ public class ClientResultSetMapper implements BaseEntityResultSetMapper<Client> 
                 rs.getBoolean("is_professional"),
                 List.of(),
                 rs.getTimestamp("created_at").toLocalDateTime(),
-                getDate("updated_at", rs),
-                getDate("deleted_at", rs)
+                getDateTime("updated_at", rs),
+                getDateTime("deleted_at", rs)
         );
     }
 

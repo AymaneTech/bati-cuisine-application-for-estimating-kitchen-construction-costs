@@ -62,8 +62,8 @@ public class ProjectUi {
         );
 
         service.update(saveProject.id(), saveProject);
-
         printReport(saveProject);
+
     }
 
     public void printReport(SaveProjectRequest project) {

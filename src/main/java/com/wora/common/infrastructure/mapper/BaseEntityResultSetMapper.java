@@ -1,9 +1,7 @@
 package com.wora.common.infrastructure.mapper;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Timestamp;
+import java.sql.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public interface BaseEntityResultSetMapper<Entity> {
@@ -11,8 +9,13 @@ public interface BaseEntityResultSetMapper<Entity> {
 
     void map(Entity entity, PreparedStatement stmt) throws SQLException;
 
-    default LocalDateTime getDate(final String columnName, final ResultSet rs) throws SQLException {
-        Timestamp timestamp = rs.getTimestamp(columnName);
+    default LocalDateTime getDateTime(final String columnName, final ResultSet rs) throws SQLException {
+        final Timestamp timestamp = rs.getTimestamp(columnName);
         return timestamp != null ? timestamp.toLocalDateTime() : null;
+    }
+
+    default LocalDate getDate(final String columnName, final ResultSet rs) throws SQLException {
+        Date date = rs.getDate(columnName);
+        return date != null ? date.toLocalDate() : null;
     }
 }
