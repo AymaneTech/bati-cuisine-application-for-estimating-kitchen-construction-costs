@@ -96,10 +96,26 @@ public class ClientUi {
         ));
         final Boolean isProfessional = scanBoolean("is he professional (y/n): ");
 
-        final ClientResponse clientResponse = service.update(new ClientId(id), new ClientRequest(new Name(firstName, lastName), phone, address, isProfessional));
-        System.out.println(getTable(List.of(clientResponse)));
+        System.out.println("\nPlease confirm the updated client information:");
+        System.out.println("First Name: " + firstName);
+        System.out.println("Last Name: " + lastName);
+        System.out.println("Phone: " + phone);
+        System.out.println("Address: " + address);
+        System.out.println("Is Professional: " + (isProfessional ? "Yes" : "No"));
+
+        boolean confirmUpdate = scanBoolean("Do you confirm this update (y/n): ");
+
+        if (confirmUpdate) {
+            final ClientResponse clientResponse = service.update(new ClientId(id), new ClientRequest(new Name(firstName, lastName), phone, address, isProfessional));
+            System.out.println(getTable(List.of(clientResponse)));
+            System.out.println("Client updated successfully!\n");
+        } else {
+            System.out.println("Update cancelled.\n");
+        }
+
         this.showMenu();
     }
+
 
     public void delete() {
         secondaryTitle("Please to follow instructions to delete a client!");
