@@ -56,7 +56,7 @@ public class InputScanner {
     }
 
     public static LocalDate scanDate(String prompt, Predicate<LocalDate> validator) {
-        final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         return scanWithValidation(prompt, input -> LocalDate.parse(input, formatter), validator);
     }
 

@@ -70,6 +70,9 @@ CREATE TABLE IF NOT EXISTS quotes (
     issue_date DATE,
     validity_date DATE,
     accepted BOOLEAN,
+    created_at TIMESTAMP DEFAULT NOW(),
+    updated_at TIMESTAMP DEFAULT NOW(),
+    deleted_at TIMESTAMP,
     FOREIGN KEY (project_id) REFERENCES projects(id) ON DELETE CASCADE
 );
 
@@ -91,3 +94,7 @@ UPDATE
 CREATE TRIGGER update_components_timestamp BEFORE
 UPDATE
     ON components FOR EACH ROW EXECUTE FUNCTION update_timestamp_column();
+
+CREATE TRIGGER update_quotes_timestamp BEFORE
+    UPDATE
+    ON quotes FOR EACH ROW EXECUTE FUNCTION update_timestamp_column();
