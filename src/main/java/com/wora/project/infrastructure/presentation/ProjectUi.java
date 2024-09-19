@@ -1,5 +1,7 @@
 package com.wora.project.infrastructure.presentation;
 
+import com.github.freva.asciitable.AsciiTable;
+import com.github.freva.asciitable.Column;
 import com.wora.client.domain.valueObject.ClientId;
 import com.wora.client.infrastructure.presentation.ClientUi;
 import com.wora.common.util.ValidationStrategies;
@@ -12,7 +14,12 @@ import com.wora.project.application.dto.response.ProjectResponse;
 import com.wora.project.application.service.ProjectReportService;
 import com.wora.project.application.service.ProjectService;
 import com.wora.project.domain.enums.ProjectStatus;
+import com.wora.project.domain.valueObject.ProjectId;
 import com.wora.quotation.infrastructure.presentation.QuoteUi;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.UUID;
 
 import static com.wora.common.util.InputScanner.*;
 import static com.wora.common.util.Print.title;
@@ -49,10 +56,10 @@ public class ProjectUi {
 
         switch (userChoice) {
             case 1 -> this.create();
-//            case 2 -> this.update();
-//            case 3 -> this.delete();
-//            case 4 -> this.showAll();
-//            case 5 -> this.showById();
+            case 2 -> this.update();
+            case 3 -> this.delete();
+            case 4 -> this.showAll();
+            case 5 -> this.showById();
             case 6 -> menuUi.showMenu();
             case 0 -> System.exit(0);
             default -> throw new IllegalArgumentException("Invalid choice");
@@ -96,7 +103,35 @@ public class ProjectUi {
 
         service.update(saveProject.id(), saveProject);
         printReport(saveProject);
+        quoteUi.create(saveProject.id());
+    }
 
+    public void showAll() {
+        System.out.println(getTable(service.findAll()));
+        this.showMenu();
+    }
+
+    public void showById() {
+        final UUID id = scanUuid("Please to enter the project id: ", ValidationStrategies.combine(
+                input -> service.existsById(new ProjectId(input))
+        ));
+
+        printReport(service.findById(new ProjectId(id)));
+        this.showMenu();
+    }
+
+    public void delete() {
+        final String projectName = scanString("Please to enter the name of project you wish to delete", ValidationStrategies.combine(
+                ValidationStrategies.NOT_BLANK,
+                service::existsByName
+        ));
+        service.deleteByName(projectName);
+        System.out.println(" project deleted successfully!");
+        this.showMenu();
+    }
+
+    public void printReport(ProjectResponse project) {
+        printReport(new SaveProjectRequest(project.id(), project.name(), project.surface(), project.totalCost(), project.projectStatus(), project.client(), project.tva(), project.profitMargin()));
     }
 
     public void printReport(SaveProjectRequest project) {
@@ -122,11 +157,24 @@ public class ProjectUi {
         System.out.println("Profit Margin: " + costCalculatingService.calculateProfitMargin(project));
         System.out.println("Total cost with margin: " + costCalculatingService.calculateWithProfitMargin(project));
 
-        quoteUi.create(project.id());
-
+        this.showMenu();
     }
 
     public void setMenuUi(MainMenuUi menuUi) {
         this.menuUi = menuUi;
+    }
+
+    private String getTable(List<ProjectResponse> projects) {
+        return AsciiTable.getTable(projects, Arrays.asList(
+                new Column().header("Project ID").with(p -> p.id().value().toString()),
+                new Column().header("Project Name").with(ProjectResponse::name),
+                new Column().header("Surface").with(p -> String.format("%.2f", p.surface())),
+                new Column().header("Total Cost").with(p -> String.format("%.2f", p.totalCost())),
+                new Column().header("Project Status").with(p -> p.projectStatus().name()),
+                new Column().header("Client Name").with(p -> p.client().name().fullName()),
+                new Column().header("Client ID").with(p -> p.client().id().value().toString()),
+                new Column().header("Created At").with(p -> p.createdAt().toString()),
+                new Column().header("Last Updated At").with(p -> p.updatedAt() != null ? p.updatedAt().toString() : "Not Updated Yet")
+        ));
     }
 }

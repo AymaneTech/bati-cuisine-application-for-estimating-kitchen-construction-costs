@@ -93,7 +93,21 @@ public class ProjectRepositoryImpl extends BaseRepositoryImpl<Project, UUID> imp
 
     @Override
     public Optional<Project> findByName(String name) {
-        return findByColumn("name", name);
+        final AtomicReference<Optional<Project>> project = new AtomicReference<>(Optional.empty());
+        final String query = """
+                SELECT p.*, c.* FROM projects p
+                JOIN clients c ON p.client_id = c.id
+                WHERE p.name = ?
+                AND p.deleted_at IS NULL
+                """;
+        executeQueryWithPreparedStatement(query, stmt -> {
+            stmt.setObject(1, name);
+            final ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                project.set(Optional.of(mapper.map(rs)));
+            }
+        });
+        return project.get();
     }
 
     @Override
