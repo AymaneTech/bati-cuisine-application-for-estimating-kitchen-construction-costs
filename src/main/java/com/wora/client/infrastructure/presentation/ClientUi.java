@@ -167,6 +167,6 @@ public class ClientUi {
     }
 
     public void setMenuUi(MainMenuUi mainMenuUi) {
-        this.menuUi = menuUi;
+        this.menuUi = mainMenuUi;
     }
 }
