@@ -76,6 +76,7 @@ public class ProjectUi {
         final ProjectStatus projectStatus = scanEnum("Please enter the number of project status: ", ProjectStatus.class);
 
         final ProjectResponse createdProject = service.create(new CreateProjectRequest(name, surface, projectStatus, clientId));
+        System.out.println("proejct created "+ createdProject);
 
         executeIfUserConfirms("Do you want to add new materiels",
                 () -> materielUi.create(createdProject.id())
@@ -94,7 +95,7 @@ public class ProjectUi {
                 () -> scanDouble("Please to enter profit margin (%): ", ValidationStrategies.POSITIVE_DOUBLE),
                 1.0
         );
-        SaveProjectRequest saveProject = new SaveProjectRequest(
+        final SaveProjectRequest saveProject = new SaveProjectRequest(
                 createdProject.id(), createdProject.name(),
                 createdProject.surface(), createdProject.totalCost(),
                 createdProject.projectStatus(), createdProject.client(),
