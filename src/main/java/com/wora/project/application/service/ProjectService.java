@@ -22,4 +22,6 @@ public interface ProjectService {
     void delete(ProjectId id);
 
     boolean existsById(ProjectId id);
+
+    boolean existsByName(String name);
 }

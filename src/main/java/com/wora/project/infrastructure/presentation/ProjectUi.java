@@ -31,7 +31,10 @@ public class ProjectUi {
 
     public void create() {
         final ClientId clientId = clientUi.searchOrCreate();
-        final String name = scanString("Please enter the project name: ", ValidationStrategies.NOT_BLANK);
+        final String name = scanString("Please enter the project name: ", ValidationStrategies.combine(
+                ValidationStrategies.NOT_BLANK,
+                input -> !service.existsByName(input)
+        ));
         final Double surface = scanDouble("Please to enter the surface of " + name + " in m²: ", ValidationStrategies.POSITIVE_DOUBLE);
         final ProjectStatus projectStatus = scanEnum("Please enter the number of project status: ", ProjectStatus.class);
 
