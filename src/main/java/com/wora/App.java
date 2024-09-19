@@ -25,6 +25,7 @@ import com.wora.component.infrastructure.presentation.MaterielUi;
 import com.wora.component.infrastructure.presentation.WorkerUi;
 import com.wora.component.infrastructure.presistence.MaterielRepositoryImpl;
 import com.wora.component.infrastructure.presistence.WorkerRepositoryImpl;
+import com.wora.mainMenu.MainMenuUi;
 import com.wora.project.application.mapper.ProjectMapper;
 import com.wora.project.application.service.ProjectReportService;
 import com.wora.project.application.service.ProjectService;
@@ -67,7 +68,11 @@ public class App {
         final ProjectService projectService = new ProjectServiceImpl(projectRepository, new ProjectMapper());
         final ProjectUi projectUi = new ProjectUi(projectService, projectReportService, clientUi, materielUi, workerUi, quoteUi);
 
-        projectUi.create();
 
+        final MainMenuUi menu = new MainMenuUi(clientUi, projectUi, quoteUi);
+        projectUi.setMenuUi(menu);
+        clientUi.setMenuUi(menu);
+        quoteUi.setMenuUi(menu);
+        menu.showMenu();
     }
 }

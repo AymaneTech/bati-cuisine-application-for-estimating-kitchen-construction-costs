@@ -5,6 +5,7 @@ import com.wora.client.infrastructure.presentation.ClientUi;
 import com.wora.common.util.ValidationStrategies;
 import com.wora.component.infrastructure.presentation.MaterielUi;
 import com.wora.component.infrastructure.presentation.WorkerUi;
+import com.wora.mainMenu.MainMenuUi;
 import com.wora.project.application.dto.request.CreateProjectRequest;
 import com.wora.project.application.dto.request.SaveProjectRequest;
 import com.wora.project.application.dto.response.ProjectResponse;
@@ -14,6 +15,7 @@ import com.wora.project.domain.enums.ProjectStatus;
 import com.wora.quotation.infrastructure.presentation.QuoteUi;
 
 import static com.wora.common.util.InputScanner.*;
+import static com.wora.common.util.Print.title;
 
 public class ProjectUi {
     private final ProjectService service;
@@ -22,6 +24,7 @@ public class ProjectUi {
     private final MaterielUi materielUi;
     private final WorkerUi workerUi;
     private final QuoteUi quoteUi;
+    private MainMenuUi menuUi;
 
     public ProjectUi(ProjectService service, ProjectReportService costCalculatingService, ClientUi clientUi, MaterielUi materielUi, WorkerUi workerUi, QuoteUi quoteUi) {
         this.service = service;
@@ -30,6 +33,30 @@ public class ProjectUi {
         this.materielUi = materielUi;
         this.workerUi = workerUi;
         this.quoteUi = quoteUi;
+    }
+
+    public void showMenu() {
+        title("Welcome to project menu");
+        System.out.println("1. Create new project");
+        System.out.println("2. Update an existing project");
+        System.out.println("3. Delete an existing project");
+        System.out.println("4. Show all projects");
+        System.out.println("5. Show project by id");
+        System.out.println("6. Back to main menu.");
+        System.out.println("0. exit.");
+
+        Integer userChoice = scanInt("Please to enter you choice: ", ValidationStrategies.POSITIVE_INT);
+
+        switch (userChoice) {
+            case 1 -> this.create();
+//            case 2 -> this.update();
+//            case 3 -> this.delete();
+//            case 4 -> this.showAll();
+//            case 5 -> this.showById();
+            case 6 -> menuUi.showMenu();
+            case 0 -> System.exit(0);
+            default -> throw new IllegalArgumentException("Invalid choice");
+        }
     }
 
     public void create() {
@@ -97,5 +124,9 @@ public class ProjectUi {
 
         quoteUi.create(project.id());
 
+    }
+
+    public void setMenuUi(MainMenuUi menuUi) {
+        this.menuUi = menuUi;
     }
 }

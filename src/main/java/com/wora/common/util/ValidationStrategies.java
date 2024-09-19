@@ -12,7 +12,7 @@ public class ValidationStrategies {
     private static final Pattern PHONE_PATTERN = Pattern.compile("^(?:\\+212[\\s]?|0)([5-7]\\d{8})$");
 
     public static final Predicate<String> NOT_BLANK = s -> !s.isEmpty();
-    public static final Predicate<Integer> POSITIVE_INT = i -> i > 0;
+    public static final Predicate<Integer> POSITIVE_INT = i -> i >= 0;
     public static final Predicate<Double> POSITIVE_DOUBLE = i -> i > 0;
     public static final Predicate<Float> POSITIVE_FLOAT = i -> i > 0;
     public static final Predicate<LocalDate> FUTURE_DATE = d -> d.isAfter(LocalDate.now());

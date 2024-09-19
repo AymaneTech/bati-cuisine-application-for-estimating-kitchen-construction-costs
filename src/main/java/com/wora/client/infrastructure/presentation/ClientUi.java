@@ -8,6 +8,7 @@ import com.wora.client.application.service.ClientService;
 import com.wora.client.domain.valueObject.ClientId;
 import com.wora.client.domain.valueObject.Name;
 import com.wora.common.util.ValidationStrategies;
+import com.wora.mainMenu.MainMenuUi;
 
 import java.util.Arrays;
 import java.util.List;
@@ -19,6 +20,7 @@ import static com.wora.common.util.Print.title;
 
 public class ClientUi {
     private final ClientService service;
+    private MainMenuUi menuUi;
 
     public ClientUi(ClientService service) {
         this.service = service;
@@ -31,6 +33,8 @@ public class ClientUi {
         System.out.println("3. Delete an existing client");
         System.out.println("4. Show all clients");
         System.out.println("5. Show client by id");
+        System.out.println("6. Back to main menu.");
+        System.out.println("0. exit.");
 
         Integer userChoice = scanInt("Please to enter you choice: ", ValidationStrategies.POSITIVE_INT);
 
@@ -40,6 +44,8 @@ public class ClientUi {
             case 3 -> this.delete();
             case 4 -> this.showAll();
             case 5 -> this.showById();
+            case 6 -> menuUi.showMenu();
+            case 0 -> System.exit(0);
             default -> throw new IllegalArgumentException("Invalid choice");
         }
     }
@@ -158,5 +164,9 @@ public class ClientUi {
                 new Column().header("Created At").with(client -> client.createdAt().toString()),
                 new Column().header("Last Updated At").with(client -> client.updatedAt() != null ? client.updatedAt().toString() : "Not Updated Yet")
         ));
+    }
+
+    public void setMenuUi(MainMenuUi mainMenuUi) {
+        this.menuUi = menuUi;
     }
 }

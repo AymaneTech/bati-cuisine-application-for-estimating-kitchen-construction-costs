@@ -1,6 +1,7 @@
 package com.wora.quotation.infrastructure.presentation;
 
 import com.wora.common.util.ValidationStrategies;
+import com.wora.mainMenu.MainMenuUi;
 import com.wora.project.domain.valueObject.ProjectId;
 import com.wora.quotation.application.dto.request.QuoteRequest;
 import com.wora.quotation.application.service.QuoteService;
@@ -11,9 +12,14 @@ import static com.wora.common.util.InputScanner.*;
 
 public class QuoteUi {
     private final QuoteService service;
+    private MainMenuUi menuUi;
 
     public QuoteUi(QuoteService service) {
         this.service = service;
+    }
+
+    public void showMenu() {
+
     }
 
     public void create(ProjectId projectId) {
@@ -28,5 +34,9 @@ public class QuoteUi {
             service.create(new QuoteRequest(issueDate, validityDate, accepted, projectId));
             System.out.println("Quote saved.");
         });
+    }
+
+    public void setMenuUi(MainMenuUi menuUi) {
+        this.menuUi = menuUi;
     }
 }
