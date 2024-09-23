@@ -7,6 +7,9 @@ import com.wora.component.application.dto.response.WorkerResponse;
 import com.wora.component.application.services.ComponentService;
 import com.wora.project.application.dto.request.SaveProjectRequest;
 import com.wora.project.application.service.ProjectReportService;
+import com.wora.project.domain.valueObject.ProjectId;
+
+import java.util.function.Function;
 
 public class ProjectReportServiceImpl implements ProjectReportService {
     private final ComponentService<WorkerRequest, WorkerResponse> workerService;
@@ -19,14 +22,9 @@ public class ProjectReportServiceImpl implements ProjectReportService {
 
     @Override
     public Double calculateWithoutProfitMargin(SaveProjectRequest dto) {
-        final Double materielCost = materielService.calculateTotalCostWithTva(materielService.findAllByProjectId(dto.id()));
-        final Double workerCost = workerService.calculateTotalCostWithTva(workerService.findAllByProjectId(dto.id()));
-        final Double totalCostWithoutTva = materielCost + workerCost;
-
-        if (dto.tva() > 0) {
-            return formatDouble(totalCostWithoutTva * (1 + dto.tva() / 100));
-        }
-        return formatDouble(totalCostWithoutTva);
+        return formatDouble(
+                calculateTotal(dto, this::withTvaCalc, this::withoutTvaCalc)
+        );
     }
 
     @Override
@@ -40,6 +38,23 @@ public class ProjectReportServiceImpl implements ProjectReportService {
         final Double totalCostWithoutMargin = calculateWithoutProfitMargin(dto);
         final Double profitMarginAmount = calculateProfitMargin(dto);
         return formatDouble(totalCostWithoutMargin + profitMarginAmount);
+    }
+
+    private Double calculateTotal(SaveProjectRequest dto,
+                                  Function<ProjectId, Double> withTvaCalc,
+                                  Function<ProjectId, Double> withoutTvaCalc) {
+        return dto.applyTva() ? withTvaCalc.apply(dto.id())
+                : withoutTvaCalc.apply(dto.id());
+    }
+
+    private Double withTvaCalc(ProjectId projectId) {
+        return materielService.calculateTotalCostWithTva(materielService.findAllByProjectId(projectId))
+                + workerService.calculateTotalCostWithTva(workerService.findAllByProjectId(projectId));
+    }
+
+    private Double withoutTvaCalc(ProjectId projectId) {
+        return materielService.calculateTotalCost(materielService.findAllByProjectId(projectId))
+                + workerService.calculateTotalCost(workerService.findAllByProjectId(projectId));
     }
 
     private Double formatDouble(Double d) {

@@ -14,9 +14,7 @@ public class Project extends AbstractEntity<ProjectId> {
     private ProjectId id;
     private String name;
     private Double profitMargin;
-    private Double tva;
     private Double surface;
-    private Double totalCost;
     private ProjectStatus projectStatus;
     private Client client;
     private List<Component> components = new ArrayList<>();
@@ -69,31 +67,8 @@ public class Project extends AbstractEntity<ProjectId> {
         return this;
     }
 
-    public Double tva() {
-        return tva;
-    }
-
-    public Project setTva(Double tva) {
-        this.tva = tva;
-        return this;
-    }
-
     public Double surface() {
         return surface;
-    }
-
-    public Project setSurface(Double surface) {
-        this.surface = surface;
-        return this;
-    }
-
-    public Double totalCost() {
-        return totalCost;
-    }
-
-    public Project setTotalCost(Double totalCost) {
-        this.totalCost = totalCost;
-        return this;
     }
 
     public ProjectStatus projectStatus() {
@@ -129,9 +104,7 @@ public class Project extends AbstractEntity<ProjectId> {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", profitMargin=" + profitMargin +
-                ", tva=" + tva +
                 ", surface=" + surface +
-                ", totalCost=" + totalCost +
                 ", projectStatus=" + projectStatus +
                 ", client=" + client +
                 ", components=" + components +

@@ -29,8 +29,7 @@ public class ProjectMapper implements BaseEntityDtoMapper<Project, CreateProject
                 dto.projectStatus(),
                 dto.client()
         )
-                .setProfitMargin(dto.profitMargin())
-                .setTva(dto.tva());
+                .setProfitMargin(dto.profitMargin());
     }
 
     @Override
@@ -39,10 +38,8 @@ public class ProjectMapper implements BaseEntityDtoMapper<Project, CreateProject
                 project.id(),
                 project.name(),
                 project.surface(),
-                project.totalCost(),
                 project.projectStatus(),
                 project.client(),
-                project.tva(),
                 project.profitMargin(),
                 project.createdAt(),
                 project.updatedAt()

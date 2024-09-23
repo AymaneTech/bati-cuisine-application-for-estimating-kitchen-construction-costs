@@ -1,19 +1,5 @@
 package com.wora.project.infrastructure.presentation;
 
-import static com.wora.common.util.InputScanner.clearScreen;
-import static com.wora.common.util.InputScanner.executeIfUserConfirms;
-import static com.wora.common.util.InputScanner.executeIfUserConfirmsWithResult;
-import static com.wora.common.util.InputScanner.scanDouble;
-import static com.wora.common.util.InputScanner.scanEnum;
-import static com.wora.common.util.InputScanner.scanInt;
-import static com.wora.common.util.InputScanner.scanString;
-import static com.wora.common.util.InputScanner.scanUuid;
-import static com.wora.common.util.Print.title;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.UUID;
-
 import com.github.freva.asciitable.AsciiTable;
 import com.github.freva.asciitable.Column;
 import com.wora.client.domain.valueObject.ClientId;
@@ -30,6 +16,13 @@ import com.wora.project.application.service.ProjectService;
 import com.wora.project.domain.enums.ProjectStatus;
 import com.wora.project.domain.valueObject.ProjectId;
 import com.wora.quotation.infrastructure.presentation.QuoteUi;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.UUID;
+
+import static com.wora.common.util.InputScanner.*;
+import static com.wora.common.util.Print.title;
 
 public class ProjectUi {
     private final ProjectService service;
@@ -92,10 +85,7 @@ public class ProjectUi {
                 () -> workerUi.create(createdProject.id())
         );
 
-        final Double tva = executeIfUserConfirmsWithResult("Do you want to apply TVA ",
-                () -> scanDouble("Please to enter the TVA (%): ", ValidationStrategies.POSITIVE_DOUBLE),
-                0.0
-        );
+        final Boolean applyTva = scanBoolean("Do you want to apply TVA (y/n): ");
 
         final Double profitMargin = executeIfUserConfirmsWithResult("Do you want to apply profit Margin ",
                 () -> scanDouble("Please to enter profit margin (%): ", ValidationStrategies.POSITIVE_DOUBLE),
@@ -103,9 +93,9 @@ public class ProjectUi {
         );
         final SaveProjectRequest saveProject = new SaveProjectRequest(
                 createdProject.id(), createdProject.name(),
-                createdProject.surface(), createdProject.totalCost(),
+                createdProject.surface(),
                 createdProject.projectStatus(), createdProject.client(),
-                tva, profitMargin
+                applyTva, profitMargin
         );
 
         service.update(saveProject.id(), saveProject);
@@ -141,11 +131,6 @@ public class ProjectUi {
                 existingProject.projectStatus()
         );
 
-        final Double tva = executeIfUserConfirmsWithResult("Do you want to change the TVA? (Current: " + existingProject.tva() + "%)",
-                () -> scanDouble("Please enter the new TVA (%): ", ValidationStrategies.POSITIVE_DOUBLE),
-                existingProject.tva()
-        );
-
         final Double profitMargin = executeIfUserConfirmsWithResult("Do you want to change the profit margin? (Current: " + existingProject.profitMargin() + "%)",
                 () -> scanDouble("Please enter the new profit margin (%): ", ValidationStrategies.POSITIVE_DOUBLE),
                 existingProject.profitMargin()
@@ -155,10 +140,9 @@ public class ProjectUi {
                 existingProject.id(),
                 name,
                 surface,
-                existingProject.totalCost(),
                 projectStatus,
                 existingProject.client(),
-                tva,
+                false,
                 profitMargin
         );
 
@@ -195,7 +179,7 @@ public class ProjectUi {
     }
 
     public void printReport(ProjectResponse project) {
-        printReport(new SaveProjectRequest(project.id(), project.name(), project.surface(), project.totalCost(), project.projectStatus(), project.client(), project.tva(), project.profitMargin()));
+        printReport(new SaveProjectRequest(project.id(), project.name(), project.surface(), project.projectStatus(), project.client(), false, project.profitMargin()));
     }
 
     public void printReport(SaveProjectRequest project) {
@@ -231,7 +215,6 @@ public class ProjectUi {
                 new Column().header("Project ID").with(p -> p.id().value().toString()),
                 new Column().header("Project Name").with(ProjectResponse::name),
                 new Column().header("Surface").with(p -> String.format("%.2f", p.surface())),
-                new Column().header("Total Cost").with(p -> String.format("%.2f", p.totalCost())),
                 new Column().header("Project Status").with(p -> p.projectStatus().name()),
                 new Column().header("Client Name").with(p -> p.client().name().fullName()),
                 new Column().header("Client ID").with(p -> p.client().id().value().toString()),

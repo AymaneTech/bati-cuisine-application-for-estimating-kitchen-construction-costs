@@ -49,7 +49,6 @@ public class ProjectResultSetMapper implements BaseEntityResultSetMapper<Project
                 getDateTime("updated_at", rs),
                 getDateTime("deleted_at", rs)
         )
-                .setTva(rs.getDouble("tva"))
                 .setProfitMargin(rs.getDouble("profit_margin"));
     }
 

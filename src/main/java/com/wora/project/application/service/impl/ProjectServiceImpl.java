@@ -45,7 +45,7 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public ProjectResponse findByName(String name) {
-        return repository.findByName( name)
+        return repository.findByName(name)
                 .map(mapper::map)
                 .orElseThrow(() -> new ProjectNotFoundException(name));
     }

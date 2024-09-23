@@ -6,7 +6,7 @@ import com.wora.project.domain.valueObject.ProjectId;
 
 import java.time.LocalDateTime;
 
-public record ProjectResponse(ProjectId id, String name, Double surface, Double totalCost, ProjectStatus projectStatus,
-                              Client client, Double tva, Double profitMargin, LocalDateTime createdAt,
+public record ProjectResponse(ProjectId id, String name, Double surface, ProjectStatus projectStatus,
+                              Client client, Double profitMargin, LocalDateTime createdAt,
                               LocalDateTime updatedAt) {
 }

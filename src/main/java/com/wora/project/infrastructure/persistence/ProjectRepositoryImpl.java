@@ -74,7 +74,7 @@ public class ProjectRepositoryImpl extends BaseRepositoryImpl<Project, UUID> imp
         final String query = """
                 UPDATE projects
                 SET name = ?, surface = ?, project_status = ?::project_status,
-                client_id = ?, profit_margin = ?, tva = ?
+                client_id = ?, profit_margin = ?
                 WHERE id = ?
                 """;
         executeWithSingleUpdate(query, stmt -> {
@@ -84,7 +84,6 @@ public class ProjectRepositoryImpl extends BaseRepositoryImpl<Project, UUID> imp
             stmt.setObject(count++, project.projectStatus().toString());
             stmt.setObject(count++, project.client().id().value());
             stmt.setDouble(count++, project.profitMargin());
-            stmt.setDouble(count++, project.tva());
             stmt.setObject(count++, project.id().value());
         });
         return findById(project.id().value())
