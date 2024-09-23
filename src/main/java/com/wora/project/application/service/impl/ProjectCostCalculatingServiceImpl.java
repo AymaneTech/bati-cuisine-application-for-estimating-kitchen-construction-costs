@@ -7,21 +7,57 @@ import com.wora.component.application.dto.response.WorkerResponse;
 import com.wora.component.application.services.ComponentService;
 import com.wora.project.application.dto.request.SaveProjectRequest;
 import com.wora.project.application.service.ProjectCostCalculatingService;
-import com.wora.project.application.service.ProjectService;
+import com.wora.project.domain.valueObject.ProjectId;
+
+import java.util.function.Function;
 
 public class ProjectCostCalculatingServiceImpl implements ProjectCostCalculatingService {
     private final ComponentService<WorkerRequest, WorkerResponse> workerService;
     private final ComponentService<MaterielRequest, MaterielResponse> materielService;
-    private final ProjectService projectService;
 
-    public ProjectCostCalculatingServiceImpl(ComponentService<WorkerRequest, WorkerResponse> workerService, ComponentService<MaterielRequest, MaterielResponse> materielService, ProjectService projectService) {
+    public ProjectCostCalculatingServiceImpl(ComponentService<WorkerRequest, WorkerResponse> workerService, ComponentService<MaterielRequest, MaterielResponse> materielService) {
         this.workerService = workerService;
         this.materielService = materielService;
-        this.projectService = projectService;
     }
 
     @Override
-    public void calculate(SaveProjectRequest dto) {
+    public Double calculateWithoutProfitMargin(SaveProjectRequest dto) {
+        return formatDouble(
+                calculateTotal(dto, this::withTvaCalc, this::withoutTvaCalc)
+        );
+    }
 
+    @Override
+    public Double calculateProfitMargin(SaveProjectRequest dto) {
+        Double totalCost = calculateWithoutProfitMargin(dto);
+        return formatDouble((totalCost * dto.profitMargin()) / 100);
+    }
+
+    @Override
+    public Double calculateWithProfitMargin(SaveProjectRequest dto) {
+        final Double totalCostWithoutMargin = calculateWithoutProfitMargin(dto);
+        final Double profitMarginAmount = calculateProfitMargin(dto);
+        return formatDouble(totalCostWithoutMargin + profitMarginAmount);
+    }
+
+    private Double calculateTotal(SaveProjectRequest dto,
+                                  Function<ProjectId, Double> withTvaCalc,
+                                  Function<ProjectId, Double> withoutTvaCalc) {
+        return dto.applyTva() ? withTvaCalc.apply(dto.id())
+                : withoutTvaCalc.apply(dto.id());
+    }
+
+    private Double withTvaCalc(ProjectId projectId) {
+        return materielService.calculateTotalCostWithTva(materielService.findAllByProjectId(projectId))
+                + workerService.calculateTotalCostWithTva(workerService.findAllByProjectId(projectId));
+    }
+
+    private Double withoutTvaCalc(ProjectId projectId) {
+        return materielService.calculateTotalCost(materielService.findAllByProjectId(projectId))
+                + workerService.calculateTotalCost(workerService.findAllByProjectId(projectId));
+    }
+
+    private Double formatDouble(Double d) {
+        return Double.valueOf(String.format("%.2f", d));
     }
 }

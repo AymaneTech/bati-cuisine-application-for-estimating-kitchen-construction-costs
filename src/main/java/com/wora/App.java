@@ -27,9 +27,9 @@ import com.wora.component.infrastructure.presistence.MaterielRepositoryImpl;
 import com.wora.component.infrastructure.presistence.WorkerRepositoryImpl;
 import com.wora.mainMenu.MainMenuUi;
 import com.wora.project.application.mapper.ProjectMapper;
-import com.wora.project.application.service.ProjectReportService;
+import com.wora.project.application.service.ProjectCostCalculatingService;
 import com.wora.project.application.service.ProjectService;
-import com.wora.project.application.service.impl.ProjectReportServiceImpl;
+import com.wora.project.application.service.impl.ProjectCostCalculatingServiceImpl;
 import com.wora.project.application.service.impl.ProjectServiceImpl;
 import com.wora.project.domain.repository.ProjectRepository;
 import com.wora.project.infrastructure.mapper.ProjectResultSetMapper;
@@ -58,7 +58,7 @@ public class App {
         final ComponentService<WorkerRequest, WorkerResponse> workerService = new WorkerServiceImpl(workerRepository, new WorkerMapper());
         final WorkerUi workerUi = new WorkerUi(workerService);
 
-        final ProjectReportService projectReportService = new ProjectReportServiceImpl(workerService, materielService);
+        final ProjectCostCalculatingService projectCostCalculatingService = new ProjectCostCalculatingServiceImpl(workerService, materielService);
 
         final QuoteRepository quoteRepository = new QuoteRepositoryImpl(new QuoteResultSetMapper());
         final QuoteService quoteService = new QuoteServiceImpl(quoteRepository, new QuoteMapper());
@@ -66,7 +66,7 @@ public class App {
 
         final ProjectRepository projectRepository = new ProjectRepositoryImpl(new ProjectResultSetMapper(new ClientResultSetMapper()));
         final ProjectService projectService = new ProjectServiceImpl(projectRepository, new ProjectMapper());
-        final ProjectUi projectUi = new ProjectUi(projectService, projectReportService, clientUi, materielUi, workerUi, quoteUi);
+        final ProjectUi projectUi = new ProjectUi(projectService, projectCostCalculatingService, clientUi, materielUi, workerUi, quoteUi);
 
 
         final MainMenuUi menu = new MainMenuUi(clientUi, projectUi, quoteUi);

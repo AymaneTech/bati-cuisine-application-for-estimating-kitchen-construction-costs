@@ -11,7 +11,7 @@ import com.wora.mainMenu.MainMenuUi;
 import com.wora.project.application.dto.request.CreateProjectRequest;
 import com.wora.project.application.dto.request.SaveProjectRequest;
 import com.wora.project.application.dto.response.ProjectResponse;
-import com.wora.project.application.service.ProjectReportService;
+import com.wora.project.application.service.ProjectCostCalculatingService;
 import com.wora.project.application.service.ProjectService;
 import com.wora.project.domain.enums.ProjectStatus;
 import com.wora.project.domain.valueObject.ProjectId;
@@ -26,14 +26,14 @@ import static com.wora.common.util.Print.title;
 
 public class ProjectUi {
     private final ProjectService service;
-    private final ProjectReportService costCalculatingService;
+    private final ProjectCostCalculatingService costCalculatingService;
     private final ClientUi clientUi;
     private final MaterielUi materielUi;
     private final WorkerUi workerUi;
     private final QuoteUi quoteUi;
     private MainMenuUi menuUi;
 
-    public ProjectUi(ProjectService service, ProjectReportService costCalculatingService, ClientUi clientUi, MaterielUi materielUi, WorkerUi workerUi, QuoteUi quoteUi) {
+    public ProjectUi(ProjectService service, ProjectCostCalculatingService costCalculatingService, ClientUi clientUi, MaterielUi materielUi, WorkerUi workerUi, QuoteUi quoteUi) {
         this.service = service;
         this.costCalculatingService = costCalculatingService;
         this.clientUi = clientUi;
@@ -91,6 +91,7 @@ public class ProjectUi {
                 () -> scanDouble("Please to enter profit margin (%): ", ValidationStrategies.POSITIVE_DOUBLE),
                 1.0
         );
+        
         final SaveProjectRequest saveProject = new SaveProjectRequest(
                 createdProject.id(), createdProject.name(),
                 createdProject.surface(),
