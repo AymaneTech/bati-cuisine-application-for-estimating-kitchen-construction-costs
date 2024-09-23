@@ -1,5 +1,19 @@
 package com.wora.project.infrastructure.presentation;
 
+import static com.wora.common.util.InputScanner.clearScreen;
+import static com.wora.common.util.InputScanner.executeIfUserConfirms;
+import static com.wora.common.util.InputScanner.executeIfUserConfirmsWithResult;
+import static com.wora.common.util.InputScanner.scanDouble;
+import static com.wora.common.util.InputScanner.scanEnum;
+import static com.wora.common.util.InputScanner.scanInt;
+import static com.wora.common.util.InputScanner.scanString;
+import static com.wora.common.util.InputScanner.scanUuid;
+import static com.wora.common.util.Print.title;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.UUID;
+
 import com.github.freva.asciitable.AsciiTable;
 import com.github.freva.asciitable.Column;
 import com.wora.client.domain.valueObject.ClientId;
@@ -16,13 +30,6 @@ import com.wora.project.application.service.ProjectService;
 import com.wora.project.domain.enums.ProjectStatus;
 import com.wora.project.domain.valueObject.ProjectId;
 import com.wora.quotation.infrastructure.presentation.QuoteUi;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.UUID;
-
-import static com.wora.common.util.InputScanner.*;
-import static com.wora.common.util.Print.title;
 
 public class ProjectUi {
     private final ProjectService service;
@@ -76,7 +83,6 @@ public class ProjectUi {
         final ProjectStatus projectStatus = scanEnum("Please enter the number of project status: ", ProjectStatus.class);
 
         final ProjectResponse createdProject = service.create(new CreateProjectRequest(name, surface, projectStatus, clientId));
-        System.out.println("proejct created "+ createdProject);
 
         executeIfUserConfirms("Do you want to add new materiels",
                 () -> materielUi.create(createdProject.id())
@@ -104,7 +110,7 @@ public class ProjectUi {
 
         service.update(saveProject.id(), saveProject);
         printReport(saveProject);
-        quoteUi.create(saveProject.id());
+        executeIfUserConfirms("Do you want to save the quote of this proejct: ", () -> quoteUi.create(saveProject.id()));
         this.showMenu();
     }
 
