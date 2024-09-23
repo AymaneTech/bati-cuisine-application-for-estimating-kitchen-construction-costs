@@ -30,7 +30,6 @@ public class MaterielUi {
         final Double transportCost = scanDouble("Please enter the transportation cost: ", ValidationStrategies.POSITIVE_DOUBLE);
         final Double quantityCoefficient = scanDouble("Please to enter quantity coefficient: ", ValidationStrategies.POSITIVE_DOUBLE);
 
-        System.out.println("here is the tva" + tva);
         final MaterielResponse materielResponse = service.create(
                 new MaterielRequest(name, tva, projectId, unitCost, quantity, transportCost, quantityCoefficient)
         );
