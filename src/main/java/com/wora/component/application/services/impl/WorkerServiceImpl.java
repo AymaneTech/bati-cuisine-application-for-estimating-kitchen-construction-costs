@@ -1,7 +1,8 @@
 package com.wora.component.application.services.impl;
 
+import java.util.List;
+
 import com.wora.component.application.dto.request.WorkerRequest;
-import com.wora.component.application.dto.response.MaterielResponse;
 import com.wora.component.application.dto.response.WorkerResponse;
 import com.wora.component.application.mapper.WorkerMapper;
 import com.wora.component.application.services.ComponentService;
@@ -11,8 +12,6 @@ import com.wora.component.domain.exception.ComponentNotFoundException;
 import com.wora.component.domain.repository.ComponentRepository;
 import com.wora.component.domain.valueObject.ComponentId;
 import com.wora.project.domain.valueObject.ProjectId;
-
-import java.util.List;
 
 public class WorkerServiceImpl implements ComponentService<WorkerRequest, WorkerResponse> {
     private final ComponentRepository<Worker> repository;
