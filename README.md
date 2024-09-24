@@ -26,3 +26,7 @@ Bati-Cuisine aims to provide construction and renovation professionals with a pr
 - Effectively manage kitchen renovation projects
 
 By offering these capabilities, Bati-Cuisine enhances productivity and accuracy in the kitchen renovation industry.
+
+
+# Diagram class
+![Diagram class](./conception/classDiagram.png)
